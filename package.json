@@ -1,0 +1,20 @@
+{
+  "name": "gameon",
+  "version": "1.0.0",
+  "description": "An app for finding pickup games in your area",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rysmith504/GameOn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rysmith504/GameOn/issues"
+  },
+  "homepage": "https://github.com/rysmith504/GameOn#readme"
+}
