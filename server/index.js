@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const port = 4000;
+const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
 const app = express();
 

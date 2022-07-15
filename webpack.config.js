@@ -1,3 +1,4 @@
+// TODO
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -7,52 +8,40 @@ const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {
-  mode: 'development',
-  watch: true,
-  devtool: 'eval',
-  stats: {
-    excludeModules: /node_modules/,
-  },
+  mode: "development",
   entry: {
-    app: path.resolve(SRC_DIR, 'index.jsx'),
+    app: path.resolve(__dirname, 'client', 'index.jsx')
   },
   output: {
-    path: DIST_DIR,
-    filename: '[name].bundle.js',
+    filename: "[name].bundle.js",
+    path: DIST_DIR
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
   },
-
-  module: { 
+  watch: true,
+  module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(jsx|js)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: [
-              '@babel/preset-env',
-              ['@babel/preset-react', { runtime: 'automatic' }],
-            ],
-          },
-        },
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
+      }
+    ]
   },
   plugins: [
-    // Creates a loading bar
-    new WebpackBar(),
-    // Clears files in ./dist
-    new CleanWebpackPlugin(),
-    // generates an html file from template
-    new HtmlWebpackPlugin({
-      template: path.resolve(SRC_DIR, 'index.ejs'),
-    }),
-  ],
-};
+        // Creates a loading bar
+        new WebpackBar(),
+        // Clears files in ./dist
+        new CleanWebpackPlugin(),
+        // generates an html file from template
+        new HtmlWebpackPlugin({
+          template: path.resolve(SRC_DIR, 'index.ejs')
+    })
+  ]
+}
