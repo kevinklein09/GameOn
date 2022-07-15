@@ -8,16 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rysmith504/GameOn.git"
+    "url": "git+https://github.com/Work4ce/GameOn"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rysmith504/GameOn/issues"
+    "url": "https://github.com/Work4ce/GameOn"
   },
-  "homepage": "https://github.com/rysmith504/GameOn#readme"
+  "homepage": "https://github.com/Work4ce/GameOn/blob/main/README.md"
 }
-
-
-
