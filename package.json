@@ -4,7 +4,8 @@
   "description": "An app for finding pickup games in your area",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,8 @@
     "react-router-dom": "^6.3.0",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.3"
+    "webpack-dev-server": "^4.9.3",
+    "webpackbar": "^5.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.6",
