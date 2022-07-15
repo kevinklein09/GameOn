@@ -35,9 +35,7 @@ module.exports = {
     ]
   },
   plugins: [
-        // Creates a loading bar
         new WebpackBar(),
-        // Clears files in ./dist
         new CleanWebpackPlugin(),
         // generates an html file from template
         new HtmlWebpackPlugin({
