@@ -24,6 +24,9 @@ User.create({
   email: 'betpetjones@gmail.com',
   address: '123 Street',
   phone: '2812244335',
+})
+.catch((err) => {
+  console.log('no duplicates allowed');
 });
 
 module.exports.User = User;

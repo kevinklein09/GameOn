@@ -47,6 +47,9 @@ Event.create({
   players: 1,
   isOpen: true,
   isExpired: false,
+})
+.catch((err) => {
+  console.log('no duplicates allowed');
 });
 
 module.exports.Event = Event;
