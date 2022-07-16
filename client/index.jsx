@@ -14,11 +14,12 @@ const root = createRoot(document.getElementById("root"));
 root.render(
 <BrowserRouter>
   <Routes>
-    <Route path="/" element= {<App />} />
+    <Route path="/" element= {<App />}>
     <Route path="login" element={<Login />} />
     <Route path="map" element={<Map />} />
     <Route path="listings" element={<Listings />} />
-    <Route path="CreateEvents" element={<CreateEvents />} />
-    <Route path="CreateEvents" element={<CreateEvents />} /> 
+    <Route path="postEvent" element={<CreateEvents />} />
+    <Route path="profile" element={<Profile />} /> 
+    </Route>
   </Routes>
 </BrowserRouter>);

@@ -1,6 +1,6 @@
 import React from "react";
 
-const LISTINGS = () => {
+const Listings = () => {
   return (
       <div>
         <h1>
