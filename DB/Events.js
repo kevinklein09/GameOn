@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -29,24 +29,29 @@ const eventSchema = new Schema({
 });
 eventSchema.index(
   {
-    owner: 1, location: 1, date: 1, time: 1,
+    owner: 1,
+    location: 1,
+    date: 1,
+    time: 1,
   },
-  { unique: true },
+  { unique: true }
 );
 // Event Model
-const Event = mongoose.model('Event', eventSchema);
+const Event = mongoose.model("Event", eventSchema);
 
 // Test Event Model
 Event.create({
-  attendees: ['62d2daccc99fc43b5a304cb9'],
-  owner: '62d2daccc99fc43b5a304cb9',
-  location: '123 Basketball Court',
-  date: '7/21/2022',
-  time: '6:00 pm',
-  category: '62d2daccc99fc43b5a304cbb',
+  attendees: ["62d2daccc99fc43b5a304cb9"],
+  owner: "62d2daccc99fc43b5a304cb9",
+  location: "123 Basketball Court",
+  date: "7/21/2022",
+  time: "6:00 pm",
+  category: "62d2daccc99fc43b5a304cbb",
   players: 1,
   isOpen: true,
   isExpired: false,
+}).catch((err) => {
+  console.error(err);
 });
 
 module.exports.Event = Event;
