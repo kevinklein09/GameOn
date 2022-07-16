@@ -1,6 +1,16 @@
 import React from "react";
-import reactDom from "react-dom";
+// import ReactDOM from "react-dom";
 import App from "./components/App.jsx"
-import { BrowserRouter } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import Map from "./components/Map.jsx";
 
-reactDom.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById("root"));
+const root = createRoot(document.getElementById("root"));
+
+root.render(
+<BrowserRouter>
+  <Routes>
+    <Route path="/" element= {<App />} />
+    <Route path="map" element={<Map />} />
+  </Routes>
+</BrowserRouter>);
