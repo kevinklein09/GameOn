@@ -19,9 +19,9 @@ const User = mongoose.model('User', userSchema);
 
 // Test User Model
 User.create({
-  googleUser: 'royce@gmail.com',
+  googleUser: 'rBEtahnyoyce@gmail.com',
   username: 'royce',
-  email: 'royceroyce@gmail.com',
+  email: 'rBEtahnyoyce@gmail.com',
   address: '143 Street',
   phone: '2812246335',
 })
