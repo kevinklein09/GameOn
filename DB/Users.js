@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 // User collection Schema --------------------------
@@ -15,17 +15,15 @@ const userSchema = new Schema({
 });
 
 // User Model
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 // Test User Model
 User.create({
-  googleUser: "royce@gmail.com",
-  username: "royce",
-  email: "royce@gmail.com",
-  address: "124 Street",
-  phone: "28122449995",
-}).catch((err) => {
-  console.error(err);
+  googleUser: 'betpetjones@gmail.com',
+  username: 'Bethany',
+  email: 'betpetjones@gmail.com',
+  address: '123 Street',
+  phone: '2812244335',
 });
 
 module.exports.User = User;
