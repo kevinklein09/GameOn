@@ -1,4 +1,4 @@
-/* eslint-disable linebreak-style */
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
@@ -47,7 +47,7 @@ const sports = [{
 
 Sport.insertMany(sports)
   .catch((err) => {
-    console.log('no duplicates allowed');
+    console.log('no duplicates allowed', err);
   });
 
 module.exports.Sport = Sport;

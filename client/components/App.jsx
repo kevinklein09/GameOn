@@ -8,10 +8,9 @@ import { Link, Outlet } from 'react-router-dom';
 // import CreateEvents from './CreateEvent.jsx';
 // import Login from './Login.jsx';
 
-const App = () =>{
-    return (
+const App = () => (
         <>
-            <h1>Welcome to GameOn React App thats built using Webpack and Babel separately.  For the players!!!</h1>
+            <h1>Welcome to GameOn. For the players!!!</h1>
         <nav>
             <Link to="/login">LOGIN</Link>{'   '}
             <Link to="/map">Map</Link>{'   '}
@@ -21,7 +20,6 @@ const App = () =>{
         </nav>
         <Outlet/>
         </>
-    )
-}
+);
 
-export default App;  
+export default App;
