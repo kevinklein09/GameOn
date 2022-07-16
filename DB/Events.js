@@ -1,4 +1,4 @@
-/* eslint-disable linebreak-style */
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
@@ -48,8 +48,8 @@ Event.create({
   isOpen: true,
   isExpired: false,
 })
-.catch((err) => {
-  console.log('no duplicates allowed');
-});
+  .catch((err) => {
+    console.log('no duplicates allowed', err);
+  });
 
 module.exports.Event = Event;
