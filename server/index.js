@@ -15,6 +15,6 @@ app.use(express.static(distPath)); // Statically serve up client directory
 
 app.listen(port, () => {
   console.log(`
-  Listening at: http://127.0.0.1:${port}
+  Listening at: http://ec2-54-68-83-206.us-west-2.compute.amazonaws.com:${port}
   `);
 });
