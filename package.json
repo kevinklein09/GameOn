@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Work4ce/GameOn"
+    "url": "git+https://github.com/Work4ce/GameOn.git"
   },
   "keywords": [],
   "author": "",
@@ -23,11 +23,13 @@
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.9.0",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "http-server": "^14.1.1",
     "mongod": "^2.0.0",
     "mongodb": "^4.8.0",
     "mongoose": "^6.4.4",
+    "nodemon": "^2.0.19",
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -47,7 +49,11 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "eslint": "^8.19.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1"
   }
