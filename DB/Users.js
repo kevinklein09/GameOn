@@ -19,11 +19,11 @@ const User = mongoose.model('User', userSchema);
 
 // Test User Model
 User.create({
-  googleUser: 'betpetjones@gmail.com',
-  username: 'Bethany',
-  email: 'betpetjones@gmail.com',
-  address: '123 Street',
-  phone: '2812244335',
+  googleUser: 'royce@gmail.com',
+  username: 'royce',
+  email: 'royceroyce@gmail.com',
+  address: '143 Street',
+  phone: '2812246335',
 })
 .catch((err) => {
   console.log('no duplicates allowed');
