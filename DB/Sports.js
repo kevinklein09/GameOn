@@ -47,7 +47,7 @@ const sports = [{
 
 Sport.insertMany(sports)
   .catch((err) => {
-    console.log('no duplicates allowed');
+    console.error('no duplicates allowed', err);
   });
 
 module.exports.Sport = Sport;

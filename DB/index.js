@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 // eslint-disable-next-line import/extensions
 const ENV = require("../.env");
 const Models = require("./models");
+console.log('I will work eventually');
 
 const mongoPass = ENV.MONGODB_PASS;
 
