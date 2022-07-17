@@ -8,6 +8,7 @@ import Profile from './components/Profile.jsx';
 import Listings from './components/Listings.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
+import './styles.css';
 
 const root = createRoot(document.getElementById('root'));
 

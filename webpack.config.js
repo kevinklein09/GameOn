@@ -9,11 +9,11 @@ const DIST_DIR = path.resolve(__dirname, 'dist');
 module.exports = {
   mode: 'development',
   entry: {
-    app: path.resolve(__dirname, 'client', 'index.jsx')
+    app: path.resolve(__dirname, 'client', 'index.jsx'),
   },
   output: {
     filename: '[name].bundle.js',
-    path: DIST_DIR
+    path: DIST_DIR,
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
@@ -27,21 +27,21 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
       },
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
-      }
-    ]
+      },
+    ],
   },
   plugins: [
     new WebpackBar(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(SRC_DIR, 'index.ejs')
-    })
-  ]
-}
+      template: path.resolve(SRC_DIR, 'index.ejs'),
+    }),
+  ],
+};
