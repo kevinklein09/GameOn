@@ -22,7 +22,7 @@ userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 // User Model
-const User = mongoose.model('User', userSchema);
+const Users = mongoose.model('Users', userSchema);
 
 passport.use(User.createStrategy());
 
@@ -50,7 +50,8 @@ function(accessToken, refreshToken, profile, cb) {
 ));
 
 // Test User Model
-User.create({
+Users.create({
+  googleUser: 'jas@gmail.com',
   username: 'royce',
   email: 'j@gmail.com',
   address: '143 Street',
@@ -62,5 +63,4 @@ User.create({
     console.log('no duplicates allowed', err);
   });
 
-module.exports.User = User;
-
+module.exports = mongoose.model('Users', userSchema);
