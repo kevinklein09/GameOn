@@ -32,18 +32,12 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-<<<<<<< HEAD
-passport.deserializeUser(function(id, done) {
-  Users.findById(id, function(err, user) {
-=======
 passport.deserializeUser((id, done) => {
   Users.findById(id, (err, user) => {
->>>>>>> ee05ee93d748f207e15af5ab25f000536154156b
     done(err, user);
   });
 });
 
-<<<<<<< HEAD
 passport.use(new GoogleStrategy({
   clientID: ENV.CLIENT_ID,
   clientSecret: ENV.CLIENT_SECRET,
@@ -55,21 +49,6 @@ function(accessToken, refreshToken, profile, cb) {
     return cb(err, user);
   });
 }
-=======
-passport.use(new GoogleStrategy(
-  {
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/google/callback',
-    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
-  },
-  ((accessToken, refreshToken, profile, cb) => {
-    Users.findOrCreate({
-      googleId: profile.id,
-      username: profile.id,
-    }, (err, user) => cb(err, user));
-  }),
->>>>>>> ee05ee93d748f207e15af5ab25f000536154156b
 ));
 
 // Test Users Model
