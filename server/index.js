@@ -85,6 +85,22 @@ app.get(
     res.redirect("http://localhost:3000");
   });
 
+app.post('/api/event', (req, res) => {
+  const {
+    location, description, date, time, category, catName, players,
+  } = req.body;
+  Events.create({
+    location,
+    description,
+    date,
+    time,
+    category,
+    catName,
+    players,
+    isOpen: true,
+  });
+});
+
 app.listen(port, () => {
   console.log(`
   Listening at: http://ec2-54-68-83-206.us-west-2.compute.amazonaws.com:${port}
