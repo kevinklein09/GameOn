@@ -24,14 +24,14 @@ userSchema.plugin(findOrCreate);
 // User Model
 const Users = mongoose.model('Users', userSchema);
 
-passport.use(User.createStrategy());
+passport.use(Users.createStrategy());
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+  Users.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -43,7 +43,7 @@ passport.use(new GoogleStrategy({
   userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
 function(accessToken, refreshToken, profile, cb) {
-  User.findOrCreate({ googleId: profile.id, username: profile.id }, function (err, user) {
+  Users.findOrCreate({ googleId: profile.id, username: profile.id }, function (err, user) {
     return cb(err, user);
   });
 }
