@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true })); // Parses url
 app.use(express.static(distPath)); // Statically serve up client directory
 // app.use(express.static(styles)); // Statically serve up styles
 
-app.get('/api/listings', (req, res) => {
+app.get('/api/eventListings', (req, res) => {
   Events.find({})
     .then((query) => {
       console.log(query);
