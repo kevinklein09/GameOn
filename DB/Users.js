@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 require('dotenv').config();
+const ENV = require('../.env');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const findOrCreate = require('mongoose-findorcreate');
@@ -7,7 +8,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const { Schema } = mongoose;
-// User collection Schema --------------------------
+// Users collection Schema --------------------------
 const userSchema = new Schema({
   googleUser: String,
   username: String,
@@ -22,7 +23,7 @@ const userSchema = new Schema({
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
-// User Model
+// Users Model
 const Users = mongoose.model('Users', userSchema);
 
 passport.use(Users.createStrategy());
@@ -37,22 +38,20 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-passport.use(new GoogleStrategy(
-  {
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/google/callback',
-    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
-  },
-  ((accessToken, refreshToken, profile, cb) => {
-    Users.findOrCreate({
-      googleId: profile.id,
-      username: profile.id,
-    }, (err, user) => cb(err, user));
-  }),
+passport.use(new GoogleStrategy({
+  clientID: ENV.CLIENT_ID,
+  clientSecret: ENV.CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/google/callback",
+  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+},
+function(accessToken, refreshToken, profile, cb) {
+  Users.findOrCreate({ googleId: profile.id, username: profile.id }, function (err, user) {
+    return cb(err, user);
+  });
+}
 ));
 
-// Test User Model
+// Test Users Model
 Users.create({
   googleUser: 'jas@gmail.com',
   username: 'royce',

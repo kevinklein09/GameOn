@@ -78,9 +78,12 @@ app.get(
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
   (req, res) => {
     // Successful authentication, redirect secrets.
-    res.redirect('http://localhost:3000');
-  },
-);
+    res.redirect("http://localhost:3000");
+  });
+
+  app.get("/logout", function(req, res){
+    res.redirect("http://localhost:3000");
+  });
 
 app.listen(port, () => {
   console.log(`
