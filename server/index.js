@@ -8,7 +8,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 const path = require('path');
 const express = require('express');
-const User = require('../DB/Users')
 const ENV = require('../.env');
 
 const mongoose = require('mongoose');
@@ -81,7 +80,9 @@ app.get("/auth/google/callback",
     res.redirect("http://localhost:3000");
   });
 
-
+  app.get("/logout", function(req, res){
+    res.redirect("http://localhost:3000");
+  });
 
 app.listen(port, () => {
   console.log(`
