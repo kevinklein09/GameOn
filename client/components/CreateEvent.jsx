@@ -1,49 +1,57 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import SportsSelect from './SportsSelect.jsx';
 
-const CreateEvents = () => (
-      <div>
-        <h1>
-            THIS IS WHERE YOU CREATE NEW EVENTS
-        </h1>
+const CreateEvents = () => {
+  const [sport, setSport] = useState('');
+  const [description, setDescription] = useState('');
 
-        <form>
-          <div id="category">
-            <select onChange={() => console.log ("changed")}defaultValue="">
-              <option value="" disabled hidden>pick a sport</option>
-              <option>basketball</option>
-              <option>baseball</option>
-              <option>soccer</option>
-            </select>
-          </div>
+  const handleSelectSport = (e) => {
+    setSport(e.target.value);
+  };
 
-          <div id="description">
-            <textarea rows="5" cols="60" onChange={(e) => {
-              console.log(e.target.value);
-            }}>
-              Enter Description Here
-            </textarea>
-          </div>
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
 
-          <div id="location">
-            <input type="text" value="insert location here"></input>
-          </div>
+  return (
+    <div>
+      <h1>THIS IS WHERE YOU CREATE NEW EVENTS</h1>
 
-          <div id="equipment">
-            <input type="text" value="list equipment here"></input>
-            <button> add item </button>
-          </div>
+      <form>
+        <SportsSelect handleSelectSport={handleSelectSport}/>
 
-          <div id="date">
-            <input type="date"></input>
-          </div>
+        <div id='description'>
+          <textarea
+            rows='5'
+            cols='60'
+            onChange={(e) => handleDescription(e)}
+          >
+            Enter Description Here
+          </textarea>
+        </div>
 
-          <div id="submit">
-            <button> POST EVENT </button>
-          </div>
-        </form>
-      </div>
-);
+        <div id='location'>
+          <input type='text' value='insert location here'></input>
+        </div>
+
+        <div id='equipment'>
+          <input type='text' value='list equipment here'></input>
+          <button> add item </button>
+        </div>
+
+        <div id='date'>
+          <input type='date'></input>
+        </div>
+
+        <div id='submit'>
+          <button> POST EVENT </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default CreateEvents;
