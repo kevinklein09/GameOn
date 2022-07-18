@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { AddressAutofill } from '@mapbox/search-js-react';
-import { MapboxSearch, SearchSession } from '@mapbox/search-js-core';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const mapboxgl = require('mapbox-gl');
 
@@ -28,6 +29,19 @@ const Map = () => {
       style: 'mapbox://styles/mapbox/streets-v11',
     });
 
+    const geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl,
+    });
+
+    const results = map.current.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl,
+      }),
+    );
+
+    console.log(MapboxGeocoder);
     // GET request to the database to retrieve all event data
     // use the Marker function to populate them on the map
     // https://docs.mapbox.com/mapbox-gl-js/api/markers/
@@ -40,7 +54,7 @@ const Map = () => {
       marker.togglePopup();
     });
     const marker2 = new mapboxgl.Marker()
-      .setLngLat([-90.12, 29.97])
+      .setLngLat([-90.166775, 29.95726])
       .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
       .addTo(map.current);
     marker2.on('click', (e) => {
@@ -54,22 +68,6 @@ const Map = () => {
       marker3.togglePopup();
     });
   });
-
-  //   let autocomplete;
-  //   function initAutocomplete() {
-  //     autocomplete = new google.maps.places.Autocomplete(
-  //       window.HTMLInputElement('autocomplete'),
-  //       {
-  //         types: ['establishment', 'park', 'bar', 'bowling_alley', 'landmark', 'neighborhood',
-  //  'gym', 'library', 'school', 'stadium', 'university'],
-  //         componentRestrictions: { country: ['US'] },
-  //         fields: ['place_id', 'geometry', 'name'],
-  //       },
-  //     );
-  //   }
-  //   console.log(google);
-  //   google.maps.event.addDomListener(window, 'load', initAutocomplete);
-  //  <script defer src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API}&libraries=places`}></script>
 
   return (
 <div>
@@ -107,6 +105,7 @@ https://docs.mapbox.com/mapbox-search-js/tutorials/add-address-autofill-with-rea
 https://docs.mapbox.com/mapbox-search-js/api/react/autofill/
 https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/
 https://docs.mapbox.com/mapbox-gl-js/api/markers/#popup
+http://visgl.github.io/react-map-gl/
 
 https://developers.google.com/maps/documentation/javascript/places#find_place_from_query
 https://console.cloud.google.com/google/maps-apis/overview;onboard=true?project=gameon-356617
