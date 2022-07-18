@@ -45,3 +45,5 @@ module.exports = {
     }),
   ],
 };
+
+// https://github.com/jantimon/html-webpack-plugin#writing-your-own-templates

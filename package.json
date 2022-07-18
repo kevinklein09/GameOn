@@ -4,7 +4,7 @@
   "description": "An app for finding pickup games in your area",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server",
+    "start": "node server",
     "build": "webpack"
   },
   "repository": {
@@ -21,6 +21,11 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@googlemaps/google-maps-services-js": "^3.3.16",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@mapbox/search-js-core": "^1.0.0-beta.11",
+    "@mapbox/search-js-react": "^1.0.0-beta.11",
+    "@mapbox/search-js-web": "^1.0.0-beta.11",
     "@mui/material": "^5.9.0",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
