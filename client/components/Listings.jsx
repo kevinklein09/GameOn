@@ -5,6 +5,11 @@ const Listings = () => (
         <h1>
             SEE ALL DA LISTINGS
         </h1>
+        <div>
+            {
+
+            }
+        </div>
       </div>
 );
 
