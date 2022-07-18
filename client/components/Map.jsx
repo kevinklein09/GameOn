@@ -6,6 +6,8 @@ import { AddressAutofill } from '@mapbox/search-js-react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
+const axios = require('axios');
+
 const mapboxgl = require('mapbox-gl');
 
 const ENV = require('../../.env');
@@ -28,24 +30,16 @@ const Map = () => {
       zoom,
       style: 'mapbox://styles/mapbox/streets-v11',
     });
-
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl,
     });
-
     const results = map.current.addControl(
       new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl,
       }),
     );
-
-    console.log(MapboxGeocoder);
-    // GET request to the database to retrieve all event data
-    // use the Marker function to populate them on the map
-    // https://docs.mapbox.com/mapbox-gl-js/api/markers/
-
     const marker = new mapboxgl.Marker()
       .setLngLat([-90.10, 29.96])
       .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
@@ -69,8 +63,15 @@ const Map = () => {
     });
   });
 
+  function handleSubmit(e) {
+    console.log('Submit');
+    console.log(e.target.value);
+  }
+
+  // axios.get('/map');
+
   return (
-<div>
+    <div>
       <h1>
         WELCOME TO THE MAP
       </h1>
@@ -91,8 +92,9 @@ const Map = () => {
         <input
           name="postcode" placeholder="Postcode" type="text"
           autoComplete="postal-code" />
-      </form><div id="map" className="map-container" ref={mapDiv}></div><script>
-      </script>
+          <input type="submit" onClick={handleSubmit}></input>
+      </form>
+      <div id="map" className="map-container" ref={mapDiv}></div>
     </div>
 
   );
@@ -101,6 +103,11 @@ const Map = () => {
 export default Map;
 
 /* NOTES:
+
+    // GET request to the database to retrieve all event data
+    // use the Marker function to populate them on the map
+    // https://docs.mapbox.com/mapbox-gl-js/api/markers/
+
 https://docs.mapbox.com/mapbox-search-js/tutorials/add-address-autofill-with-react/
 https://docs.mapbox.com/mapbox-search-js/api/react/autofill/
 https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/
@@ -112,4 +119,19 @@ https://console.cloud.google.com/google/maps-apis/overview;onboard=true?project=
 https://developers.google.com/maps/documentation/places/web-service/search
 https://developers.google.com/maps/documentation/places/web-service/autocomplete#maps_http_places_autocomplete_amoeba-js
 https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
+
+app.get(/maps, (req, res)=>{
+  console.log('get request');
+  Event.find({})
+  .then((query)=>{
+    console.log(query);
+    res.sendStatus(200);
+  })
+  .catch((err)=>{
+    console.error(err);
+    res.sendStatus(500);
+  })
+})
+
 */
+
