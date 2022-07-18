@@ -10,7 +10,9 @@ const eventSchema = new Schema({
     type: String,
     index: true,
   },
-  location: {
+  locName: String,
+  description: String,
+  address: {
     type: String,
     index: true,
   },
@@ -40,15 +42,17 @@ const Events = mongoose.model('Events', eventSchema);
 
 // Test Event Model
 Events.create({
-  attendees: ['62d2daccc99fc43b5a304cb9'],
-  owner: '62d2daccc99fc43b5a304cb9',
-  location: '123 Basketball Court',
+  attendees: [],
+  owner: '',
+  locName: 'Lafreniere Soccer Field',
+  description: '',
+  address: '3000 Downs Blvd, Metairie, LA 70003',
   date: '7/21/2022',
   time: '6:00 pm',
-  coordinates: [-90.12, 29.97],
-  category: '62d2daccc99fc43b5a304cbb',
-  catName: 'Basketball',
-  players: 1,
+  coordinates: [-90.214837, 29.9990368],
+  category: '',
+  catName: 'Soccer',
+  players: 22,
   isOpen: true,
   isExpired: false,
 })
