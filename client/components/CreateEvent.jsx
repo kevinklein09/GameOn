@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import axios from 'axios';
 import SportsSelect from './SportsSelect.jsx';
@@ -11,6 +12,15 @@ const CreateEvents = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [playerLimit, setPlayerLimit] = useState(0);
+  let categoryId;
+
+  axios.get('/api/categories')
+    .then((categories) => {
+      categoryId = categories.data.filter((category) => category.category === sport)[0]._id
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   const handleSelectSport = (e) => {
     setSport(e.target.value);
@@ -26,7 +36,7 @@ const CreateEvents = () => {
 
   const handleTime = (e) => {
     setTime(e.target.value);
-  }
+  };
 
   const handleLocation = (e) => {
     setLocation(e.target.value);
@@ -34,6 +44,19 @@ const CreateEvents = () => {
 
   const handlePlayerLimit = (e) => {
     setPlayerLimit(JSON.parse(e.target.value));
+  };
+
+  const postEvent = () => {
+    axios.post('/api/event', {
+      location,
+      description,
+      date,
+      time,
+      category: categoryId,
+      catName: sport,
+      players: playerLimit,
+      isOpen: true,
+    });
   };
 
   return (
@@ -75,7 +98,7 @@ const CreateEvents = () => {
         </div>
 
         <div id='submit'>
-          <button> POST EVENT </button>
+          <button onClick={postEvent}> POST EVENT </button>
         </div>
       </form>
     </div>
