@@ -15,10 +15,10 @@ const userSchema = new Schema({
 });
 
 // User Model
-const User = mongoose.model('User', userSchema);
+const Users = mongoose.model('Users', userSchema);
 
 // Test User Model
-User.create({
+Users.create({
   googleUser: 'jas@gmail.com',
   username: 'royce',
   email: 'j@gmail.com',
@@ -29,4 +29,4 @@ User.create({
     console.log('no duplicates allowed', err);
   });
 
-module.exports.User = User;
+module.exports = mongoose.model('Users', userSchema);

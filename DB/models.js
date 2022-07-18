@@ -1,9 +1,9 @@
-const User = require('./Users');
-const Sport = require('./Sports');
-const Event = require('./Events');
+const Users = require('./Users');
+const Sports = require('./Sports');
+const Events = require('./Events');
 
 module.exports = {
-  User,
-  Sport,
-  Event,
+  Users,
+  Sports,
+  Events,
 };

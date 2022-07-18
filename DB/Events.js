@@ -36,10 +36,10 @@ eventSchema.index(
   { unique: true },
 );
 // Event Model
-const Event = mongoose.model('Event', eventSchema);
+const Events = mongoose.model('Events', eventSchema);
 
 // Test Event Model
-Event.create({
+Events.create({
   attendees: ['62d2daccc99fc43b5a304cb9'],
   owner: '62d2daccc99fc43b5a304cb9',
   location: '123 Basketball Court',
@@ -56,4 +56,4 @@ Event.create({
     console.log('no duplicates allowed', err);
   });
 
-module.exports.Event = Event;
+module.exports = mongoose.model('Events', eventSchema);

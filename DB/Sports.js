@@ -12,10 +12,10 @@ const sportSchema = new Schema({
 });
 
 // Sport Model
-const Sport = mongoose.model('Sport', sportSchema);
+const Sports = mongoose.model('Sports', sportSchema);
 
 // Sport Model Seed
-const sports = [{
+const sport = [{
   category: 'volleyball',
 }, {
   category: 'basketball',
@@ -45,9 +45,9 @@ const sports = [{
   category: 'ping pong',
 }];
 
-Sport.insertMany(sports)
+Sports.insertMany(sport)
   .catch((err) => {
     console.log('no duplicates allowed', err);
   });
 
-module.exports.Sport = Sport;
+module.exports = mongoose.model('Sports', sportSchema);
