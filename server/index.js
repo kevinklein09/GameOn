@@ -62,7 +62,7 @@ app.get('/api/maps', (req, res) => {
 });
 
 app.use(session({
-  secret: ENV.CLIENT_SECRET,
+  secret: ENV.EXPRESS_SECRET,
   resave: false,
   saveUninitialized: false,
 }));
@@ -78,11 +78,11 @@ app.get(
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
   (req, res) => {
     // Successful authentication, redirect secrets.
-    res.redirect("http://localhost:3000");
+    res.redirect("http://localhost:3000/#/profile");
   });
 
   app.get("/logout", function(req, res){
-    res.redirect("http://localhost:3000");
+    req.logout(() => res.redirect("http://localhost:3000"));
   });
 
 app.post('/api/event', (req, res) => {
