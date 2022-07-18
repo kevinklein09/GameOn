@@ -1,7 +1,16 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+require('dotenv').config();
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const findOrCreate = require('mongoose-findorcreate');
 const path = require('path');
 const express = require('express');
+const User = require('../DB/Users')
+const ENV = require('../.env');
+
 const mongoose = require('mongoose');
 
 const DB = require('../DB/index');
@@ -53,8 +62,32 @@ app.get('/api/maps', (req, res) => {
     });
 });
 
+app.use(session({
+  secret: ENV.CLIENT_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.get("/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+app.get("/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "http://localhost:3000" }),
+  function(req, res) {
+    // Successful authentication, redirect secrets.
+    res.redirect("http://localhost:3000");
+  });
+
+
+
 app.listen(port, () => {
   console.log(`
   Listening at: http://ec2-54-68-83-206.us-west-2.compute.amazonaws.com:${port}
   `);
 });
+
+
+module.exports.app = app;
