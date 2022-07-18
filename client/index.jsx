@@ -7,7 +7,7 @@ import {
 import App from './components/App.jsx';
 import Map from './components/Map.jsx';
 import Profile from './components/Profile.jsx';
-import Listings from './components/Listings.jsx';
+import EventListings from './components/EventListings.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
 import './styles.css';
@@ -20,7 +20,7 @@ root.render(
       <Route path="/" element= {<App />}>
         <Route path="login" element={<Login />} />
         <Route path="map" element={<Map />} />
-        <Route path="listings" element={<Listings />} />
+        <Route path="eventListings" element={<EventListings />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
         <Route path="*" element= {<App />}/>
