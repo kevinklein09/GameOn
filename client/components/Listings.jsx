@@ -1,11 +1,11 @@
 import React from 'react';
 
-const LOGIN = () => (
+const Listings = () => (
       <div>
         <h1>
-            THIS IS WHERE YOU LOGIN
+            SEE ALL DA LISTINGS
         </h1>
       </div>
 );
 
-export default LOGIN;
+export default Listings;
