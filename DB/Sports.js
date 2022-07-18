@@ -16,33 +16,33 @@ const Sports = mongoose.model('Sports', sportSchema);
 
 // Sport Model Seed
 const sport = [{
-  category: 'volleyball',
+  category: '🏐 Volleyball',
 }, {
-  category: 'basketball',
+  category: '🏀 Basketball',
 },
 {
-  category: 'tennis',
+  category: '🎾 Tennis',
 },
 {
-  category: 'football',
+  category: '🏈 Football',
 },
 {
-  category: 'soccer',
+  category: '⚽ Soccer',
 },
 {
-  category: 'ultimate frisbee',
+  category: '🥏 Ultimate frisbee',
 },
 {
-  category: 'softball',
+  category: '🥎 Softball',
 },
 {
-  category: 'racquetball',
+  category: '🎳 Bowling',
 },
 {
-  category: 'rugby',
+  category: '🏉 Rugby',
 },
 {
-  category: 'ping pong',
+  category: '🏓 Ping Pong',
 }];
 
 Sports.insertMany(sport)

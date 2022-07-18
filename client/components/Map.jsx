@@ -63,19 +63,22 @@ const Map = () => {
     });
   });
 
-  function handleSubmit(e) {
-    console.log('Submit');
-    console.log(e.target.value);
-  }
-
-  // axios.get('/map');
-
   return (
     <div>
       <h1>
         WELCOME TO THE MAP
       </h1>
-      <form>
+      <div id="map" className="map-container" ref={mapDiv}></div>
+    </div>
+
+  );
+};
+
+export default Map;
+
+/* NOTES:
+
+ <form>
         <AddressAutofill accessToken={MAP_TOKEN}>
           <input
             name="address"
@@ -94,15 +97,6 @@ const Map = () => {
           autoComplete="postal-code" />
           <input type="submit" onClick={handleSubmit}></input>
       </form>
-      <div id="map" className="map-container" ref={mapDiv}></div>
-    </div>
-
-  );
-};
-
-export default Map;
-
-/* NOTES:
 
     // GET request to the database to retrieve all event data
     // use the Marker function to populate them on the map
