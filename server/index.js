@@ -8,6 +8,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 const path = require('path');
 const express = require('express');
+const User = require('../DB/Users')
+const ENV = require('../.env');
+
 
 const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
@@ -18,10 +21,24 @@ app.use(express.json()); // Parse the request body
 app.use(express.urlencoded({ extended: true })); // Parses url
 app.use(express.static(distPath)); // Statically serve up client directory
 
+app.use(session({
+  secret: ENV.CLIENT_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
-
-
+app.get("/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+app.get("/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "http://localhost:3000" }),
+  function(req, res) {
+    // Successful authentication, redirect secrets.
+    res.redirect("http://localhost:3000");
+  });
 
 
 
@@ -30,3 +47,6 @@ app.listen(port, () => {
   Listening at: http://ec2-54-68-83-206.us-west-2.compute.amazonaws.com:${port}
   `);
 });
+
+
+module.exports.app = app;

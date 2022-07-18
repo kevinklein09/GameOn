@@ -3,6 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const passport = require("passport");
 const findOrCreate = require('mongoose-findorcreate');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passportLocalMongoose = require('passport-local-mongoose');
 const { Schema } = mongoose;
 // User collection Schema --------------------------
