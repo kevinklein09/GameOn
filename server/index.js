@@ -62,7 +62,7 @@ app.get('/api/maps', (req, res) => {
 });
 
 app.use(session({
-  secret: ENV.CLIENT_SECRET,
+  secret: ENV.EXPRESS_SECRET,
   resave: false,
   saveUninitialized: false,
 }));
