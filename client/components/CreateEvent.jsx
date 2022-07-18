@@ -1,49 +1,85 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import SportsSelect from './SportsSelect.jsx';
 
-const CreateEvents = () => (
-      <div>
-        <h1>
-            THIS IS WHERE YOU CREATE NEW EVENTS
-        </h1>
+const CreateEvents = () => {
+  const [sport, setSport] = useState('');
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [playerLimit, setPlayerLimit] = useState(0);
 
-        <form>
-          <div id="category">
-            <select onChange={() => console.log ("changed")}defaultValue="">
-              <option value="" disabled hidden>pick a sport</option>
-              <option>basketball</option>
-              <option>baseball</option>
-              <option>soccer</option>
-            </select>
-          </div>
+  const handleSelectSport = (e) => {
+    setSport(e.target.value);
+  };
 
-          <div id="description">
-            <textarea rows="5" cols="60" onChange={(e) => {
-              console.log(e.target.value);
-            }}>
-              Enter Description Here
-            </textarea>
-          </div>
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
 
-          <div id="location">
-            <input type="text" value="insert location here"></input>
-          </div>
+  const handleDate = (e) => {
+    setDate(e.target.value);
+  };
 
-          <div id="equipment">
-            <input type="text" value="list equipment here"></input>
-            <button> add item </button>
-          </div>
+  const handleTime = (e) => {
+    setTime(e.target.value);
+  }
 
-          <div id="date">
-            <input type="date"></input>
-          </div>
+  const handleLocation = (e) => {
+    setLocation(e.target.value);
+  };
 
-          <div id="submit">
-            <button> POST EVENT </button>
-          </div>
-        </form>
-      </div>
-);
+  const handlePlayerLimit = (e) => {
+    setPlayerLimit(JSON.parse(e.target.value));
+  };
+
+  return (
+    <div>
+      <h1>THIS IS WHERE YOU CREATE NEW EVENTS</h1>
+
+      <form>
+        <SportsSelect handleSelectSport={handleSelectSport}/>
+
+        <div id='description'>
+          <textarea
+            rows='5'
+            cols='60'
+            onChange={(e) => handleDescription(e)}
+          >
+            Enter Description Here
+          </textarea>
+        </div>
+
+        <div id="playerLimit">
+          <input onChange={(e) => handlePlayerLimit(e)} type='number'></input> # of players
+        </div>
+
+        <div id='location'>
+          <input onChange={(e) => handleLocation(e)} type='text' defaultValue='event address'></input>
+        </div>
+
+        <div id='equipment'>
+          <input type='text' defaultValue='list equipment here'></input>
+          <button> add item </button>
+        </div>
+
+        <div id='date'>
+          <input onChange={(e) => handleDate(e)} type='date'></input>
+        </div>
+
+        <div id='time'>
+          <input onChange={(e) => handleTime(e)} type='time'></input>
+        </div>
+
+        <div id='submit'>
+          <button> POST EVENT </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default CreateEvents;

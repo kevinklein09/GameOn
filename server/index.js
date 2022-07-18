@@ -8,9 +8,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 const path = require('path');
 const express = require('express');
-const ENV = require('../.env');
-
 const mongoose = require('mongoose');
+const User = require('../DB/Users');
+const ENV = require('../.env');
 
 const DB = require('../DB/index');
 const { Events, Sports, Users } = require('../DB/models');
@@ -50,7 +50,7 @@ app.get('/api/categories', (req, res) => {
 
 app.get('/api/maps', (req, res) => {
   console.log('get request');
-  Event.find({})
+  Events.find({})
     .then((query) => {
       console.log(query);
       res.sendStatus(200);
@@ -64,18 +64,19 @@ app.get('/api/maps', (req, res) => {
 app.use(session({
   secret: ENV.CLIENT_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.get("/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }),
 );
-app.get("/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "http://localhost:3000" }),
-  function(req, res) {
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
+  (req, res) => {
     // Successful authentication, redirect secrets.
     res.redirect("http://localhost:3000");
   });
@@ -89,6 +90,5 @@ app.listen(port, () => {
   Listening at: http://ec2-54-68-83-206.us-west-2.compute.amazonaws.com:${port}
   `);
 });
-
 
 module.exports.app = app;
