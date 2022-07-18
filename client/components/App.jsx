@@ -7,7 +7,7 @@ const App = () => (
         <nav>
             <Link to="/login">LOGIN</Link>{'   '}
             <Link to="/map">Map</Link>{'   '}
-            <Link to="/listings">See Events</Link>{'   '}
+            <Link to="/eventListings">See Events</Link>{'   '}
             <Link to="/postEvent">Create new Event</Link>{'   '}
             <Link to="/profile">Your Profile</Link>{'   '}
         </nav>
