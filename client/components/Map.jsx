@@ -21,6 +21,7 @@ const Map = () => {
   const [lng, setLng] = useState(-90.10);
   const [lat, setLat] = useState(29.96);
   const [zoom, setZoom] = useState(12);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     mapboxgl.accessToken = MAP_TOKEN;
@@ -40,6 +41,13 @@ const Map = () => {
         mapboxgl,
       }),
     );
+
+    axios.get('/map')
+      .then((eventsData) => {
+        
+        console.log(eventsData);
+      });
+
     const marker = new mapboxgl.Marker()
       .setLngLat([-90.10, 29.96])
       .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
@@ -47,20 +55,20 @@ const Map = () => {
     marker.on('click', (e) => {
       marker.togglePopup();
     });
-    const marker2 = new mapboxgl.Marker()
-      .setLngLat([-90.166775, 29.95726])
-      .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-      .addTo(map.current);
-    marker2.on('click', (e) => {
-      marker2.togglePopup();
-    });
-    const marker3 = new mapboxgl.Marker()
-      .setLngLat([-90.08, 29.94])
-      .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-      .addTo(map.current);
-    marker3.on('click', (e) => {
-      marker3.togglePopup();
-    });
+  //   const marker2 = new mapboxgl.Marker()
+  //     .setLngLat([-90.166775, 29.95726])
+  //     .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
+  //     .addTo(map.current);
+  //   marker2.on('click', (e) => {
+  //     marker2.togglePopup();
+  //   });
+  //   const marker3 = new mapboxgl.Marker()
+  //     .setLngLat([-90.08, 29.94])
+  //     .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
+  //     .addTo(map.current);
+  //   marker3.on('click', (e) => {
+  //     marker3.togglePopup();
+  //   });
   });
 
   return (
@@ -114,18 +122,4 @@ https://developers.google.com/maps/documentation/places/web-service/search
 https://developers.google.com/maps/documentation/places/web-service/autocomplete#maps_http_places_autocomplete_amoeba-js
 https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
 
-app.get(/maps, (req, res)=>{
-  console.log('get request');
-  Event.find({})
-  .then((query)=>{
-    console.log(query);
-    res.sendStatus(200);
-  })
-  .catch((err)=>{
-    console.error(err);
-    res.sendStatus(500);
-  })
-})
-
 */
-

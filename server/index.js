@@ -48,7 +48,7 @@ app.get('/api/categories', (req, res) => {
     });
 });
 
-app.get('/api/maps', (req, res) => {
+app.get('/map', (req, res) => {
   console.log('get request');
   Events.find({})
     .then((query) => {
@@ -78,12 +78,13 @@ app.get(
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
   (req, res) => {
     // Successful authentication, redirect secrets.
-    res.redirect("http://localhost:3000");
-  });
+    res.redirect('http://localhost:3000');
+  },
+);
 
-  app.get("/logout", function(req, res){
-    res.redirect("http://localhost:3000");
-  });
+app.get('/logout', (req, res) => {
+  res.redirect('http://localhost:3000');
+});
 
 app.listen(port, () => {
   console.log(`

@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 const Models = require('./models');
 
-const { Users, Sports, Events } = Models;
+const { Users, Events } = Models;
 
 const eventData = [
   {
@@ -158,6 +159,43 @@ const eventData = [
 
 eventData.forEach((event) => {
   Events.create(event).catch((err) => {
+    console.error(err);
+  });
+});
+
+const usersData = [
+  {
+    googleUser: 'jas@gmail.com',
+    username: 'jasMin',
+    email: 'jas@gmail.com',
+    address: '143 Street',
+    phone: '5046804756',
+    googleId: 'jas@gmail.com',
+    secret: String,
+  },
+  {
+    googleUser: 'puckjones@gmail.com',
+    username: 'puck',
+    email: 'puckjones@gmail.com',
+    address: '833 Dodge Ave',
+    phone: '5043372289',
+    googleId: 'puckjones@gmail.com',
+    secret: String,
+  },
+  {
+    googleUser: 'bethanyjones365@gmail.com',
+    username: 'bethany365',
+    email: 'bethanyjones365@gmail.com',
+    address: '100 N. Carrollton',
+    phone: '2814485765',
+    googleId: 'bethanyjones365@gmail.com',
+    secret: String,
+  },
+
+];
+
+usersData.forEach((event) => {
+  Users.create(event).catch((err) => {
     console.error(err);
   });
 });
