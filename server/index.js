@@ -49,11 +49,10 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  console.log('get request');
+  console.log('map GET request');
   Events.find({})
     .then((query) => {
-      console.log(query);
-      res.sendStatus(200);
+      res.status(200).send(query);
     })
     .catch((err) => {
       console.error(err);

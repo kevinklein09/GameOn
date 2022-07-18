@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect, useRef } from 'react';
@@ -41,34 +42,31 @@ const Map = () => {
         mapboxgl,
       }),
     );
-
     axios.get('/map')
       .then((eventsData) => {
-        
-        console.log(eventsData);
+        console.log('eventsData:', eventsData.data);
+        const events = eventsData.data;
+        events.forEach((event) => {
+          const icon = document.createElement('div');
+          icon.className = 'icon';
+          icon.style.backgroundImage = 'url(https://cdn-icons-png.flaticon.com/512/1165/1165187.png)';
+          icon.style.width = '20px';
+          icon.style.height = '20px';
+          
+          icon.style.backgroundSize = '100%';
+          new mapboxgl.Marker(icon)
+            .setLngLat([event.coordinates[0], event.coordinates[1]])
+            .setPopup(new mapboxgl.Popup().setHTML(`
+              <h4>${event.locName}</h4>
+              <p>${event.description}</p>
+              <p>${event.date}</p>
+              <p>${event.time}</p>`))
+            .addTo(map.current)
+            .on('click', (e) => {
+              e.togglePopup();
+            });
+        });
       });
-
-    const marker = new mapboxgl.Marker()
-      .setLngLat([-90.10, 29.96])
-      .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-      .addTo(map.current);
-    marker.on('click', (e) => {
-      marker.togglePopup();
-    });
-  //   const marker2 = new mapboxgl.Marker()
-  //     .setLngLat([-90.166775, 29.95726])
-  //     .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-  //     .addTo(map.current);
-  //   marker2.on('click', (e) => {
-  //     marker2.togglePopup();
-  //   });
-  //   const marker3 = new mapboxgl.Marker()
-  //     .setLngLat([-90.08, 29.94])
-  //     .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-  //     .addTo(map.current);
-  //   marker3.on('click', (e) => {
-  //     marker3.togglePopup();
-  //   });
   });
 
   return (

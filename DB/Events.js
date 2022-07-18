@@ -27,6 +27,7 @@ const eventSchema = new Schema({
   coordinates: Array,
   category: String,
   catName: String,
+  image: String,
   players: Number,
   isOpen: Boolean,
   isExpired: Boolean,
@@ -38,26 +39,5 @@ eventSchema.index(
   { unique: true },
 );
 // Event Model
-const Events = mongoose.model('Events', eventSchema);
-
-// Test Event Model
-Events.create({
-  attendees: [],
-  owner: '',
-  locName: 'Lafreniere Soccer Field',
-  description: '',
-  address: '3000 Downs Blvd, Metairie, LA 70003',
-  date: '7/21/2022',
-  time: '6:00 pm',
-  coordinates: [-90.214837, 29.9990368],
-  category: '',
-  catName: 'Soccer',
-  players: 22,
-  isOpen: true,
-  isExpired: false,
-})
-  .catch((err) => {
-    console.log('no duplicates allowed', err);
-  });
 
 module.exports = mongoose.model('Events', eventSchema);
