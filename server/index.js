@@ -40,6 +40,19 @@ app.get('/api/categories', (req, res) => {
     });
 });
 
+app.get('/api/maps', (req, res) => {
+  console.log('get request');
+  Event.find({})
+    .then((query) => {
+      console.log(query);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 app.listen(port, () => {
   console.log(`
   Listening at: http://ec2-54-68-83-206.us-west-2.compute.amazonaws.com:${port}
