@@ -28,6 +28,7 @@ app.use(express.static(distPath)); // Statically serve up client directory
 
 app.get('/api/eventListings', (req, res) => {
   Events.find({})
+    .sort('date')
     .then((query) => {
       res.status(200).send(query);
     })
