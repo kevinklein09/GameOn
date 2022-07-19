@@ -48,12 +48,11 @@ app.get('/api/categories', (req, res) => {
     });
 });
 
-app.get('/api/maps', (req, res) => {
-  console.log('get request');
+app.get('/map', (req, res) => {
+  console.log('map GET request');
   Events.find({})
     .then((query) => {
-      console.log(query);
-      res.sendStatus(200);
+      res.status(200).send(query);
     })
     .catch((err) => {
       console.error(err);
@@ -75,15 +74,16 @@ app.get(
 );
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect secrets.
-    res.redirect("http://localhost:3000/#/profile");
-  });
+    res.redirect('/');
+  },
+);
 
-  app.get("/logout", function(req, res){
-    req.logout(() => res.redirect("http://localhost:3000"));
-  });
+app.get('/logout', (req, res) => {
+  req.logout(() => res.redirect('/'));
+});
 
 app.post('/api/event', (req, res) => {
   const {

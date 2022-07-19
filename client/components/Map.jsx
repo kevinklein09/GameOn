@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect, useRef } from 'react';
@@ -7,7 +8,17 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const axios = require('axios');
-
+// import images
+const basketball = new URL('../images/basketball_icon.png', import.meta.url);
+const bowling = new URL('../images/bowling_icon.png', import.meta.url);
+const football = new URL('../images/football_icon.png', import.meta.url);
+const frisbee = new URL('../images/frisbee_icon.png', import.meta.url);
+const pingpong = new URL('../images/pingpong_icon.png', import.meta.url);
+const rugby = new URL('../images/rugby_icon.png', import.meta.url);
+const soccer = new URL('../images/soccer_icon.png', import.meta.url);
+const softball = new URL('../images/softball_icon.png', import.meta.url);
+const tennis = new URL('../images/tennis_icon.png', import.meta.url);
+const volleyball = new URL('../images/volleyball_icon.png', import.meta.url);
 const mapboxgl = require('mapbox-gl');
 
 const ENV = require('../../.env');
@@ -21,6 +32,7 @@ const Map = () => {
   const [lng, setLng] = useState(-90.10);
   const [lat, setLat] = useState(29.96);
   const [zoom, setZoom] = useState(12);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     mapboxgl.accessToken = MAP_TOKEN;
@@ -40,27 +52,46 @@ const Map = () => {
         mapboxgl,
       }),
     );
-    const marker = new mapboxgl.Marker()
-      .setLngLat([-90.10, 29.96])
-      .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-      .addTo(map.current);
-    marker.on('click', (e) => {
-      marker.togglePopup();
-    });
-    const marker2 = new mapboxgl.Marker()
-      .setLngLat([-90.166775, 29.95726])
-      .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-      .addTo(map.current);
-    marker2.on('click', (e) => {
-      marker2.togglePopup();
-    });
-    const marker3 = new mapboxgl.Marker()
-      .setLngLat([-90.08, 29.94])
-      .setPopup(new mapboxgl.Popup().setHTML('<p>Hi, testing</p>'))
-      .addTo(map.current);
-    marker3.on('click', (e) => {
-      marker3.togglePopup();
-    });
+    axios.get('/map')
+      .then((eventsData) => {
+        console.log('eventsData:', eventsData.data);
+        const events = eventsData.data;
+        events.forEach((event) => {
+          const image = () => {
+            const images = {
+              basketball,
+              bowling,
+              football,
+              frisbee,
+              pingpong,
+              rugby,
+              soccer,
+              softball,
+              tennis,
+              volleyball,
+            };
+            return images[event.image];
+          };
+
+          const icon = document.createElement('div');
+          icon.className = 'icon';
+          icon.style.backgroundImage = `url(${image()})`;
+          icon.style.width = '20px';
+          icon.style.height = '20px';
+          icon.style.backgroundSize = '100%';
+          new mapboxgl.Marker(icon)
+            .setLngLat([event.coordinates[0], event.coordinates[1]])
+            .setPopup(new mapboxgl.Popup().setHTML(`
+              <h4>${event.locName}</h4>
+              <p>${event.description}</p>
+              <p>${event.date}</p>
+              <p>${event.time}</p>`))
+            .addTo(map.current)
+            .on('click', (e) => {
+              e.togglePopup();
+            });
+        });
+      });
   });
 
   return (
@@ -114,18 +145,4 @@ https://developers.google.com/maps/documentation/places/web-service/search
 https://developers.google.com/maps/documentation/places/web-service/autocomplete#maps_http_places_autocomplete_amoeba-js
 https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
 
-app.get(/maps, (req, res)=>{
-  console.log('get request');
-  Event.find({})
-  .then((query)=>{
-    console.log(query);
-    res.sendStatus(200);
-  })
-  .catch((err)=>{
-    console.error(err);
-    res.sendStatus(500);
-  })
-})
-
 */
-

@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 const Models = require('./models');
 
-const { Users, Sports, Events } = Models;
+const { Users, Events } = Models;
 
 const eventData = [
   {
@@ -14,7 +15,8 @@ const eventData = [
     time: '6:00 pm',
     coordinates: [-90.166775, 29.95726],
     category: '',
-    catName: '🏀 Basketball',
+    catName: 'Basketball',
+    image: 'basketball',
     players: 5,
     isOpen: true,
     isExpired: false,
@@ -29,7 +31,8 @@ const eventData = [
     time: '3:00 pm',
     coordinates: [-90.09817715313504, 29.99698613212327],
     category: '',
-    catName: '🎾 Tennis',
+    catName: 'Tennis',
+    image: 'tennis',
     players: 2,
     isOpen: true,
     isExpired: false,
@@ -44,7 +47,8 @@ const eventData = [
     time: '5:00 pm',
     coordinates: [-90.243582, 30.0374896],
     category: '',
-    catName: '🏐 Volleyball',
+    catName: 'Volleyball',
+    image: 'volleyball',
     players: 12,
     isOpen: true,
     isExpired: false,
@@ -59,7 +63,8 @@ const eventData = [
     time: '9:00 pm',
     coordinates: [-90.214837, 29.996739],
     category: '',
-    catName: '🏈 Football',
+    catName: 'Football',
+    image: 'football',
     players: 22,
     isOpen: true,
     isExpired: false,
@@ -74,7 +79,8 @@ const eventData = [
     time: '2:00 pm',
     coordinates: [-90.214837, 29.9990368],
     category: '',
-    catName: '⚽ Soccer',
+    catName: 'Soccer',
+    image: 'soccer',
     players: 10,
     isOpen: true,
     isExpired: false,
@@ -89,7 +95,8 @@ const eventData = [
     time: '6:00 pm',
     coordinates: [-90.124135, 29.9342911],
     category: '',
-    catName: '🥏 Ultimate frisbee',
+    catName: 'Ultimate frisbee',
+    image: 'frisbee',
     players: 4,
     isOpen: true,
     isExpired: false,
@@ -104,7 +111,8 @@ const eventData = [
     time: '12:00 pm',
     coordinates: [-90.0961103, 29.9956118],
     category: '',
-    catName: '🥎 Softball',
+    catName: 'Softball',
+    image: 'softball',
     players: 10,
     isOpen: true,
     isExpired: false,
@@ -119,7 +127,8 @@ const eventData = [
     time: '5:00 pm',
     coordinates: [-90.1092962, 29.995657],
     category: '',
-    catName: '🎳 Bowling',
+    catName: 'Bowling',
+    image: 'bowling',
     players: 22,
     isOpen: true,
     isExpired: false,
@@ -134,7 +143,8 @@ const eventData = [
     time: '4:00 pm',
     coordinates: [-90.0931201, 29.9854845],
     category: '',
-    catName: '🏉 Rugby',
+    catName: 'Rugby',
+    image: 'rugby',
     players: 14,
     isOpen: true,
     isExpired: false,
@@ -149,7 +159,8 @@ const eventData = [
     time: '9:00 pm',
     coordinates: [-90.1086827, 29.9700193],
     category: '',
-    catName: '🏓 Ping Pong',
+    catName: 'Ping Pong',
+    image: 'pingpong',
     players: 4,
     isOpen: true,
     isExpired: false,
@@ -158,6 +169,43 @@ const eventData = [
 
 eventData.forEach((event) => {
   Events.create(event).catch((err) => {
+    console.error(err);
+  });
+});
+
+const usersData = [
+  {
+    googleUser: 'jas@gmail.com',
+    username: 'jasMin',
+    email: 'jas@gmail.com',
+    address: '143 Street',
+    phone: '5046804756',
+    googleId: 'jas@gmail.com',
+    secret: String,
+  },
+  {
+    googleUser: 'puckjones@gmail.com',
+    username: 'puck',
+    email: 'puckjones@gmail.com',
+    address: '833 Dodge Ave',
+    phone: '5043372289',
+    googleId: 'puckjones@gmail.com',
+    secret: String,
+  },
+  {
+    googleUser: 'bethanyjones365@gmail.com',
+    username: 'bethany365',
+    email: 'bethanyjones365@gmail.com',
+    address: '100 N. Carrollton',
+    phone: '2814485765',
+    googleId: 'bethanyjones365@gmail.com',
+    secret: String,
+  },
+
+];
+
+usersData.forEach((event) => {
+  Users.create(event).catch((err) => {
     console.error(err);
   });
 });

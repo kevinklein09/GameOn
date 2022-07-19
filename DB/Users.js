@@ -38,17 +38,17 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-passport.use(new GoogleStrategy({
-  clientID: ENV.CLIENT_ID,
-  clientSecret: ENV.CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/google/callback",
-  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
-},
-function(accessToken, refreshToken, profile, cb) {
-  Users.findOrCreate({ googleId: profile.id, username: profile.id }, function (err, user) {
-    return cb(err, user);
-  });
-}
+passport.use(new GoogleStrategy(
+  {
+    clientID: ENV.CLIENT_ID,
+    clientSecret: ENV.CLIENT_SECRET,
+    callbackURL: 'http://localhost:3000/auth/google/callback',
+    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
+  },
+  ((accessToken, refreshToken, profile, cb) => {
+    // eslint-disable-next-line max-len
+    Users.findOrCreate({ googleId: profile.id, username: profile.id }, (err, user) => cb(err, user));
+  }),
 ));
 
 // Test Users Model
