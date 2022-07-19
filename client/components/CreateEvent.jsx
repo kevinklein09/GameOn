@@ -3,6 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from '@mui/material/Button';
 import SportsSelect from './SportsSelect.jsx';
 import EquipmentList from './EquipmentList.jsx';
 
@@ -114,7 +115,7 @@ const CreateEvents = () => {
 
         <div id='equipment'>
           <input onChange={(e) => handleItem(e)} type='text' value={item}></input>
-          <button onClick={() => handleEquipmentList()}> add item </button>
+          <Button variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
         </div>
         <EquipmentList equipment={equipment}/>
 
@@ -127,7 +128,7 @@ const CreateEvents = () => {
         </div>
 
         <div id='submit'>
-          <button onClick={postEvent}> POST EVENT </button>
+          <Button variant="contained" onClick={postEvent}> POST EVENT </Button>
         </div>
       </form>
     </div>
