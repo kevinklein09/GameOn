@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Event = ({ sport }) => {
-  console.log(sport);
-  return (
+const Event = ({ sport }) =>
+  // console.log(sport);
+  (
     <>
       <div>
         <div>{ sport.event }</div>
@@ -10,6 +10,4 @@ const Event = ({ sport }) => {
       </div>
     </>
   );
-};
-
 export default Event;
