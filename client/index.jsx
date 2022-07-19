@@ -2,7 +2,7 @@ import React from 'react';
 // import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 import {
-  BrowserRouter, Routes, Route, HashRouter,
+  Routes, Route, HashRouter,
 } from 'react-router-dom';
 import App from './components/App.jsx';
 import Map from './components/Map.jsx';
@@ -11,6 +11,11 @@ import EventListings from './components/EventListings.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
 import './styles.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 
 const root = createRoot(document.getElementById('root'));
 
