@@ -63,7 +63,7 @@ const CreateEvents = () => {
 
   const postEvent = () => {
     axios.post('/api/event', {
-      location,
+      locName: location,
       description,
       date,
       time,
