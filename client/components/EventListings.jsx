@@ -6,10 +6,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sports from './SportsSelect';
-//import Event from './Event.jsx';
+import Event from './Event.jsx';
 
-const EventListings = () => {
+const EventListings = (props) => {
   const [events, setEvents] = useState([]);
+  const [dates, setdate] = useState()
 
 const getAllEvents = () => {
   axios.get('/api/eventListings')
@@ -25,29 +26,43 @@ useEffect(() => {
   getAllEvents()
 }, []);
 
-  return (
-    <div>
-      <h1>SEE ALL DA hey whats up</h1>
-      <div>
-       <Sports />
-       <button>Sort by Date</button>
-       <button>Sort by DI ST ANCE</button>
-       {
-        events.map((event, i) => {
-          return (
-            <div class="event" key={ i }>
-              { event.description }
-              <button>goin</button> 
-            </div>
-          )
-        })
-       }
-      </div>
-    </div>
-  );
-};
+return (
+  <div>
+    <h1>See all da events</h1>
+    <Sports />
+    <button>Sort by Dist  ance</button>
+    { events.map((event, i) => {
+      return <Event eventData={ event } class="event" key={ `event: ${i}` }/> 
+    }) }
+  </div>
+)
 
+};
 export default EventListings;
+
+//   return (
+//     <div>
+//       <h1>SEE ALL DA hey whats up</h1>
+ 
+//        <Sports />
+//        <button>Sort by Date</button>
+//        <button>Sort by DI ST ANC   E</button>
+//        {
+//         events.map((event, i) => {
+//           return (
+//             <div>
+//             <Event class="event" key={ `event: ${i}` }/>
+//             <button>Going or Not</button>
+//             <div>
+//        ))}
+//        }
+       
+        
+      
+//     </div>
+//   );
+// };
+
 
 // const fakeData = [
 //   {
