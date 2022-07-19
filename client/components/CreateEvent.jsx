@@ -1,27 +1,36 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+/* eslint-disable */
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import SportsSelect from './SportsSelect.jsx';
 import EquipmentList from './EquipmentList.jsx';
+import AddressField from './AddressField.jsx';
 
-const ENV = require('../../.env');
 
-const { MAP_TOKEN } = ENV;
+
 const today = new Date();
 
 const CreateEvents = () => {
   const [sport, setSport] = useState('');
   const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
+  // const [location, setLocation] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('');
+  const [long, setLong] = useState(0);
+  const [lat, setLat] = useState(0);
+  // const [coords, setCoords] = useState([]);
   const [date, setDate] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
   const [time, setTime] = useState('12:00');
   const [playerLimit, setPlayerLimit] = useState(0);
   const [equipment, setEquipment] = useState([]);
   const [item, setItem] = useState('');
   let categoryId;
+  let location = `${address} ${city} ${state} ${zip}`
 
   if (sport) {
     axios.get('/api/categories')
@@ -58,35 +67,72 @@ const CreateEvents = () => {
     setTime(e.target.value);
   };
 
-  const handleLocation = (e) => {
-    setLocation(e.target.value);
+  const handleAddress = (e) => {
+    setAddress(e.target.value);
+  };
+  const handleCity = (e) => {
+    setCity(e.target.value);
+  };
+  const handleState = (e) => {
+    setState(e.target.value);
+  };
+  const handleZip = (e) => {
+    setZip(e.target.value);
+    getCoords();
   };
 
   const handlePlayerLimit = (e) => {
     setPlayerLimit(JSON.parse(e.target.value));
   };
 
+  const getCoords = () => {
+    const query = location.split(' ').join('_');
+    const queryUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?type=poi&access_token=${MAP_TOKEN}`;
+    axios.get(queryUrl)
+      .then((results) => {
+        console.log(results.data.features[0].center)
+        setLong(results.data.features[0].center[0]);
+        setLat(results.data.features[0].center[1]);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+
   const postEvent = () => {
-    axios.post('/api/event', {
-      locName: location,
+
+      axios.post('/api/event', {
+      address: location,
       description,
       date,
       time,
+      coordinates: [long, lat],
       category: categoryId,
       catName: sport,
       players: playerLimit,
       isOpen: true,
     });
+      
+
 
     setSport('');
     setDescription('');
-    setLocation('');
+    setAddress('');
+    setCity('');
+    setState('');
+    setZip('');
+    // setCoords([]);
+    setLong(0);
+    setLat(0);
+    // setLocation('');
     setPlayerLimit(0);
     setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
     setTime('12:00');
     setEquipment([]);
     setItem('');
   };
+
 
   return (
     <div>
@@ -115,15 +161,28 @@ const CreateEvents = () => {
           /> # of players
         </div>
 
-        <div id='location'>
+        <AddressField
+          handleAddress={handleAddress}
+          handleCity={handleCity}
+          handleState={handleState}
+          handleZip={handleZip}
+          address={address}
+          city={city}
+          state={state}
+          zip={zip}
+        />
+
+
+        {/* <div id='location'>
           <input
             type='text'
             maxLength='100'
             onChange={(e) => handleLocation(e)}
             placeholder='enter event address'
             value={location}
+            required
           />
-        </div>
+        </div> */}
 
         <div id='equipment'>
           <input
@@ -153,24 +212,14 @@ const CreateEvents = () => {
             onChange={(e) => handleTime(e)}
           />
         </div>
+        <input onClick={postEvent} type='submit'/>
 
-        <div id='submit'>
+        {/* <div id='submit'>
           <Button variant="contained" onClick={postEvent}> POST EVENT </Button>
-        </div>
+        </div> */}
       </form>
     </div>
   );
 };
 
 export default CreateEvents;
-
-// const query = location.split(' ').join('_');
-// const queryUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?type=poi&access_token=${MAP_TOKEN}`;
-// console.log(queryUrl);
-// axios.get(queryUrl)
-//   .then((results) => {
-//     console.log(results.features[0].center);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
