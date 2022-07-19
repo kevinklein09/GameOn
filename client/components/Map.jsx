@@ -54,7 +54,6 @@ const Map = () => {
     );
     axios.get('/map')
       .then((eventsData) => {
-        console.log('eventsData:', eventsData.data);
         const events = eventsData.data;
         events.forEach((event) => {
           const image = () => {
