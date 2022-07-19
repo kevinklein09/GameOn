@@ -3,7 +3,6 @@
 /* eslint-disable import/extensions */
 import React, { useState, useEffect, useRef } from 'react';
 
-import { AddressAutofill } from '@mapbox/search-js-react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
@@ -23,7 +22,7 @@ const mapboxgl = require('mapbox-gl');
 
 const ENV = require('../../.env');
 
-const { MAP_TOKEN, GOOGLE_MAPS_API } = ENV;
+const { MAP_TOKEN } = ENV;
 
 const Map = () => {
   // https://reactjs.org/docs/hooks-reference.html#useref
@@ -42,10 +41,7 @@ const Map = () => {
       zoom,
       style: 'mapbox://styles/mapbox/streets-v11',
     });
-    const geocoder = new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl,
-    });
+
     const results = map.current.addControl(
       new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
@@ -81,10 +77,10 @@ const Map = () => {
           new mapboxgl.Marker(icon)
             .setLngLat([event.coordinates[0], event.coordinates[1]])
             .setPopup(new mapboxgl.Popup().setHTML(`
-              <h4>${event.locName}</h4>
-              <p>${event.description}</p>
-              <p>${event.date}</p>
-              <p>${event.time}</p>`))
+          <h4>${event.locName}</h4>
+          <p>${event.description}</p>
+          <p>${event.date}</p>
+          <p>${event.time}</p>`))
             .addTo(map.current)
             .on('click', (e) => {
               e.togglePopup();
@@ -94,7 +90,7 @@ const Map = () => {
   });
 
   return (
-    <div>
+      <div>
       <h1>
         WELCOME TO THE MAP
       </h1>
@@ -108,18 +104,19 @@ export default Map;
 
 /* NOTES:
 
- <form>
-        <AddressAutofill accessToken={MAP_TOKEN}>
-          <input
-            name="address"
+import { AddressAutofill } from '@mapbox/search-js-react';
+<form>
+<AddressAutofill accessToken={MAP_TOKEN}>
+<input
+name="address"
             placeholder="Address"
             type="text"
             autoComplete="address-line1" />
-        </AddressAutofill>
-        <input
-          name="city" placeholder="City" type="text"
-          autoComplete="address-level2" />
-        <input
+            </AddressAutofill>
+            <input
+            name="city" placeholder="City" type="text"
+            autoComplete="address-level2" />
+            <input
           name="state" placeholder="State" type="text"
           autoComplete="address-level1" />
         <input
@@ -137,11 +134,6 @@ https://docs.mapbox.com/mapbox-search-js/api/react/autofill/
 https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/
 https://docs.mapbox.com/mapbox-gl-js/api/markers/#popup
 http://visgl.github.io/react-map-gl/
-
-https://developers.google.com/maps/documentation/javascript/places#find_place_from_query
-https://console.cloud.google.com/google/maps-apis/overview;onboard=true?project=gameon-356617
-https://developers.google.com/maps/documentation/places/web-service/search
-https://developers.google.com/maps/documentation/places/web-service/autocomplete#maps_http_places_autocomplete_amoeba-js
-https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
+https://reactjs.org/docs/hooks-reference.html#useref
 
 */

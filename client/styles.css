@@ -94,3 +94,9 @@ body {
     font-weight: bold;
     font-family: 'Roboto', arial, sans-serif;
   }
+
+  .event {
+    margin: 10px;
+    background-color: #737373;
+    
+  }
