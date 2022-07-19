@@ -12,6 +12,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
+require('./passport');
 
 const DB = require('../DB/index');
 const { Events, Sports, Users } = require('../DB/models');
@@ -69,7 +70,7 @@ app.use(passport.session());
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }),
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 app.get(
   '/auth/google/callback',

@@ -14,13 +14,13 @@ const today = new Date();
 
 const CreateEvents = () => {
   const [sport, setSport] = useState('');
-  const [description, setDescription] = useState('enter description here');
-  const [location, setLocation] = useState('enter event address');
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
   const [date, setDate] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
   const [time, setTime] = useState('12:00');
   const [playerLimit, setPlayerLimit] = useState(0);
   const [equipment, setEquipment] = useState([]);
-  const [item, setItem] = useState('list equipment here');
+  const [item, setItem] = useState('');
   let categoryId;
 
   if (sport) {
@@ -79,13 +79,13 @@ const CreateEvents = () => {
     });
 
     setSport('');
-    setDescription('enter description here');
-    setLocation('enter event address');
+    setDescription('');
+    setLocation('');
     setPlayerLimit(0);
     setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
     setTime('12:00');
     setEquipment([]);
-    setItem('list equipment here');
+    setItem('');
   };
 
   return (
@@ -99,32 +99,59 @@ const CreateEvents = () => {
           <textarea
             rows='5'
             cols='60'
+            maxLength='500'
             onChange={(e) => handleDescription(e)}
             value={description}
-          >
-          </textarea>
+            placeholder='enter description here'
+          />
         </div>
 
         <div id="playerLimit">
-          <input onChange={(e) => handlePlayerLimit(e)} type='number' value={playerLimit}></input> # of players
+          <input
+            type='number'
+            onChange={(e) => handlePlayerLimit(e)}
+            min='1' max='100'
+            value={playerLimit}
+          /> # of players
         </div>
 
         <div id='location'>
-          <input onChange={(e) => handleLocation(e)} type='text' value={location}></input>
+          <input
+            type='text'
+            maxLength='100'
+            onChange={(e) => handleLocation(e)}
+            placeholder='enter event address'
+            value={location}
+          />
         </div>
 
         <div id='equipment'>
-          <input onChange={(e) => handleItem(e)} type='text' value={item}></input>
+          <input
+            type='text'
+            onChange={(e) => handleItem(e)}
+            maxLength='20'
+            placeholder='list equipment here'
+            value={item}
+          />
           <Button variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
         </div>
+
         <EquipmentList equipment={equipment}/>
 
         <div id='date'>
-          <input value={date} onChange={(e) => handleDate(e)} type='date'></input>
+          <input
+            value={date}
+            onChange={(e) => handleDate(e)}
+            type='date'
+          />
         </div>
 
         <div id='time'>
-          <input value={time} onChange={(e) => handleTime(e)} type='time'></input>
+          <input
+            type='time'
+            value={time}
+            onChange={(e) => handleTime(e)}
+          />
         </div>
 
         <div id='submit'>
