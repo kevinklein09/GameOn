@@ -10,6 +10,7 @@ import Profile from './components/Profile.jsx';
 import EventListings from './components/EventListings.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
+import Home from './components/Home.jsx';
 import './styles.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -23,13 +24,14 @@ root.render(
   <HashRouter>
     <Routes>
       <Route path="/" element= {<App />}>
+        <Route path="home" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="map" element={<Map />} />
         <Route path="eventListings" element={<EventListings />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
         <Route path="logout" element= {<Login />}/>
-        <Route path="*" element= {<App />}/>
+        <Route path="*" element= {<Login />}/>
       </Route>
     </Routes>
   </HashRouter>,
