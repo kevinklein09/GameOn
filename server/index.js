@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 require('dotenv').config();
@@ -27,7 +28,6 @@ app.use(express.static(distPath)); // Statically serve up client directory
 app.get('/api/eventListings', (req, res) => {
   Events.find({})
     .then((query) => {
-      console.log(query);
       res.status(200).send(query);
     })
     .catch((err) => {
@@ -39,7 +39,6 @@ app.get('/api/eventListings', (req, res) => {
 app.get('/api/categories', (req, res) => {
   Sports.find({})
     .then((query) => {
-      console.log(query);
       res.status(200).send(query);
     })
     .catch((err) => {

@@ -3,15 +3,20 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from '@mui/material/Button';
 import SportsSelect from './SportsSelect.jsx';
 import EquipmentList from './EquipmentList.jsx';
+
+const ENV = require('../../.env');
+
+const { MAP_TOKEN } = ENV;
 const today = new Date();
 
 const CreateEvents = () => {
   const [sport, setSport] = useState('');
   const [description, setDescription] = useState('enter description here');
   const [location, setLocation] = useState('enter event address');
-  const [date, setDate] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth()}-${today.getDate()}`);
+  const [date, setDate] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
   const [time, setTime] = useState('12:00');
   const [playerLimit, setPlayerLimit] = useState(0);
   const [equipment, setEquipment] = useState([]);
@@ -21,7 +26,7 @@ const CreateEvents = () => {
   if (sport) {
     axios.get('/api/categories')
       .then((categories) => {
-        categoryId = categories.data.filter((category) => category.category === sport)[0]._id
+        categoryId = categories.data.filter((category) => category.category === sport)[0]._id;
       })
       .catch((err) => {
         console.error(err);
@@ -77,7 +82,7 @@ const CreateEvents = () => {
     setDescription('enter description here');
     setLocation('enter event address');
     setPlayerLimit(0);
-    setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth()}-${today.getDate()}`);
+    setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
     setTime('12:00');
     setEquipment([]);
     setItem('list equipment here');
@@ -110,7 +115,7 @@ const CreateEvents = () => {
 
         <div id='equipment'>
           <input onChange={(e) => handleItem(e)} type='text' value={item}></input>
-          <button onClick={() => handleEquipmentList()}> add item </button>
+          <Button variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
         </div>
         <EquipmentList equipment={equipment}/>
 
@@ -123,7 +128,7 @@ const CreateEvents = () => {
         </div>
 
         <div id='submit'>
-          <button onClick={postEvent}> POST EVENT </button>
+          <Button variant="contained" onClick={postEvent}> POST EVENT </Button>
         </div>
       </form>
     </div>
@@ -131,3 +136,14 @@ const CreateEvents = () => {
 };
 
 export default CreateEvents;
+
+// const query = location.split(' ').join('_');
+// const queryUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?type=poi&access_token=${MAP_TOKEN}`;
+// console.log(queryUrl);
+// axios.get(queryUrl)
+//   .then((results) => {
+//     console.log(results.features[0].center);
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
