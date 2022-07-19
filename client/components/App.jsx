@@ -46,7 +46,14 @@ const linkStyle = {
   margin: "1rem",
   textDecoration: "none",
   color: 'black',
-  fontSize: 15,
+  fontSize: 17,
+};
+const login = {
+  margin: "1rem",
+  textDecoration: "none",
+  color: 'gray',
+  fontSize: 13,
+  fontFamily: 'Roboto',
 };
 
 // const useStyles = makeStyles({
@@ -65,18 +72,23 @@ const linkStyle = {
 const App = () => (
 
         <ThemeProvider theme={theme}>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={1}>
+          <Grid item xs={9}></Grid>
+          <Grid item xs={1}><Link to="/login" style={login}>LOGIN</Link></Grid>
+          <Grid item xs={1}><Link to="/logout" style={login}>LOGOUT</Link></Grid>
+            </Grid>
           <Typography align="center" variant="h2" component="h2" >Game<strong><SportsBasketballIcon sx={{ fontSize: 50 }}/>N</strong></Typography>
-        <Tabs fixed>
-          <Link to="/home" style={linkStyle}>{<Tab icon={<HomeIcon />} label='HOME'/>}</Link>
-          <Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon />} label='GAMES'/>}</Link>
-          <Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon />} label='MAP'/>}</Link>
-          <Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon />} label='POST'/>}</Link>
-          <Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon />} label='PROFILE' />}</Link>
-          <Link to="/login" style={linkStyle}>{<Tab icon={<LoginIcon />} label='LOGIN'/>}</Link>
-          <Link to="/logout" style={linkStyle}>{<Tab icon={<LogoutIcon />} label='LOGOUT'/>}</Link>
-        </Tabs>
+          <Grid container spacing={6} align="center" margin="auto">
+          <Grid item xs={2}><Link to="/home" style={linkStyle}>{<Tab icon={<HomeIcon />} label='HOME'/>}</Link> </Grid>
+          <Grid item xs={2}><Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon />} label='GAMES'/>}</Link></Grid>
+          <Grid item xs={2}><Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon />} label='MAP'/>}</Link></Grid>
+          <Grid item xs={2}><Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon />} label='POST'/>}</Link></Grid>
+          <Grid item xs={2}><Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon />} label='PROFILE' />}</Link></Grid>
+          </Grid>
           <Outlet/>
           <Typography><p align="center">Game<strong><SportsBasketballIcon sx={{ fontSize: 15 }}/>N</strong>: Your go-to app for local pickup games.</p></Typography>
+        </Box>
         </ThemeProvider>
 );
 
