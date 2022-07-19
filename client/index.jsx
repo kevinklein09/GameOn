@@ -23,6 +23,7 @@ root.render(
         <Route path="eventListings" element={<EventListings />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="logout" element= {<Login />}/>
         <Route path="*" element= {<App />}/>
       </Route>
     </Routes>

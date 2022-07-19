@@ -8,7 +8,17 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const axios = require('axios');
-
+// import images
+const basketball = new URL('../images/basketball_icon.png', import.meta.url);
+const bowling = new URL('../images/bowling_icon.png', import.meta.url);
+const football = new URL('../images/football_icon.png', import.meta.url);
+const frisbee = new URL('../images/frisbee_icon.png', import.meta.url);
+const pingpong = new URL('../images/pingpong_icon.png', import.meta.url);
+const rugby = new URL('../images/rugby_icon.png', import.meta.url);
+const soccer = new URL('../images/soccer_icon.png', import.meta.url);
+const softball = new URL('../images/softball_icon.png', import.meta.url);
+const tennis = new URL('../images/tennis_icon.png', import.meta.url);
+const volleyball = new URL('../images/volleyball_icon.png', import.meta.url);
 const mapboxgl = require('mapbox-gl');
 
 const ENV = require('../../.env');
@@ -47,12 +57,27 @@ const Map = () => {
         console.log('eventsData:', eventsData.data);
         const events = eventsData.data;
         events.forEach((event) => {
+          const image = () => {
+            const images = {
+              basketball,
+              bowling,
+              football,
+              frisbee,
+              pingpong,
+              rugby,
+              soccer,
+              softball,
+              tennis,
+              volleyball,
+            };
+            return images[event.image];
+          };
+
           const icon = document.createElement('div');
           icon.className = 'icon';
-          icon.style.backgroundImage = 'url(https://cdn-icons-png.flaticon.com/512/1165/1165187.png)';
+          icon.style.backgroundImage = `url(${image()})`;
           icon.style.width = '20px';
           icon.style.height = '20px';
-          
           icon.style.backgroundSize = '100%';
           new mapboxgl.Marker(icon)
             .setLngLat([event.coordinates[0], event.coordinates[1]])

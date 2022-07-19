@@ -10,6 +10,7 @@ const App = () => (
             <Link to="/eventListings">See Events</Link>{'   '}
             <Link to="/postEvent">Create new Event</Link>{'   '}
             <Link to="/profile">Your Profile</Link>{'   '}
+            <Link to="/logout">Logout</Link>{'   '}
         </nav>
         <Outlet/>
         </>
