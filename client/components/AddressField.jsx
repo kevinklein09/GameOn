@@ -18,23 +18,27 @@ const AddressField = ({ handleAddress, handleCity, handleState, handleZip, addre
       type="text"
       onChange={(e) => handleAddress(e)}
       value={address || ''}
+      required='required'
       autoComplete="address-line1" />
   </AddressAutofill>
     <input
       name="city" placeholder="City" type="text"
       onChange={(e) => handleCity(e)}
       value={city || ''}
+      required='required'
       autoComplete="address-level2" />
     <input
       name="state" placeholder="State" type="text"
       onChange={(e) => handleState(e)}
       value={state || ''}
+      required='required'
       autoComplete="address-level1" />
     <input
       name="postcode" placeholder="Postcode" type="text"
       onChange={(e) => handleZip(e)}
       value={zip || ''}
-      autoComplete="postal-code" />
+      required='required'
+      autoComplete="postal-code" /> *required
 
   </div>
 )
