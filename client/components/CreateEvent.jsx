@@ -4,12 +4,16 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+//MUI
 import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
-import SportsSelect from './SportsSelect.jsx';
+import OutlinedInput from '@mui/material/OutlinedInput'
+import { createTheme, ThemeProvider} from '@mui/material/styles';
+import DatePicker from '@mui/x-date-pickers-pro/DatePicker'
+import TimePicker from '@mui/x-date-pickers-pro/TimePicker';
+//COMPONENTS
+import Sports from './SportsSelect';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
-import { createTheme, ThemeProvider} from '@mui/material/styles';
 
 const theme = createTheme({
   status: {
@@ -50,6 +54,10 @@ const CreateEvents = () => {
   let categoryId;
   let location = `${address} ${city} ${state} ${zip}`
 
+  if (playerLimit < 1) {
+    setPlayerLimit(1)
+  }
+
   if (sport) {
     axios.get('/api/categories')
       .then((categories) => {
@@ -75,6 +83,7 @@ const CreateEvents = () => {
   };
 
   const handleDescription = (e) => {
+    console.log(e.target.value)
     setDescription(e.target.value);
   };
 
@@ -183,10 +192,23 @@ const CreateEvents = () => {
 
       <form>
       <ThemeProvider theme={theme}>
-        <SportsSelect handleSelectSport={handleSelectSport}/>
+        <Sports sport={sport} handleSelectSport={handleSelectSport}/>
+        
 
         <div id='description'>
-          <textarea
+          <OutlinedInput
+            style={{backgroundColor: 'white', marginTop: '10px'}}
+            multiline={true}
+            rows='5'
+            placeholder='enter description here'
+            fullWidth={true}
+            colorSecondary
+            inputProps={{
+              maxLength: 500,
+              onChange: (e) => handleDescription(e)
+            }}
+          />
+          {/* <textarea
             rows='5'
             cols='60'
             maxLength='500'
@@ -194,16 +216,26 @@ const CreateEvents = () => {
             value={description}
             placeholder='enter description here'
             required
-          />*required
+          />*required */}
         </div>
 
         <div id="playerLimit">
-          <input
+          <OutlinedInput
+            style= {{backgroundColor: 'white', marginTop: '10px'}}
+            inputProps={{
+              type:'number',
+              onChange: (e) => handlePlayerLimit(e),
+              min: 1,
+              max: 100,
+              value: playerLimit,
+            }}
+          /> # of players 
+          {/* <input
             type='number'
             onChange={(e) => handlePlayerLimit(e)}
             min='1' max='100'
             value={playerLimit}
-          /> # of players
+          /> */}
         </div>
 
         <AddressField
@@ -242,7 +274,9 @@ const CreateEvents = () => {
         </div>
 
         <EquipmentList equipment={equipment}/>
-
+        <DatePicker
+        
+        />
         <div id='date'>
           <input
             value={date}
