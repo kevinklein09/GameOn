@@ -83,20 +83,4 @@ export default App;
 /*
 https://styled-components.com/docs/basics#installation
 const App = () => (
-
-        <ThemeProvider theme={theme}>
-          <Typography align="center" variant="h2" component="h2" >Game<strong><SportsBasketballIcon sx={{ fontSize: 50 }}/>N</strong></Typography>
-        <Tabs fixed>
-          <Link to="/home" style={linkStyle}>{<Tab icon={<HomeIcon />} label='HOME'/>}</Link>
-          <Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon />} label='GAMES'/>}</Link>
-          <Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon />} label='MAP'/>}</Link>
-          <Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon />} label='POST'/>}</Link>
-          <Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon />} label='PROFILE' />}</Link>
-          <Link to="/login" style={linkStyle}>{<Tab icon={<LoginIcon />} label='LOGIN'/>}</Link>
-          <Link to="/logout" style={linkStyle}>{<Tab icon={<LogoutIcon />} label='LOGOUT'/>}</Link>
-        </Tabs>
-          <Outlet/>
-          <Typography><p align="center">Game<strong><SportsBasketballIcon sx={{ fontSize: 15 }}/>N</strong>: Your go-to app for local pickup games.</p></Typography>
-        </ThemeProvider>
-);
 */
