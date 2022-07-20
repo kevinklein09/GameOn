@@ -113,7 +113,9 @@ app.post('/api/event', (req, res) => {
     catName,
     players,
     isOpen: true,
-  });
+  })
+    .then((data) => res.status(200).send(data))
+    .catch((err) => res.sendStatus(500));
 });
 
 app.listen(port, () => {

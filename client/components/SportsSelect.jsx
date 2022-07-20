@@ -20,12 +20,12 @@ const Sports = (props) => {
   }, []);
   return (
     <div id='category'>
-      <select onChange={(e) => props.handleSelectSport(e)} defaultValue=''>
+      <select required onChange={(e) => props.handleSelectSport(e)} defaultValue=''>
         <option value='' disabled hidden>
           pick a sport
         </option>
         {sports.map((sport, index) => <option key={index}>{sport.category}</option>)}
-      </select>
+      </select>*required
     </div>
   );
 };
