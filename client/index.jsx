@@ -1,6 +1,6 @@
 // import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, Component } from 'react';
 import {
   Routes, Route, HashRouter, BrowserRouter,
 } from 'react-router-dom';
@@ -21,34 +21,36 @@ const root = createRoot(document.getElementById('root'));
 // const [user, setUser] = useState('{username: user, email: user@gmail.com}');
 const UserContext = createContext();
 
-class UserContextProvider extends React.Component {
+class UserContextProvider extends Component {
   state = {
     user: { username: 'username', email: 'user@gmail.com' },
   };
 
   render() {
     return (
-    <UserContext.Provider value = {{ ...this.state }} />
+    <UserContext.Provider value = {{ ...this.state }} >
+      { this.props.children }
+      </UserContext.Provider>
     );
   }
 }
 
 root.render(
   <UserContextProvider>
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
-      <Route exact path="/" element= {<App />}>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="home" element={<Home />} />
-        <Route exact path="login" element={<Login />} />
-        <Route exact path="map" element={<Map />} />
-        <Route exact path="eventListings" element={<EventListings />} />
-        <Route exact path="postEvent" element={<CreateEvents />} />
-        <Route exact path="profile" element={<Profile />} />
-        <Route exact path="logout" element= {<Login />}/>
-        <Route exact path="*" element= {<Login />}/>
+      <Route path="/" element= {<App />}>
+        <Route path="/" element={<Home />} />
+        <Route path="home" element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="map" element={<Map />} />
+        <Route path="eventListings" element={<EventListings />} />
+        <Route path="postEvent" element={<CreateEvents />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="logout" element= {<Login />}/>
+        <Route path="*" element= {<Login />}/>
       </Route>
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
   </UserContextProvider>,
 );
