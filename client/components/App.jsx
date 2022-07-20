@@ -55,6 +55,8 @@ const login = {
 
 const App = () => {
 
+  const [user, setUser] = useState(null);
+  
   useEffect(() => {
     const getUser = () => {
       const options = {
