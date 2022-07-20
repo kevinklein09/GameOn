@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -25,6 +25,8 @@ const ENV = require('../../.env');
 const { MAP_TOKEN } = ENV;
 
 const Map = () => {
+  // const context = useContext(UserContext);
+  // console.log(this.context);
   // https://reactjs.org/docs/hooks-reference.html#useref
   const mapDiv = useRef(null);
   const map = useRef(null);
@@ -68,13 +70,6 @@ const Map = () => {
             return images[event.catName.split(' ').join('')];
           };
 
-          console.log('marker:', prevMarker);
-          if (event.coordinates[0] === prevMarker[0]) {
-            console.log(`${event.coordinates[0].toString()}1`);
-            console.log('yes');
-            event.coordinates.splice(0, 1, Number(`${event.coordinates[0].toString()}79`));
-            console.log(event.coordinates);
-          }
           prevMarker = event.coordinates;
           const icon = document.createElement('div');
           icon.className = 'icon';
