@@ -2,6 +2,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 require('dotenv').config();
+const cookieParser = require('cookie-parser')
+const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
@@ -21,6 +23,8 @@ const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
 const app = express();
 // const styles = require('../client/styles.css');
+app.use(cors());
+app.use(cookieParser())
 app.use(express.json()); // Parse the request body
 app.use(express.urlencoded({ extended: true })); // Parses url
 app.use(express.static(distPath)); // Statically serve up client directory
@@ -60,7 +64,11 @@ app.get('/map', (req, res) => {
     });
 });
 
+
+
 app.get('/users', (req, res) => {
+  console.log('GET REQ LINE 66 REQ', req)
+  console.log('GET REQ LINE 67 RES', res)
   Users.find({})
     .then((query) => {
       console.log('user get request');
@@ -80,6 +88,24 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const isLoggedIn = (req, res, next) => {
+  req.user ? next() : res.sendStatus(401);
+}
+app.get('/auth/success', (req, res) => {
+  if (req.user) {
+    res.status(200).json({
+      user: req.user,
+      message: 'success',
+      success: true
+    })
+  }
+})
+
+app.get('/protected', isLoggedIn, (req, res) => {
+  // console.log(req)
+  res.send(req.user[0]);
+})
+
 app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }),
@@ -88,6 +114,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
+    console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
     res.redirect('/');
   },
