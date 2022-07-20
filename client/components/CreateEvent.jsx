@@ -5,9 +5,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
 import SportsSelect from './SportsSelect.jsx';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
+import { createTheme, ThemeProvider} from '@mui/material/styles';
+
+const theme = createTheme({
+  status: {
+    danger: '#e53e3e',
+  },
+  palette: {
+    primary: {
+      main: '#5e35b1',
+      darker: '#5e35b1',
+    },
+    neutral: {
+      main: '#64748B',
+      contrastText: '#fff',
+    },
+  },
+});
 
 
 
@@ -26,7 +44,7 @@ const CreateEvents = () => {
   // const [coords, setCoords] = useState([]);
   const [date, setDate] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
   const [time, setTime] = useState('12:00');
-  const [playerLimit, setPlayerLimit] = useState(0);
+  const [playerLimit, setPlayerLimit] = useState(1);
   const [equipment, setEquipment] = useState([]);
   const [item, setItem] = useState('');
   let categoryId;
@@ -112,33 +130,38 @@ const CreateEvents = () => {
       catName: sport,
       players: playerLimit,
       isOpen: true,
-    });
+    })
+    .then(() => console.log('event created'))
+    .catch(() => console.error('OOPS'));
       
 
+    if (sport && description && address){
+      setDescription('');
+      setAddress('');
+      setCity('');
+      setState('');
+      setZip('');
+      // setCoords([]);
+      setLong(0);
+      setLat(0);
+      // setLocation('');
+      setPlayerLimit(1);
+      setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
+      setTime('12:00');
+      setEquipment([]);
+      setItem('');
 
-    setSport('');
-    setDescription('');
-    setAddress('');
-    setCity('');
-    setState('');
-    setZip('');
-    // setCoords([]);
-    setLong(0);
-    setLat(0);
-    // setLocation('');
-    setPlayerLimit(0);
-    setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
-    setTime('12:00');
-    setEquipment([]);
-    setItem('');
+    }
   };
 
 
   return (
     <div>
+
       <h1>THIS IS WHERE YOU CREATE NEW EVENTS</h1>
 
       <form>
+      <ThemeProvider theme={theme}>
         <SportsSelect handleSelectSport={handleSelectSport}/>
 
         <div id='description'>
@@ -149,7 +172,8 @@ const CreateEvents = () => {
             onChange={(e) => handleDescription(e)}
             value={description}
             placeholder='enter description here'
-          />
+            required
+          />*required
         </div>
 
         <div id="playerLimit">
@@ -192,7 +216,8 @@ const CreateEvents = () => {
             placeholder='list equipment here'
             value={item}
           />
-          <Button variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
+
+            <Button  color='primary' variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
         </div>
 
         <EquipmentList equipment={equipment}/>
@@ -212,11 +237,10 @@ const CreateEvents = () => {
             onChange={(e) => handleTime(e)}
           />
         </div>
-        <input onClick={postEvent} type='submit'/>
 
-        {/* <div id='submit'>
-          <Button variant="contained" onClick={postEvent}> POST EVENT </Button>
-        </div> */}
+        <Button variant='contained' color='primary' onClick={postEvent} type='submit'>SUBMIT</Button>
+        
+        </ThemeProvider>
       </form>
     </div>
   );
