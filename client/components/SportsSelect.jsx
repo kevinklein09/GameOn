@@ -3,6 +3,7 @@
 /* eslint linebreak-style: ['error', 'windows'] */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Select from '@mui/material/Select';
 
 const Sports = (props) => {
   const [sports, setSports] = useState([]);
@@ -20,12 +21,14 @@ const Sports = (props) => {
   }, []);
   return (
     <div id='category'>
-      <select required onChange={(e) => props.handleSelectSport(e)} defaultValue=''>
-        <option value='' disabled hidden>
+      <Select required onChange={(e) => props.handleSelectSport(e)} defaultValue='selected'>
+      {/* <select required onChange={(e) => props.handleSelectSport(e)} defaultValue=''> */}
+        <option value='selected' disabled hidden>
           pick a sport
         </option>
         {sports.map((sport, index) => <option key={index}>{sport.category}</option>)}
-      </select>*required
+      {/* </select> */}
+      </Select>*required
     </div>
   );
 };
