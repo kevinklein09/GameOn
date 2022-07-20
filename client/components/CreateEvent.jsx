@@ -118,7 +118,8 @@ const CreateEvents = () => {
   }
 
 
-  const postEvent = () => {
+  const postEvent = (e) => {
+    e.preventDefault();
 
       axios.post('/api/event', {
       address: location,
