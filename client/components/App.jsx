@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, createContext } from "react";
+import React, { usEffect, useState, createContext } from "react";
 import { Link, Outlet } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -83,7 +82,7 @@ const App = () => {
   }, []);
 
   return(
-    
+
         // <UserContext.Provider>
         <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
