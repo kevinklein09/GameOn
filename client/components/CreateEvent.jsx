@@ -118,7 +118,8 @@ const CreateEvents = () => {
   }
 
 
-  const postEvent = () => {
+  const postEvent = (e) => {
+    e.preventDefault();
 
       axios.post('/api/event', {
       address: location,
@@ -131,27 +132,46 @@ const CreateEvents = () => {
       players: playerLimit,
       isOpen: true,
     })
-    .then(() => console.log('event created'))
-    .catch(() => console.error('OOPS'));
+    .then(() => {
+      alert('your event was created!')
+      if (sport && description && address){
+        setDescription('');
+        setAddress('');
+        setCity('');
+        setState('');
+        setZip('');
+        // setCoords([]);
+        setLong(0);
+        setLat(0);
+        // setLocation('');
+        setPlayerLimit(1);
+        setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
+        setTime('12:00');
+        setEquipment([]);
+        setItem('');
+  
+      }
+    })
+    .catch(() => console.error('OOPs'));
       
 
-    if (sport && description && address){
-      setDescription('');
-      setAddress('');
-      setCity('');
-      setState('');
-      setZip('');
-      // setCoords([]);
-      setLong(0);
-      setLat(0);
-      // setLocation('');
-      setPlayerLimit(1);
-      setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
-      setTime('12:00');
-      setEquipment([]);
-      setItem('');
+    // if (sport && description && address){
+    //   setDescription('');
+    //   setAddress('');
+    //   setCity('');
+    //   setState('');
+    //   setZip('');
+    //   // setCoords([]);
+    //   setLong(0);
+    //   setLat(0);
+    //   // setLocation('');
+    //   setPlayerLimit(1);
+    //   setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
+    //   setTime('12:00');
+    //   setEquipment([]);
+    //   setItem('');
 
-    }
+    // }
   };
 
 
@@ -239,7 +259,7 @@ const CreateEvents = () => {
         </div>
 
         <Button variant='contained' color='primary' onClick={postEvent} type='submit'>SUBMIT</Button>
-        
+
         </ThemeProvider>
       </form>
     </div>
