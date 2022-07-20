@@ -99,9 +99,6 @@ const Map = () => {
 
   return (
       <div>
-      <h1>
-        WELCOME TO THE MAP
-      </h1>
       <div id="map" className="map-container" ref={mapDiv}></div>
     </div>
 
