@@ -102,9 +102,9 @@ app.get('/auth/success', (req, res) => {
   }
 })
 
-app.get('/protected', isLoggedIn, (req, res) => {
+app.get('/hidden', isLoggedIn, (req, res) => {
   // console.log(req)
-  res.send(req.user[0]);
+  res.send(req.user.email);
 })
 
 app.get(

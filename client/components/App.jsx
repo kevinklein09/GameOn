@@ -54,7 +54,36 @@ const login = {
   fontFamily: 'Roboto',
 };
 
-const App = () => (
+const App = () => {
+
+  useEffect(() => {
+    const getUser = () => {
+      const options = {
+        url: '/hidden',
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true,
+        }
+      };
+      axios(options)
+        .then((res) => {
+          console.log('APP LINE 91 AXIOS RESOBJ', res)
+          if (res.status === 200) { return res; }
+        })
+        .then(({ data }) => { // <-- data = userObject
+          console.log('DATA APP GET REQ LINE 94', data);
+          setUser(data);
+        })
+        .catch((err) => console.error(err, '***ERROR***'));
+    };
+    getUser();
+  }, []);
+
+  return(
+    
         // <UserContext.Provider>
         <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
@@ -76,7 +105,8 @@ const App = () => (
         </Box>
         </ThemeProvider>
         // </UserContext.Provider>
-);
+  )
+};
 
 export default App;
 
