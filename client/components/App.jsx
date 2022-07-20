@@ -1,12 +1,8 @@
 import React from 'react';
+import { useState, createContext } from "react";
 import { Link, Outlet } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-// import { makeStyles } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tabs from '@mui/material/Tabs';
@@ -20,6 +16,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+
+// const UserContext = React.createContext('{username: user, email: user@gmail.com}');
 
 const theme = createTheme({
   components: {
@@ -56,21 +54,8 @@ const login = {
   fontFamily: 'Roboto',
 };
 
-// const useStyles = makeStyles({
-//   btn: {
-//     fontSize: 16,
-//     backgroundColor: 'violet',
-//     '&:hover': {
-//       backgroundColor: 'blue',
-//     },
-//   },
-// });
-
-// const classes = useStyles();
-// className={classes.btn};
-
 const App = () => (
-
+        // <UserContext.Provider>
         <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
@@ -80,16 +65,17 @@ const App = () => (
             </Grid>
           <Typography align="center" variant="h2" component="h2" >Game<strong><SportsBasketballIcon sx={{ fontSize: 50 }}/>N</strong></Typography>
           <Grid container spacing={6} align="center" margin="auto">
-          <Grid item xs={2}><Link to="/home" style={linkStyle}>{<Tab icon={<HomeIcon />} label='HOME'/>}</Link> </Grid>
-          <Grid item xs={2}><Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon />} label='GAMES'/>}</Link></Grid>
-          <Grid item xs={2}><Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon />} label='MAP'/>}</Link></Grid>
-          <Grid item xs={2}><Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon />} label='POST'/>}</Link></Grid>
-          <Grid item xs={2}><Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon />} label='PROFILE' />}</Link></Grid>
+          <Grid xs={2}><Link to="/home" style={linkStyle}>{<Tab icon={<HomeIcon />} label='HOME'/>}</Link> </Grid>
+          <Grid xs={2}><Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon />} label='GAMES'/>}</Link></Grid>
+          <Grid xs={2}><Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon />} label='MAP'/>}</Link></Grid>
+          <Grid xs={2}><Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon />} label='POST'/>}</Link></Grid>
+          <Grid xs={2}><Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon />} label='PROFILE' />}</Link></Grid>
           </Grid>
           <Outlet/>
           <Typography><p align="center">Game<strong><SportsBasketballIcon sx={{ fontSize: 15 }}/>N</strong>: Your go-to app for local pickup games.</p></Typography>
         </Box>
         </ThemeProvider>
+        // </UserContext.Provider>
 );
 
 export default App;
