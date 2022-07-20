@@ -1,4 +1,4 @@
-import React, { usEffect, useState, createContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Link, Outlet } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 
 // const UserContext = React.createContext('{username: user, email: user@gmail.com}');
 

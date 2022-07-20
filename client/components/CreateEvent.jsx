@@ -70,6 +70,7 @@ const CreateEvents = () => {
   };
 
   const handleSelectSport = (e) => {
+    console.log(e.target.value);
     setSport(e.target.value);
   };
 
