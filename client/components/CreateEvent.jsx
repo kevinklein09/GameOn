@@ -8,8 +8,8 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import OutlinedInput from '@mui/material/OutlinedInput'
 import { createTheme, ThemeProvider} from '@mui/material/styles';
-import DatePicker from '@mui/x-date-pickers-pro/DatePicker'
-import TimePicker from '@mui/x-date-pickers-pro/TimePicker';
+// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
+// import AdapterJalaali from '@date-io/jalaali';
 //COMPONENTS
 import Sports from './SportsSelect';
 import EquipmentList from './EquipmentList.jsx';
@@ -78,12 +78,11 @@ const CreateEvents = () => {
   };
 
   const handleSelectSport = (e) => {
-    console.log(e.target.value);
+    console.log(e.target.value)
     setSport(e.target.value);
   };
 
   const handleDescription = (e) => {
-    console.log(e.target.value)
     setDescription(e.target.value);
   };
 
@@ -118,7 +117,6 @@ const CreateEvents = () => {
     const queryUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?type=poi&access_token=${MAP_TOKEN}`;
     axios.get(queryUrl)
       .then((results) => {
-        console.log(results.data.features[0].center)
         setLong(results.data.features[0].center[0]);
         setLat(results.data.features[0].center[1]);
       })
@@ -202,10 +200,10 @@ const CreateEvents = () => {
             rows='5'
             placeholder='enter description here'
             fullWidth={true}
-            colorSecondary
             inputProps={{
               maxLength: 500,
-              onChange: (e) => handleDescription(e)
+              onChange: (e) => handleDescription(e),
+              value: description
             }}
           />
           {/* <textarea
@@ -238,7 +236,7 @@ const CreateEvents = () => {
           /> */}
         </div>
 
-        <AddressField
+        <AddressField 
           handleAddress={handleAddress}
           handleCity={handleCity}
           handleState={handleState}
@@ -274,9 +272,9 @@ const CreateEvents = () => {
         </div>
 
         <EquipmentList equipment={equipment}/>
-        <DatePicker
-        
-        />
+        {/* <LocalizationProvider dateAdapter={AdapterJalaali}>
+        <DateRangePicker/>
+        </LocalizationProvider> */}
         <div id='date'>
           <input
             value={date}

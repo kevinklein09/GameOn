@@ -32,11 +32,17 @@ const Map = () => {
   // https://reactjs.org/docs/hooks-reference.html#useref
   const mapDiv = useRef(null);
   const map = useRef(null);
+  const buttonRef = useRef(null);
   const [lng, setLng] = useState(-90.10);
   const [lat, setLat] = useState(29.96);
   const [zoom, setZoom] = useState(12);
   const [marker, setMarker] = useState([]);
   let prevMarker = [];
+
+  function handleClick() {
+    console.log('click');
+  }
+
   useEffect(() => {
     console.log('context:', context);
     mapboxgl.accessToken = MAP_TOKEN;
@@ -53,6 +59,7 @@ const Map = () => {
         mapboxgl,
       }),
     );
+
     axios.get('/map')
       .then((eventsData) => {
         const events = eventsData.data;
@@ -80,16 +87,18 @@ const Map = () => {
           icon.style.width = '20px';
           icon.style.height = '20px';
           icon.style.backgroundSize = '100%';
+
           new mapboxgl.Marker(icon)
             .setLngLat([event.coordinates[0], event.coordinates[1]])
             .setPopup(new mapboxgl.Popup().setHTML(`
-          <h4>${event.locName}</h4>
+          <h4>${event.catName}</h4>
           <p>${event.description}</p>
-          <p>${new Date(event.date.substring(0, 10)).toDateString()}</p>
-          <p>${event.time}</p>`))
+          <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
+          <p><strong>Where: </strong>${event.address}</p>
+          <button class="btn" onclick="${handleClick}">Going</button>
+          `))
             .addTo(map.current)
             .on('click', (e) => {
-              e.togglePopup();
             });
         });
       });
@@ -107,27 +116,6 @@ export default Map;
 
 /* NOTES:
 
-import { AddressAutofill } from '@mapbox/search-js-react';
-<form>
-<AddressAutofill accessToken={MAP_TOKEN}>
-<input
-name="address"
-            placeholder="Address"
-            type="text"
-            autoComplete="address-line1" />
-            </AddressAutofill>
-            <input
-            name="city" placeholder="City" type="text"
-            autoComplete="address-level2" />
-            <input
-          name="state" placeholder="State" type="text"
-          autoComplete="address-level1" />
-        <input
-          name="postcode" placeholder="Postcode" type="text"
-          autoComplete="postal-code" />
-          <input type="submit" onClick={handleSubmit}></input>
-      </form>
-
     // GET request to the database to retrieve all event data
     // use the Marker function to populate them on the map
     // https://docs.mapbox.com/mapbox-gl-js/api/markers/
@@ -139,4 +127,13 @@ https://docs.mapbox.com/mapbox-gl-js/api/markers/#popup
 http://visgl.github.io/react-map-gl/
 https://reactjs.org/docs/hooks-reference.html#useref
 
+https://stackoverflow.com/questions/48916901/possible-to-render-react-component-within-mapboxgl-popup-in-sethtml-or-setdo
+
+https://stackoverflow.com/questions/68066479/onclick-not-working-in-my-popup-button-mapoboxgl
+https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/
+https://codesandbox.io/s/confident-moser-80lxz?file=/src/App.js:906-1013
+https://github.com/visgl/react-map-gl/blob/master/src/components/popup.ts
+https://docs.mapbox.com/mapbox-gl-js/api/markers/
+https://www.w3schools.com/jsref/event_onclick.asp
+https://docs.mapbox.com/mapbox-gl-js/api/markers/
 */
