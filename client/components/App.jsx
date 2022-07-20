@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, createContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Link, Outlet } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -16,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 
 // const UserContext = React.createContext('{username: user, email: user@gmail.com}');
 
@@ -54,7 +54,38 @@ const login = {
   fontFamily: 'Roboto',
 };
 
-const App = () => (
+const App = () => {
+
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    const getUser = () => {
+      const options = {
+        url: '/hidden',
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true,
+        }
+      };
+      axios(options)
+        .then((res) => {
+          console.log('APP LINE 91 AXIOS RESOBJ', res)
+          if (res.status === 200) { return res; }
+        })
+        .then(({ data }) => { // <-- data = userObject
+          console.log('DATA APP GET REQ LINE 94', data);
+          setUser(data);
+        })
+        .catch((err) => console.error(err, '***ERROR***'));
+    };
+    getUser();
+  }, []);
+
+  return(
+
         // <UserContext.Provider>
         <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
@@ -76,7 +107,8 @@ const App = () => (
         </Box>
         </ThemeProvider>
         // </UserContext.Provider>
-);
+  )
+};
 
 export default App;
 
