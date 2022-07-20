@@ -8,16 +8,16 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const axios = require('axios');
 // import images
-const basketball = new URL('../images/basketball_icon.png', import.meta.url);
-const bowling = new URL('../images/bowling_icon.png', import.meta.url);
-const football = new URL('../images/football_icon.png', import.meta.url);
-const frisbee = new URL('../images/frisbee_icon.png', import.meta.url);
-const pingpong = new URL('../images/pingpong_icon.png', import.meta.url);
-const rugby = new URL('../images/rugby_icon.png', import.meta.url);
-const soccer = new URL('../images/soccer_icon.png', import.meta.url);
-const softball = new URL('../images/softball_icon.png', import.meta.url);
-const tennis = new URL('../images/tennis_icon.png', import.meta.url);
-const volleyball = new URL('../images/volleyball_icon.png', import.meta.url);
+const Basketball = new URL('../images/basketball_icon.png', import.meta.url);
+const Bowling = new URL('../images/bowling_icon.png', import.meta.url);
+const Football = new URL('../images/football_icon.png', import.meta.url);
+const Ultimatefrisbee = new URL('../images/frisbee_icon.png', import.meta.url);
+const PingPong = new URL('../images/pingpong_icon.png', import.meta.url);
+const Rugby = new URL('../images/rugby_icon.png', import.meta.url);
+const Soccer = new URL('../images/soccer_icon.png', import.meta.url);
+const Softball = new URL('../images/softball_icon.png', import.meta.url);
+const Tennis = new URL('../images/tennis_icon.png', import.meta.url);
+const Volleyball = new URL('../images/volleyball_icon.png', import.meta.url);
 const mapboxgl = require('mapbox-gl');
 
 const ENV = require('../../.env');
@@ -31,8 +31,8 @@ const Map = () => {
   const [lng, setLng] = useState(-90.10);
   const [lat, setLat] = useState(29.96);
   const [zoom, setZoom] = useState(12);
-  const [markers, setMarkers] = useState([]);
-
+  const [marker, setMarker] = useState([]);
+  let prevMarker = [];
   useEffect(() => {
     mapboxgl.accessToken = MAP_TOKEN;
     map.current = new mapboxgl.Map({
@@ -54,20 +54,28 @@ const Map = () => {
         events.forEach((event) => {
           const image = () => {
             const images = {
-              basketball,
-              bowling,
-              football,
-              frisbee,
-              pingpong,
-              rugby,
-              soccer,
-              softball,
-              tennis,
-              volleyball,
+              Basketball,
+              Bowling,
+              Football,
+              Ultimatefrisbee,
+              PingPong,
+              Rugby,
+              Soccer,
+              Softball,
+              Tennis,
+              Volleyball,
             };
-            return images[event.image];
+            return images[event.catName.split(' ').join('')];
           };
 
+          console.log('marker:', prevMarker);
+          if (event.coordinates[0] === prevMarker[0]) {
+            console.log(`${event.coordinates[0].toString()}1`);
+            console.log('yes');
+            event.coordinates.splice(0, 1, Number(`${event.coordinates[0].toString()}79`));
+            console.log(event.coordinates);
+          }
+          prevMarker = event.coordinates;
           const icon = document.createElement('div');
           icon.className = 'icon';
           icon.style.backgroundImage = `url(${image()})`;
@@ -79,7 +87,7 @@ const Map = () => {
             .setPopup(new mapboxgl.Popup().setHTML(`
           <h4>${event.locName}</h4>
           <p>${event.description}</p>
-          <p>${event.date}</p>
+          <p>${new Date(event.date.substring(0, 10)).toDateString()}</p>
           <p>${event.time}</p>`))
             .addTo(map.current)
             .on('click', (e) => {
@@ -91,9 +99,6 @@ const Map = () => {
 
   return (
       <div>
-      <h1>
-        WELCOME TO THE MAP
-      </h1>
       <div id="map" className="map-container" ref={mapDiv}></div>
     </div>
 
