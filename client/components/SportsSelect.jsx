@@ -21,7 +21,7 @@ const Sports = (props) => {
   }, []);
   return (
     <div id='category'>
-      <Select required onChange={(e) => props.handleSelectSport(e)} defaultValue='selected'>
+      <Select native='true' required onChange={(e) => props.handleSelectSport(e)} defaultValue='selected'>
       {/* <select required onChange={(e) => props.handleSelectSport(e)} defaultValue=''> */}
         <option value='selected' disabled hidden>
           pick a sport
