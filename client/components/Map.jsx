@@ -1,9 +1,11 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
-import React, { useState, useEffect, useRef, useContext } from 'react';
-
+import React, {
+  useState, useEffect, useRef, useContext, Component,
+} from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { UserContext } from '../index';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const axios = require('axios');
@@ -25,8 +27,8 @@ const ENV = require('../../.env');
 const { MAP_TOKEN } = ENV;
 
 const Map = () => {
-  // const context = useContext(UserContext);
-  // console.log(this.context);
+  const context = useContext(UserContext);
+
   // https://reactjs.org/docs/hooks-reference.html#useref
   const mapDiv = useRef(null);
   const map = useRef(null);
@@ -36,6 +38,7 @@ const Map = () => {
   const [marker, setMarker] = useState([]);
   let prevMarker = [];
   useEffect(() => {
+    console.log('context:', context);
     mapboxgl.accessToken = MAP_TOKEN;
     map.current = new mapboxgl.Map({
       container: mapDiv.current,
