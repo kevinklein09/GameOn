@@ -31,7 +31,7 @@ app.use(express.static(distPath)); // Statically serve up client directory
 // app.use(express.static(styles)); // Statically serve up styles
 
 app.get('/api/eventListings', (req, res) => {
-  console.log('normal listings', req.query);
+  // console.log('normal listings', req.query);
   Events.find({})
     .sort('date')
     .then((query) => {
@@ -55,9 +55,9 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  console.log('map listings', req.query);
+  // console.log('map listings', req.query);
   console.log('map GET request');
-  // Users.find({})
+  // search the events 
   Events.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -69,8 +69,8 @@ app.get('/map', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-  console.log('GET REQ LINE 66 REQ', req);
-  console.log('GET REQ LINE 67 RES', res);
+  // console.log('GET REQ LINE 66 REQ', req);
+  // console.log('GET REQ LINE 67 RES', res);
   Users.find({})
     .then((query) => {
       console.log('user get request');
@@ -104,8 +104,8 @@ app.get('/auth/success', (req, res) => {
 });
 
 app.get('/hidden', isLoggedIn, (req, res) => {
-  // console.log(req)
-  res.send(req.user.email);
+  console.log(req);
+  res.send(req.user);
 });
 
 app.get(
@@ -116,7 +116,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    console.log('RESPONE LINE 97', res);
+    // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
     res.redirect('/');
   },
@@ -128,10 +128,11 @@ app.get('/logout', (req, res) => {
 
 app.post('/api/event', (req, res) => {
   const {
-    address, description, date, time, coordinates, category, catName, players,
+    owner, address, description, date, time, coordinates, category, catName, players,
   } = req.body;
 
   Events.create({
+    owner,
     address,
     description,
     date,
@@ -144,6 +145,13 @@ app.post('/api/event', (req, res) => {
   })
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
+});
+app.delete('/api/event', (req, res) => {
+  const { id } = req.body;
+  console.log(req.body);
+  Events.findOneAndDelete({_id: id })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(500));
 });
 
 app.listen(port, () => {

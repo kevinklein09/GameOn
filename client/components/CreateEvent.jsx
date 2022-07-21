@@ -2,8 +2,9 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
+import { UserContext} from '../index';
 //MUI
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -15,6 +16,9 @@ import { createTheme, ThemeProvider} from '@mui/material/styles';
 import Sports from './SportsSelect';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
+
+
+
 
 const theme = createTheme({
   typography: {
@@ -45,6 +49,11 @@ const theme = createTheme({
 const today = new Date();
 
 const CreateEvents = () => {
+  //user email from login
+  const context = useContext(UserContext);
+  console.log(context);
+
+  //states
   const [sport, setSport] = useState('');
   const [description, setDescription] = useState('');
   // const [location, setLocation] = useState('');
@@ -83,7 +92,9 @@ const CreateEvents = () => {
   };
 
   const handleItem = (e) => {
+    console.log(e.target.value)
     setItem(e.target.value);
+    
   };
 
   const handleSelectSport = (e) => {
@@ -135,10 +146,13 @@ const CreateEvents = () => {
   }
 
 
+
+
   const postEvent = (e) => {
     e.preventDefault();
 
       axios.post('/api/event', {
+      owner: context,
       address: location,
       description,
       date,
@@ -190,6 +204,7 @@ const CreateEvents = () => {
 
     // }
   };
+
 
 
   return (
@@ -277,15 +292,25 @@ const CreateEvents = () => {
         </div> */}
 
         <div id='equipment'>
+          <OutlinedInput
+            style= {{backgroundColor: 'white', marginTop: '10px'}}
+            inputProps={{
+              onChange: (e) => handleItem(e),
+              maxLength: '20',
+              placeholder: 'list equipment here',
+              value: item
+            }}
+          />
+{/* 
           <input
             type='text'
             onChange={(e) => handleItem(e)}
             maxLength='20'
             placeholder='list equipment here'
             value={item}
-          />
+          /> */}
 
-            <Button  size='small' color='primary' variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
+          <Button  size='medium' color='primary' variant="contained" onClick={() => handleEquipmentList()}> add</Button>
         </div>
 
         <EquipmentList equipment={equipment}/>

@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-underscore-dangle */
 // import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
@@ -33,13 +35,13 @@ function UserContextProvider({ children }) {
       };
       axios(options)
         .then((res) => {
-          setUser(res);
-          console.log('APP LINE 91 AXIOS RESOBJ', res);
+          setUser({
+            email: res.data.email,
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            _id: res.data._id,
+          });
           if (res.status === 200) { return res; }
-        })
-        .then(({ data }) => { // <-- data = userObject
-          console.log('DATA APP GET REQ LINE 94', data);
-          setUser(data);
         })
         .catch((err) => console.error(err, '***ERROR***'));
     };
