@@ -123,7 +123,12 @@ app.get(
 );
 
 app.get('/logout', (req, res) => {
-  req.logout(() => res.redirect('/'));
+  console.log('logout');
+  console.log('req.user:', req.user);
+  req.logout(() => {
+    console.log('execute req.logout');
+    res.redirect('/');
+  });
 });
 
 app.post('/api/event', (req, res) => {
