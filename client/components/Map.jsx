@@ -1,10 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import React, {
-  useState, useEffect, useRef, useContext, Component,
+  useState, useEffect, useRef, useContext,
 } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { useSearchParams } from 'react-router-dom';
 import { UserContext } from '../index';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
@@ -28,23 +30,29 @@ const { MAP_TOKEN } = ENV;
 
 const Map = () => {
   const context = useContext(UserContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const user = searchParams.get('user');
+  const event = searchParams.get('event');
+  console.log(`userParam: ${user}, event: ${event}, signedIn: ${context}`);
 
   // https://reactjs.org/docs/hooks-reference.html#useref
   const mapDiv = useRef(null);
   const map = useRef(null);
-  const buttonRef = useRef(null);
   const [lng, setLng] = useState(-90.10);
   const [lat, setLat] = useState(29.96);
   const [zoom, setZoom] = useState(12);
-  const [marker, setMarker] = useState([]);
-  let prevMarker = [];
-
-  function handleClick() {
-    console.log('click');
-  }
 
   useEffect(() => {
-    console.log('context:', context);
+    if (user || event) {
+      axios.get(`/map?user=${user}&event=${event}`)
+        .then((eventData) => {
+          console.log(eventData);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
     mapboxgl.accessToken = MAP_TOKEN;
     map.current = new mapboxgl.Map({
       container: mapDiv.current,
@@ -80,7 +88,6 @@ const Map = () => {
             return images[event.catName.split(' ').join('')];
           };
 
-          prevMarker = event.coordinates;
           const icon = document.createElement('div');
           icon.className = 'icon';
           icon.style.backgroundImage = `url(${image()})`;
@@ -95,15 +102,12 @@ const Map = () => {
           <p>${event.description}</p>
           <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
           <p><strong>Where: </strong>${event.address}</p>
-          <button class="btn" onclick="${handleClick}">Going</button>
+          <button id="btn-collectobj"><a href="/#/map?user=${context}&event=${event._id}">Going</a></button>
           `))
-            .addTo(map.current)
-            .on('click', (e) => {
-            });
+            .addTo(map.current);
         });
       });
   });
-
   return (
       <div>
       <div id="map" className="map-container" ref={mapDiv}></div>

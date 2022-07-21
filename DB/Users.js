@@ -19,7 +19,7 @@ const userSchema = new Schema({
   phone: String,
   firstName: String,
   lastName: String,
-  googleIdNumber: Number
+  googleIdNumber: Number,
 });
 
 userSchema.plugin(passportLocalMongoose);
