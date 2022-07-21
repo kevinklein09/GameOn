@@ -101,6 +101,7 @@ const Map = () => {
             icon.style.backgroundSize = '100%';
             let popupContent;
             if (event.attendees.includes(userId)) {
+              console.log('user attending');
               popupContent = `
               <h4>${event.catName}</h4>
               <p>${event.description}</p>
