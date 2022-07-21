@@ -5,6 +5,7 @@
 import React, {
   useState, useEffect, useRef, useContext,
 } from 'react';
+import Typography from '@mui/material/Typography';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { useSearchParams } from 'react-router-dom';
 import { UserContext } from '../index';
@@ -29,12 +30,14 @@ const ENV = require('../../.env');
 const { MAP_TOKEN } = ENV;
 
 const Map = () => {
-  const context = useContext(UserContext);
+  const userContext = useContext(UserContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const user = searchParams.get('user');
   const event = searchParams.get('event');
   const userId = searchParams.get('userId');
-  console.log(`userParam: ${user}, event: ${event}, signedIn: ${context}, userId: ${userId}`);
+  if (userContext !== null) {
+    console.log(`userParam: ${user}, event: ${event}, signedIn: ${userContext.email}, userId: ${userContext._id}`);
+  }
 
   // https://reactjs.org/docs/hooks-reference.html#useref
   const mapDiv = useRef(null);
@@ -54,67 +57,77 @@ const Map = () => {
           console.error(err);
         });
     }
+    if (userContext) {
+      mapboxgl.accessToken = MAP_TOKEN;
+      map.current = new mapboxgl.Map({
+        container: mapDiv.current,
+        center: [lng, lat],
+        zoom,
+        style: 'mapbox://styles/mapbox/streets-v11',
+      });
 
-    mapboxgl.accessToken = MAP_TOKEN;
-    map.current = new mapboxgl.Map({
-      container: mapDiv.current,
-      center: [lng, lat],
-      zoom,
-      style: 'mapbox://styles/mapbox/streets-v11',
-    });
+      const results = map.current.addControl(
+        new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl,
+        }),
+      );
 
-    const results = map.current.addControl(
-      new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl,
-      }),
-    );
-
-    axios.get('/map')
-      .then((eventsData) => {
-        const events = eventsData.data;
-        events.forEach((event) => {
-          const image = () => {
-            const images = {
-              Basketball,
-              Bowling,
-              Football,
-              Ultimatefrisbee,
-              PingPong,
-              Rugby,
-              Soccer,
-              Softball,
-              Tennis,
-              Volleyball,
+      axios.get('/map')
+        .then((eventsData) => {
+          const events = eventsData.data;
+          events.forEach((event) => {
+            const image = () => {
+              const images = {
+                Basketball,
+                Bowling,
+                Football,
+                Ultimatefrisbee,
+                PingPong,
+                Rugby,
+                Soccer,
+                Softball,
+                Tennis,
+                Volleyball,
+              };
+              return images[event.catName.split(' ').join('')];
             };
-            return images[event.catName.split(' ').join('')];
-          };
 
-          const icon = document.createElement('div');
-          icon.className = 'icon';
-          icon.style.backgroundImage = `url(${image()})`;
-          icon.style.width = '20px';
-          icon.style.height = '20px';
-          icon.style.backgroundSize = '100%';
+            const icon = document.createElement('div');
+            icon.className = 'icon';
+            icon.style.backgroundImage = `url(${image()})`;
+            icon.style.width = '20px';
+            icon.style.height = '20px';
+            icon.style.backgroundSize = '100%';
 
-          new mapboxgl.Marker(icon)
-            .setLngLat([event.coordinates[0], event.coordinates[1]])
-            .setPopup(new mapboxgl.Popup().setHTML(`
+            new mapboxgl.Marker(icon)
+              .setLngLat([event.coordinates[0], event.coordinates[1]])
+              .setPopup(new mapboxgl.Popup().setHTML(`
           <h4>${event.catName}</h4>
           <p>${event.description}</p>
           <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
           <p><strong>Where: </strong>${event.address}</p>
-          <button id="btn-collectobj"><a href="/#/map?user=${context}&event=${event._id}">Going</a></button>
+          <button id="btn-collectobj"><a href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}">Going</a></button>
           `))
-            .addTo(map.current);
+              .addTo(map.current);
+          });
         });
-      });
+    }
   });
-  return (
-      <div>
-      <div id="map" className="map-container" ref={mapDiv}></div>
-    </div>
 
+  if (userContext) {
+    return (
+        <div>
+        <Typography align="center" variant="h2" component="h2" >Hello, {userContext.firstName}!</Typography>
+        <Typography align="center" variant="body1">Check out all of the games near you!</Typography>
+        <div id="map" className="map-container" ref={mapDiv}></div>
+      </div>
+    );
+  }
+  return (
+  <div>
+    <Typography align="center" variant="h2" component="h2" >Please sign in to use our app.</Typography>
+  </div>
   );
 };
 

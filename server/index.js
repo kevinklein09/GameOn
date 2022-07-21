@@ -104,8 +104,8 @@ app.get('/auth/success', (req, res) => {
 });
 
 app.get('/hidden', isLoggedIn, (req, res) => {
-  // console.log(req)
-  res.send(req.user.email);
+  console.log(req);
+  res.send(req.user);
 });
 
 app.get(
@@ -116,7 +116,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    console.log('RESPONE LINE 97', res);
+    // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
     res.redirect('/');
   },
