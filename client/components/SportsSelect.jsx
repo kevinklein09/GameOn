@@ -4,8 +4,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
-const Sports = (props) => {
+const Sports = ({sport, handleSelectSport}) => {
   const [sports, setSports] = useState([]);
   const getAllSports = () => {
     axios
@@ -21,13 +22,24 @@ const Sports = (props) => {
   }, []);
   return (
     <div id='category'>
-      <Select native='true' required onChange={(e) => props.handleSelectSport(e)} defaultValue='selected'>
-      {/* <select required onChange={(e) => props.handleSelectSport(e)} defaultValue=''> */}
-        <option value='selected' disabled hidden>
-          pick a sport
-        </option>
-        {sports.map((sport, index) => <option key={index}>{sport.category}</option>)}
-      {/* </select> */}
+    <Select
+      style={{ backgroundColor: 'white' }}
+      inputProps={{
+        defaultValue: 'test',
+      }}
+      >
+      {/* // onChange={handleSelectSport} defaultValue='test'> */}
+      <MenuItem disabled value='test'> {sport || 'choose a sport'} </MenuItem>
+      {sports.map(
+        (sportItem, index) =>
+        <MenuItem
+          onClick ={() => handleSelectSport(sportItem)}
+          key={index}
+        >{sportItem.category}</MenuItem>)}
+      {/* <select required onChange={handleSelectSport} defaultValue='test'>
+        <option disabled value='test'>TEST</option>
+
+      </select> */}
       </Select>*required
     </div>
   );

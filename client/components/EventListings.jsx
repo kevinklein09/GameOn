@@ -4,27 +4,29 @@
 /* eslint-disable */
 
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import Sports from './SportsSelect';
 import Event from './Event.jsx';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 
 
 const EventListings = (props) => {
   const [events, setEvents] = useState([]);
- 
+  let [searchParams, setSearchParams] = useSearchParams();
+  const param = searchParams.get("user");
+  console.log(param);
+  
 const getAllEvents = () => {
-  axios.get('/api/eventListings')
-  .then((eventData) => {
-    console.log(eventData);
-    setEvents(eventData.data);
-  })
-  .catch((err) => {
-    console.error(err);
-  })
-}
+      axios.get('/api/eventListings')
+      .then((eventData) => {
+        console.log(eventData);
+        setEvents(eventData.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
 useEffect(() => {
   getAllEvents()
 }, []);
@@ -44,3 +46,7 @@ return (
 
 };
 export default EventListings;
+
+/*
+https://reactrouter.com/docs/en/v6/hooks/use-search-params
+*/

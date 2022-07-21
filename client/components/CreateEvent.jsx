@@ -4,20 +4,33 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+//MUI
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
-import SportsSelect from './SportsSelect.jsx';
+import OutlinedInput from '@mui/material/OutlinedInput'
+import { createTheme, ThemeProvider} from '@mui/material/styles';
+// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
+// import AdapterJalaali from '@date-io/jalaali';
+//COMPONENTS
+import Sports from './SportsSelect';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
-import { createTheme, ThemeProvider} from '@mui/material/styles';
 
 const theme = createTheme({
+  typography: {
+    h3: {
+      fontFamily: 'Roboto',
+    },
+    t: {
+      fontFamily: 'Roboto'
+    }
+  },
   status: {
     danger: '#e53e3e',
   },
   palette: {
     primary: {
-      main: '#5e35b1',
+      main: '#ce93d8',
       darker: '#5e35b1',
     },
     neutral: {
@@ -50,6 +63,10 @@ const CreateEvents = () => {
   let categoryId;
   let location = `${address} ${city} ${state} ${zip}`
 
+  if (playerLimit < 1) {
+    setPlayerLimit(1)
+  }
+
   if (sport) {
     axios.get('/api/categories')
       .then((categories) => {
@@ -70,8 +87,8 @@ const CreateEvents = () => {
   };
 
   const handleSelectSport = (e) => {
-    console.log(e.target.value);
-    setSport(e.target.value);
+    console.log(e.category)
+    setSport(e.category);
   };
 
   const handleDescription = (e) => {
@@ -109,7 +126,6 @@ const CreateEvents = () => {
     const queryUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?type=poi&access_token=${MAP_TOKEN}`;
     axios.get(queryUrl)
       .then((results) => {
-        console.log(results.data.features[0].center)
         setLong(results.data.features[0].center[0]);
         setLat(results.data.features[0].center[1]);
       })
@@ -178,15 +194,34 @@ const CreateEvents = () => {
 
   return (
     <div>
-
-      <h1>THIS IS WHERE YOU CREATE NEW EVENTS</h1>
+      <ThemeProvider theme={theme}>
+      <Typography
+        style={{color: '#5e35b1'}}
+        align='center'
+        variant='h3'
+        gutterBottom={true}
+      >
+        Create Your Event
+      </Typography>
 
       <form>
-      <ThemeProvider theme={theme}>
-        <SportsSelect handleSelectSport={handleSelectSport}/>
+        <Sports sport={sport} handleSelectSport={handleSelectSport}/>
+        
 
         <div id='description'>
-          <textarea
+          <OutlinedInput
+            style={{backgroundColor: 'white', marginTop: '10px'}}
+            multiline={true}
+            rows='5'
+            placeholder='enter description here'
+            fullWidth={true}
+            inputProps={{
+              maxLength: 500,
+              onChange: (e) => handleDescription(e),
+              value: description
+            }}
+          />
+          {/* <textarea
             rows='5'
             cols='60'
             maxLength='500'
@@ -194,19 +229,31 @@ const CreateEvents = () => {
             value={description}
             placeholder='enter description here'
             required
-          />*required
+          />*required */}
         </div>
 
         <div id="playerLimit">
-          <input
+          <OutlinedInput
+            style= {{backgroundColor: 'white', marginTop: '10px'}}
+            inputProps={{
+              type:'number',
+              onChange: (e) => handlePlayerLimit(e),
+              min: 1,
+              max: 100,
+              value: playerLimit,
+            }}
+          /> <Typography variant='t'>
+              # of players 
+            </Typography>
+          {/* <input
             type='number'
             onChange={(e) => handlePlayerLimit(e)}
             min='1' max='100'
             value={playerLimit}
-          /> # of players
+          /> */}
         </div>
 
-        <AddressField
+        <AddressField 
           handleAddress={handleAddress}
           handleCity={handleCity}
           handleState={handleState}
@@ -238,11 +285,13 @@ const CreateEvents = () => {
             value={item}
           />
 
-            <Button  color='primary' variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
+            <Button  size='small' color='primary' variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
         </div>
 
         <EquipmentList equipment={equipment}/>
-
+        {/* <LocalizationProvider dateAdapter={AdapterJalaali}>
+        <DateRangePicker/>
+        </LocalizationProvider> */}
         <div id='date'>
           <input
             value={date}
@@ -259,10 +308,10 @@ const CreateEvents = () => {
           />
         </div>
 
-        <Button variant='contained' color='primary' onClick={postEvent} type='submit'>SUBMIT</Button>
+        <Button size='small' variant='contained' color='primary' onClick={postEvent} type='submit'>submit</Button>
 
-        </ThemeProvider>
-      </form>
+        </form>
+      </ThemeProvider>
     </div>
   );
 };
