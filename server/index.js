@@ -44,7 +44,9 @@ app.get('/api/eventListings', (req, res) => {
 });
 
 app.put('/api/eventListings', (req, res) => {
-  Events.updateOne({ _id: req.body.id }, { $push: { attendees: User.email } })
+  console.log(req.body);
+  const { eventID, userId } = req.body;
+  Events.findByIdAndUpdate({ _id: eventID }, { $push: { attendees: userId } })
     .then(() => {
       res.sendStatus(200);
     })
@@ -66,10 +68,10 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  // console.log('map listings', req.query);
-  // console.log('map GET request');
+  console.log('map listings', req.query);
+  console.log('map GET request');
   const { userId, event } = req.query;
-  // // search the events
+
   if (event) {
     Events.findByIdAndUpdate(
       { _id: event },

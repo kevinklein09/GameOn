@@ -18,8 +18,8 @@ let testObj = {royce: true};
     setGoing(e.target.checked);
       console.log("target id →", e.target.id);
       console.log('context (email of user)  →', context.email) 
-
-    axios.put('/api/eventListings', context)
+    const event = e.target.id;
+    axios.put(`/api/eventListings/`, {eventID: event, userId: context._id})
       .then((data) => {
         console.log('data that I want', data);
         if(data.id) {
