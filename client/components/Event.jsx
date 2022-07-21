@@ -11,22 +11,26 @@ const Event = (props) => {
   
   const context = useContext(UserContext);
   
-
+let testObj = {royce: true};
 
   const handleChange = (e) => {
     // console.log('changed!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     setGoing(e.target.checked);
-    console.log("target id →", e.target.id);
-    console.log('context (email of user)  →', context)  
-    axios.put('/api/eventListings')
+      console.log("target id →", e.target.id);
+      console.log('context (email of user)  →', context.email) 
+
+    axios.put('/api/eventListings', context)
       .then((data) => {
+        console.log('data that I want', data);
         if(data.id) {
           data.id = data;
         } else {
+  
           alert('login required to join event');
         }
       })
       .catch((err) => {
+        
         console.error(err);
       })
   }

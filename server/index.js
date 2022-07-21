@@ -1,27 +1,26 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-require('dotenv').config();
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const session = require('express-session');
-const passport = require('passport');
-const passportLocalMongoose = require('passport-local-mongoose');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const findOrCreate = require('mongoose-findorcreate');
-const path = require('path');
-const express = require('express');
-const mongoose = require('mongoose');
-const User = require('../DB/Users');
-const ENV = require('../.env');
-require('./passport');
-const Events = require('../DB/Events');
+require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const findOrCreate = require("mongoose-findorcreate");
+const path = require("path");
+const express = require("express");
+const mongoose = require("mongoose");
+const User = require("../DB/Users");
+const ENV = require("../.env");
+require("./passport");
 
-const DB = require('../DB/index');
-const { Events, Sports, Users } = require('../DB/models');
+const DB = require("../DB/index");
+const { Events, Sports, Users } = require("../DB/models");
 
 const port = 3000;
-const distPath = path.resolve(__dirname, '..', 'dist');
+const distPath = path.resolve(__dirname, "..", "dist");
 const app = express();
 // const styles = require('../client/styles.css');
 app.use(cors());
@@ -45,14 +44,14 @@ app.get('/api/eventListings', (req, res) => {
 });
 
 app.put('/api/eventListings', (req, res) => {
-  Events.updateOne({ _id: id }, { $push: { attendees: User.email } })
-  .then(() => {
-    res.sendStatus(200);
-  })
-  .catch((err) => {
-    console.error(err)
-    res.sendStatus(204);
-  }); 
+  Events.updateOne({ _id: req.body.id }, { $push: { attendees: User.email } })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(204);
+    });
 });
 
 app.get('/api/categories', (req, res) => {
@@ -69,7 +68,7 @@ app.get('/api/categories', (req, res) => {
 app.get('/map', (req, res) => {
   // console.log('map listings', req.query);
   console.log('map GET request');
-  // search the events 
+  // search the events
   Events.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -94,53 +93,62 @@ app.get('/users', (req, res) => {
     });
 });
 
-app.use(session({
-  secret: ENV.EXPRESS_SECRET,
-  resave: false,
-  saveUninitialized: false,
-}));
+app.use(
+  session({
+    secret: ENV.EXPRESS_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
 const isLoggedIn = (req, res, next) => {
   req.user ? next() : res.sendStatus(401);
 };
-app.get('/auth/success', (req, res) => {
+app.get("/auth/success", (req, res) => {
   if (req.user) {
     res.status(200).json({
       user: req.user,
-      message: 'success',
+      message: "success",
       success: true,
     });
   }
 });
 
-app.get('/hidden', isLoggedIn, (req, res) => {
+app.get("/hidden", isLoggedIn, (req, res) => {
   console.log(req);
   res.send(req.user);
 });
 
 app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
     // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
-    res.redirect('/');
-  },
+    res.redirect("/");
+  }
 );
 
-app.get('/logout', (req, res) => {
-  req.logout(() => res.redirect('/'));
+app.get("/logout", (req, res) => {
+  req.logout(() => res.redirect("/"));
 });
 
-app.post('/api/event', (req, res) => {
+app.post("/api/event", (req, res) => {
   const {
-    address, description, date, time, coordinates, category, catName, players,
+    address,
+    description,
+    date,
+    time,
+    coordinates,
+    category,
+    catName,
+    players,
   } = req.body;
 
   Events.create({

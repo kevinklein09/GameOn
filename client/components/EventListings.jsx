@@ -37,7 +37,6 @@ return (
   <div>
     <h1>See all da events</h1>
     <Sports />
-    <button>Sort by Dist  ance</button>
     { events.map((event, i) => {
       return <><Event eventData={ event } class="event" key={ `event: ${i}` }/></> 
     }) }
