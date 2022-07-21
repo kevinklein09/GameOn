@@ -11,6 +11,7 @@ import Profile from './components/Profile.jsx';
 import EventListings from './components/EventListings.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
+import Logout from './components/Logout.jsx';
 import Home from './components/Home.jsx';
 import './styles.css';
 
@@ -67,7 +68,7 @@ root.render(
         <Route path="eventListings" element={<EventListings />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="logout" element= {<Login />}/>
+        <Route path="logout" element= {<Logout />}/>
         <Route path="*" element= {<Login />}/>
       </Route>
     </Routes>
