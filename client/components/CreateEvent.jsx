@@ -10,8 +10,8 @@ import { UserContext} from '../index';
 // import Button from '@mui/material/Button';
 // import OutlinedInput from '@mui/material/OutlinedInput'
 // import { createTheme, ThemeProvider} from '@mui/material/styles';
-import { Typography, Stack, Alert, AlertTitle, Button, OutlinedInput, createTheme, ThemeProvider} from '@mui/material';
-import {CheckCircleSharp} from '@mui/icons-material';
+import { Typography, Button, Fab, OutlinedInput, createTheme, ThemeProvider} from '@mui/material';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 // import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
 // import AdapterJalaali from '@date-io/jalaali';
 //COMPONENTS
@@ -312,22 +312,20 @@ const CreateEvents = () => {
             value={item}
           /> */}
 
-          <Button  size='medium' color='primary' variant="contained" onClick={() => handleEquipmentList()}> add</Button>
+          <Button  style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} color='primary' variant="contained" onClick={() => handleEquipmentList()}> <b> + </b> </Button>
         </div>
 
         <EquipmentList equipment={equipment}/>
         {/* <LocalizationProvider dateAdapter={AdapterJalaali}>
         <DateRangePicker/>
         </LocalizationProvider> */}
-        <div id='date'>
+        <div style={{marginTop: '10px'}} id='dateTime'>
           <input
             value={date}
             onChange={(e) => handleDate(e)}
             type='date'
+            min={`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`}
           />
-        </div>
-
-        <div id='time'>
           <input
             type='time'
             value={time}
@@ -335,7 +333,7 @@ const CreateEvents = () => {
           />
         </div>
 
-        <Button size='small' variant='contained' color='primary' onClick={postEvent} type='submit'>submit</Button>
+        <Fab style={{marginTop: '15px'}} size='small' variant='extended' color='primary' onClick={postEvent} type='submit'><BorderColorIcon/>     Create Event</Fab>
 
         </form>
       </ThemeProvider>
