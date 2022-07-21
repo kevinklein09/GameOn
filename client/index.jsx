@@ -40,7 +40,8 @@ function UserContextProvider({ children }) {
             email: res.data.email,
             firstName: res.data.firstName,
             lastName: res.data.lastName,
-            _id: res.data._id,
+            image: res.data.image,
+            _id: res.data._id
           });
           if (res.status === 200) { return res; }
         })
@@ -68,7 +69,7 @@ root.render(
         <Route path="eventListings" element={<EventListings />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="logout" element= {<Logout />}/>
+        <Route path="logout" />
         <Route path="*" element= {<Login />}/>
       </Route>
     </Routes>

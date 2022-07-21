@@ -66,11 +66,8 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  console.log('map listings', req.query);
-  console.log('map GET request');
-<<<<<<< HEAD
-  // search the events
-=======
+  // console.log('map listings', req.query);
+  // console.log('map GET request');
   const { userId, event } = req.query;
   // // search the events
   if (event) {
@@ -81,7 +78,6 @@ app.get('/map', (req, res) => {
       .then(() => { console.log('user added to event'); })
       .catch((err) => { console.error(err); });
   }
->>>>>>> 735da91e4871036600fc810e7c20723536807da5
   Events.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -97,7 +93,7 @@ app.get('/users', (req, res) => {
   // console.log('GET REQ LINE 67 RES', res);
   Users.find({})
     .then((query) => {
-      console.log('user get request');
+      // console.log('user get request');
       res.status(200).send(query);
     })
     .catch((err) => {
@@ -117,9 +113,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const isLoggedIn = (req, res, next) => {
+  // console.log('LINE 116', req)
+  // console.log('LINE 117', res);
   req.user ? next() : res.sendStatus(401);
 };
 app.get("/auth/success", (req, res) => {
+  // console.log(req)
   if (req.user) {
     res.status(200).json({
       user: req.user,
@@ -130,7 +129,7 @@ app.get("/auth/success", (req, res) => {
 });
 
 app.get("/hidden", isLoggedIn, (req, res) => {
-  console.log(req);
+  // console.log('LINE 130', req);
   res.send(req.user);
 });
 
@@ -148,34 +147,18 @@ app.get(
   }
 );
 
-<<<<<<< HEAD
-app.get("/logout", (req, res) => {
-  req.logout(() => res.redirect("/"));
-=======
 app.get('/logout', (req, res) => {
-  console.log('logout');
-  console.log('req.user:', req.user);
+  // console.log('logout');
+  // console.log('req.user:', req.user);
   req.logout(() => {
-    console.log('execute req.logout');
+    // console.log('execute req.logout');
     res.redirect('/');
   });
->>>>>>> 735da91e4871036600fc810e7c20723536807da5
 });
 
 app.post("/api/event", (req, res) => {
   const {
-<<<<<<< HEAD
-    address,
-    description,
-    date,
-    time,
-    coordinates,
-    category,
-    catName,
-    players,
-=======
     owner, address, description, date, time, coordinates, category, catName, players,
->>>>>>> 735da91e4871036600fc810e7c20723536807da5
   } = req.body;
 
   Events.create({

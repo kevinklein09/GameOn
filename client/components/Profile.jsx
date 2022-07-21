@@ -66,6 +66,9 @@ const Profile = () => {
         <h1>
             WELCOME TO THE PROFILE PAGE
         </h1>
+        <div>
+          <img src={user.image} height={200} width={200} />
+        </div>
         <p>Hello, User: </p>
         <div>
           <h2>NAME</h2>
