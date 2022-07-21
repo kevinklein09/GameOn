@@ -8,21 +8,26 @@ import axios from 'axios';
 
 
 const Profile = () => {
+  console.log(user);
   const user = useContext(UserContext);
-
   const [userEvents, setUserEvents] = useState([]);
   const getUserEvents = () => {
     axios.get('/api/eventListings')
       .then((events) => {
-        console.log(events.data.filter((event) => event.owner === user));
-
-        setUserEvents(events.data.filter((event) => event.owner === user))
+        console.log(events.data.filter((event) => event.owner === user.email));
+  
+        setUserEvents(events.data.filter((event) => event.owner === user.email))
       })
       .catch(() => console.log(oops));
   };
 
+  
+
+
   useEffect(() => {
-    getUserEvents();
+    if (user) {
+      getUserEvents();
+    }
   }, [])
 
   // console.log('LINE 8 PROFILE USER', user)
@@ -52,7 +57,7 @@ const Profile = () => {
     }
   }
 
-  const userOrNull = () => { return user ? user : 'please login' };
+  const userOrNull = () => { return user ? user.firstName : 'please login' };
 
   return (
     <div>
