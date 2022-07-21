@@ -5,6 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 //MUI
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import OutlinedInput from '@mui/material/OutlinedInput'
 import { createTheme, ThemeProvider} from '@mui/material/styles';
@@ -16,12 +17,20 @@ import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
 
 const theme = createTheme({
+  typography: {
+    h3: {
+      fontFamily: 'Roboto',
+    },
+    t: {
+      fontFamily: 'Roboto'
+    }
+  },
   status: {
     danger: '#e53e3e',
   },
   palette: {
     primary: {
-      main: '#5e35b1',
+      main: '#ce93d8',
       darker: '#5e35b1',
     },
     neutral: {
@@ -185,11 +194,17 @@ const CreateEvents = () => {
 
   return (
     <div>
-
-      <h1>THIS IS WHERE YOU CREATE NEW EVENTS</h1>
+      <ThemeProvider theme={theme}>
+      <Typography
+        style={{color: '#5e35b1'}}
+        align='center'
+        variant='h3'
+        gutterBottom={true}
+      >
+        Create Your Event
+      </Typography>
 
       <form>
-      <ThemeProvider theme={theme}>
         <Sports sport={sport} handleSelectSport={handleSelectSport}/>
         
 
@@ -227,7 +242,9 @@ const CreateEvents = () => {
               max: 100,
               value: playerLimit,
             }}
-          /> # of players 
+          /> <Typography variant='t'>
+              # of players 
+            </Typography>
           {/* <input
             type='number'
             onChange={(e) => handlePlayerLimit(e)}
@@ -268,7 +285,7 @@ const CreateEvents = () => {
             value={item}
           />
 
-            <Button  color='primary' variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
+            <Button  size='small' color='primary' variant="contained" onClick={() => handleEquipmentList()}> add item </Button>
         </div>
 
         <EquipmentList equipment={equipment}/>
@@ -291,10 +308,10 @@ const CreateEvents = () => {
           />
         </div>
 
-        <Button variant='contained' color='primary' onClick={postEvent} type='submit'>SUBMIT</Button>
+        <Button size='small' variant='contained' color='primary' onClick={postEvent} type='submit'>submit</Button>
 
-        </ThemeProvider>
-      </form>
+        </form>
+      </ThemeProvider>
     </div>
   );
 };
