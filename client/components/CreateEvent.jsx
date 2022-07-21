@@ -6,10 +6,12 @@ import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { UserContext} from '../index';
 //MUI
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { createTheme, ThemeProvider} from '@mui/material/styles';
+// import Typography from '@mui/material/Typography';
+// import Button from '@mui/material/Button';
+// import OutlinedInput from '@mui/material/OutlinedInput'
+// import { createTheme, ThemeProvider} from '@mui/material/styles';
+import { Typography, Stack, Alert, AlertTitle, Button, OutlinedInput, createTheme, ThemeProvider} from '@mui/material';
+import {CheckCircleSharp} from '@mui/icons-material';
 // import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
 // import AdapterJalaali from '@date-io/jalaali';
 //COMPONENTS
@@ -51,8 +53,7 @@ const today = new Date();
 const CreateEvents = () => {
   //user email from login
   const context = useContext(UserContext);
-  console.log(context);
-
+  if (context) {
   //states
   const [sport, setSport] = useState('');
   const [description, setDescription] = useState('');
@@ -164,6 +165,7 @@ const CreateEvents = () => {
       isOpen: true,
     })
     .then(() => {
+
       alert('your event was created!')
       if (sport && description && address){
         setDescription('');
@@ -337,8 +339,19 @@ const CreateEvents = () => {
 
         </form>
       </ThemeProvider>
+
     </div>
   );
+  } else {
+    return (
+      <div align='center'>
+        <h3>
+        You must be logged in to create an event
+        </h3>
+        <img width='200' height='100%' src='https://manbitesfrog.com/wp-content/uploads/2021/10/giphy-1-2.gif'/>
+      </div>
+    )
+  }
 };
 
 export default CreateEvents;
