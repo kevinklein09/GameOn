@@ -52,6 +52,27 @@ function UserContextProvider({ children }) {
       </UserContext.Provider>
   );
 }
+const logout = () => {
+  axios.get("/logout").then(res => {
+    if(res.data) {
+      alert('logout successful')
+      window.location.href = '/'
+    }
+  }).catch(err => {
+    console.error('AXIOSLOGOUT ERR', err)
+  })
+}
+
+const Button = () => (
+  <Route render={({ history}) => (
+    <button
+      type='button'
+      onClick={() => { history.push('/') }}
+    >
+      Click Me!
+    </button>
+  )} />
+)
 
 root.render(
   <UserContextProvider>
@@ -65,7 +86,16 @@ root.render(
         <Route path="eventListings" element={<EventListings />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="logout" element= {<Login />}/>
+        <Route 
+        path="logout" 
+        render={({ history }) => (
+          <button 
+            type='button'
+            onClick={() => { logout(); history.push('/') }}
+          >
+            LOGOUT
+          </button>)} 
+        element= {<Login />}/>
         <Route path="*" element= {<Login />}/>
       </Route>
     </Routes>

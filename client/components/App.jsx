@@ -55,13 +55,13 @@ const App = () => {
   console.log('LINE 8 App USER', user)
 
   const logout = () => {
-    axios.get("http://localhost:3000/auth/logout").then(res => {
+    axios.get("/logout").then(res => {
       if(res.data) {
-        window.location.href = '/'
+        alert('logout successful');
+        window.location.href = '/';
       }
-    }).catch(err => {
-      console.error('AXIOSLOGOUT ERR', err)
-    })
+    }).catch(err => console.error(err))
+    history.push('/')
   }
 
   return (
