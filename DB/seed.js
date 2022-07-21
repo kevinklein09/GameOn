@@ -192,15 +192,7 @@ const usersData = [
     googleId: 'puckjones@gmail.com',
     secret: String,
   },
-  {
-    googleUser: 'bethanyjones365@gmail.com',
-    username: 'bethany365',
-    email: 'bethanyjones365@gmail.com',
-    address: '100 N. Carrollton',
-    phone: '2814485765',
-    googleId: 'bethanyjones365@gmail.com',
-    secret: String,
-  },
+
 
 ];
 
