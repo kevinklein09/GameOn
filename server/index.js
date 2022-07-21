@@ -128,10 +128,11 @@ app.get('/logout', (req, res) => {
 
 app.post('/api/event', (req, res) => {
   const {
-    address, description, date, time, coordinates, category, catName, players,
+    owner, address, description, date, time, coordinates, category, catName, players,
   } = req.body;
 
   Events.create({
+    owner,
     address,
     description,
     date,
@@ -144,6 +145,13 @@ app.post('/api/event', (req, res) => {
   })
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
+});
+app.delete('/api/event', (req, res) => {
+  const { id } = req.body;
+  console.log(req.body);
+  Events.findOneAndDelete({_id: id })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(500));
 });
 
 app.listen(port, () => {
