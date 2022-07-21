@@ -24,7 +24,7 @@ const Event = (props) => {
       <div>
         <div>-------------------------------------------</div>
         <h4>Type of Event: </h4>
-      <div>{ props.eventData.catName }</div>   
+      <div>{ props.eventData.catName }</div>  
       <h4>Details: </h4>   
       <div>{ props.eventData.description }
         <h5>Starting @ { props.eventData.time }</h5>
