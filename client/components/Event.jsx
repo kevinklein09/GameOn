@@ -4,19 +4,35 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { UserContext } from '../index.jsx';
+import axios from 'axios';
 
 const Event = (props) => {
   const [going, setGoing] = useState(false);
   
   const context = useContext(UserContext);
   
-
+let testObj = {royce: true};
 
   const handleChange = (e) => {
     // console.log('changed!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     setGoing(e.target.checked);
-    console.log("target id →", e.target.id);
-    console.log('context (email of user)  →', context)  
+      console.log("target id →", e.target.id);
+      console.log('context (email of user)  →', context.email) 
+
+    axios.put('/api/eventListings', context)
+      .then((data) => {
+        console.log('data that I want', data);
+        if(data.id) {
+          data.id = data;
+        } else {
+  
+          alert('login required to join event');
+        }
+      })
+      .catch((err) => {
+        
+        console.error(err);
+      })
   }
   
  return (
@@ -24,7 +40,7 @@ const Event = (props) => {
       <div>
         <div>-------------------------------------------</div>
         <h4>Type of Event: </h4>
-      <div>{ props.eventData.catName }</div>   
+      <div>{ props.eventData.catName }</div>  
       <h4>Details: </h4>   
       <div>{ props.eventData.description }
         <h5>Starting @ { props.eventData.time }</h5>
