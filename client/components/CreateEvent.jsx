@@ -152,7 +152,7 @@ const CreateEvents = () => {
     e.preventDefault();
 
       axios.post('/api/event', {
-      owner: context,
+      owner: context.email,
       address: location,
       description,
       date,
