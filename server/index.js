@@ -31,8 +31,7 @@ app.use(express.static(distPath)); // Statically serve up client directory
 // app.use(express.static(styles)); // Statically serve up styles
 
 app.get('/api/eventListings', (req, res) => {
-  console.log('button:', req.params);
-  console.log(req);
+  console.log('normal listings', req.query);
   Events.find({})
     .sort('date')
     .then((query) => {
@@ -56,7 +55,9 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
+  console.log('map listings', req.query);
   console.log('map GET request');
+  // Users.find({})
   Events.find({})
     .then((query) => {
       res.status(200).send(query);

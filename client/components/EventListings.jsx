@@ -8,9 +8,6 @@ import { useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import Sports from './SportsSelect';
 import Event from './Event.jsx';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 
 
 const EventListings = (props) => {
@@ -20,16 +17,16 @@ const EventListings = (props) => {
   console.log(param);
   
 const getAllEvents = () => {
-  axios.get('/api/eventListings')
-  .then((eventData) => {
+      axios.get('/api/eventListings')
+      .then((eventData) => {
+        console.log(eventData);
+        setEvents(eventData.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
 
-    console.log(eventData);
-    setEvents(eventData.data);
-  })
-  .catch((err) => {
-    console.error(err);
-  })
-}
 useEffect(() => {
   getAllEvents()
 }, []);
@@ -49,3 +46,7 @@ return (
 
 };
 export default EventListings;
+
+/*
+https://reactrouter.com/docs/en/v6/hooks/use-search-params
+*/
