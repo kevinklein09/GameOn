@@ -86,16 +86,7 @@ root.render(
         <Route path="eventListings" element={<EventListings />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
-        <Route 
-        path="logout" 
-        render={({ history }) => (
-          <button 
-            type='button'
-            onClick={() => { logout(); history.push('/') }}
-          >
-            LOGOUT
-          </button>)} 
-        element= {<Login />}/>
+        <Route path="logout" element= {<Login />}/>
         <Route path="*" element= {<Login />}/>
       </Route>
     </Routes>

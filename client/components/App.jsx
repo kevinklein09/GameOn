@@ -61,7 +61,6 @@ const App = () => {
         window.location.href = '/';
       }
     }).catch(err => console.error(err))
-    history.push('/')
   }
 
   return (
