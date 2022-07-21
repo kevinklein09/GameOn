@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
 require('./passport');
+const Events = require('../DB/Events');
 
 const DB = require('../DB/index');
 const { Events, Sports, Users } = require('../DB/models');
@@ -41,6 +42,17 @@ app.get('/api/eventListings', (req, res) => {
       console.error(err);
       res.sendStatus(500);
     });
+});
+
+app.put('/api/eventListings', (req, res) => {
+  Events.updateOne({ _id: id }, { $push: { attendees: User.email } })
+  .then(() => {
+    res.sendStatus(200);
+  })
+  .catch((err) => {
+    console.error(err)
+    res.sendStatus(204);
+  }); 
 });
 
 app.get('/api/categories', (req, res) => {

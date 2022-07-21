@@ -4,6 +4,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { UserContext } from '../index.jsx';
+import axios from 'axios';
 
 const Event = (props) => {
   const [going, setGoing] = useState(false);
@@ -17,6 +18,17 @@ const Event = (props) => {
     setGoing(e.target.checked);
     console.log("target id →", e.target.id);
     console.log('context (email of user)  →', context)  
+    axios.put('/api/eventListings')
+      .then((data) => {
+        if(data.id) {
+          data.id = data;
+        } else {
+          alert('login required to join event');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
   
  return (
