@@ -4,8 +4,7 @@
 /* eslint-disable */
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../index';
-
-const axios = require('axios');
+import axios from 'axios';
 
 
 const Profile = () => {
@@ -37,8 +36,20 @@ const Profile = () => {
   //     });
   // });
 
-  const handleDelete = () => {
-    
+  const handleDelete = (eventId) => {
+    const deleteConfirmation = confirm('Are you sure you wish to delete this event?')
+    if (deleteConfirmation) {
+      axios.delete('/api/event', {
+        data: {
+          id: eventId
+        }
+      })
+      .then(() => {
+        console.log('event deleted')
+        getUserEvents(); 
+      })
+      .catch((err) => console.error(err));
+    }
   }
 
   const userOrNull = () => { return user ? user : 'please login' };
@@ -68,7 +79,7 @@ const Profile = () => {
           <p style={{marginLeft: '10px'}}>{event.catName}</p>
           <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}</p>
           <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
-          <button style={{marginLeft: 'auto'}}> delete </button>
+          <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
         </div>
         )}
       </div>
