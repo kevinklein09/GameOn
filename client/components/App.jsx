@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../index';
 import { Link, Outlet } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -39,7 +40,7 @@ const linkStyle = {
   textDecoration: 'none',
   color: 'black',
   fontSize: 17,
-};
+}; 
 const login = {
   margin: '1rem',
   textDecoration: 'none',
@@ -49,33 +50,19 @@ const login = {
 };
 
 const App = () => {
-  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const getUser = () => {
-      const options = {
-        url: '/hidden',
-        method: 'GET',
-        withCredentials: true,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Credentials': true,
-        },
-      };
-      axios(options)
-        .then((res) => {
-          console.log('APP LINE 91 AXIOS RESOBJ', res);
-          if (res.status === 200) { return res; }
-        })
-        .then(({ data }) => { // <-- data = userObject
-          console.log('DATA APP GET REQ LINE 94', data);
-          setUser(data);
-        })
-        .catch((err) => console.error(err, '***ERROR***'));
-    };
-    getUser();
-  }, []);
+  const user = useContext(UserContext)
+  console.log('LINE 8 App USER', user)
+
+  const logout = () => {
+    axios.get("http://localhost:3000/auth/logout").then(res => {
+      if(res.data) {
+        window.location.href = '/'
+      }
+    }).catch(err => {
+      console.error('AXIOSLOGOUT ERR', err)
+    })
+  }
 
   return (
 
@@ -84,7 +71,7 @@ const App = () => {
           <Grid container spacing={1}>
           <Grid item xs={9}></Grid>
           <Grid item xs={1}><Link to="/login" style={login}>LOGIN</Link></Grid>
-          <Grid item xs={1}><Link to="/logout" style={login}>LOGOUT</Link></Grid>
+          <Grid item xs={1}><Link onClick={ logout } to="/logout" style={login}>LOGOUT</Link></Grid>
             </Grid>
           <Typography align="center" variant="h2" component="h2" >Game<strong><SportsBasketballIcon sx={{ fontSize: 50 }}/>N</strong></Typography>
           <Grid container spacing={6} align="center" margin="auto">
