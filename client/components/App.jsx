@@ -48,36 +48,7 @@ const login = {
   fontFamily: 'Roboto',
 };
 
-const App = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const getUser = () => {
-      const options = {
-        url: '/hidden',
-        method: 'GET',
-        withCredentials: true,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Credentials': true,
-        },
-      };
-      axios(options)
-        .then((res) => {
-          console.log('APP LINE 91 AXIOS RESOBJ', res);
-          if (res.status === 200) { return res; }
-        })
-        .then(({ data }) => { // <-- data = userObject
-          console.log('DATA APP GET REQ LINE 94', data);
-          setUser(data);
-        })
-        .catch((err) => console.error(err, '***ERROR***'));
-    };
-    getUser();
-  }, []);
-
-  return (
+const App = () => (
 
         <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
@@ -98,8 +69,7 @@ const App = () => {
           <Typography><p align="center">Game<strong><SportsBasketballIcon sx={{ fontSize: 15 }}/>N</strong>: Your go-to app for local pickup games.</p></Typography>
         </Box>
         </ThemeProvider>
-  );
-};
+);
 
 export default App;
 
