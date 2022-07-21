@@ -21,7 +21,7 @@ const Home = () => (
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            We're excited that you're here. If you want to find people to play local pick up games, you've come to the right place. 
+            We're excited that you're here. If you want to find people to play local pick up games, you've come to the right place. lol jk get wreked loser go to some other website
           </Typography>
         </AccordionDetails>
       </Accordion>
