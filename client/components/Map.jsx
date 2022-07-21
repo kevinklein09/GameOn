@@ -33,7 +33,8 @@ const Map = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const user = searchParams.get('user');
   const event = searchParams.get('event');
-  console.log(`userParam: ${user}, event: ${event}, signedIn: ${context}`);
+  const userId = searchParams.get('userId');
+  console.log(`userParam: ${user}, event: ${event}, signedIn: ${context}, userId: ${userId}`);
 
   // https://reactjs.org/docs/hooks-reference.html#useref
   const mapDiv = useRef(null);
@@ -42,11 +43,12 @@ const Map = () => {
   const [lat, setLat] = useState(29.96);
   const [zoom, setZoom] = useState(12);
 
+  // context username & userId
   useEffect(() => {
     if (user || event) {
       axios.get(`/map?user=${user}&event=${event}`)
         .then((eventData) => {
-          console.log(eventData);
+          // console.log(eventData);
         })
         .catch((err) => {
           console.error(err);

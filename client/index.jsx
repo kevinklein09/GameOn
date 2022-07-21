@@ -33,12 +33,11 @@ function UserContextProvider({ children }) {
       };
       axios(options)
         .then((res) => {
+          console.log('Index.jsx User:', res);
           setUser(res);
-          console.log('APP LINE 91 AXIOS RESOBJ', res);
           if (res.status === 200) { return res; }
         })
         .then(({ data }) => { // <-- data = userObject
-          console.log('DATA APP GET REQ LINE 94', data);
           setUser(data);
         })
         .catch((err) => console.error(err, '***ERROR***'));

@@ -6,7 +6,7 @@ const Profile = () => {
   useEffect(() => {
     axios.get('/users')
       .then((usersData) => {
-        console.log(usersData);
+        // console.log(usersData);
       })
       .catch((err) => {
         console.error(err);
