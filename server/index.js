@@ -55,9 +55,18 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  // console.log('map listings', req.query);
+  console.log('map listings', req.query);
   console.log('map GET request');
-  // search the events 
+  const { userId, event } = req.query;
+  // // search the events
+  if (event) {
+    Events.findByIdAndUpdate(
+      { _id: event },
+      { $push: { attendees: userId } },
+    )
+      .then(() => { console.log('user added to event'); })
+      .catch((err) => { console.error(err); });
+  }
   Events.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -154,7 +163,7 @@ app.post('/api/event', (req, res) => {
 app.delete('/api/event', (req, res) => {
   const { id } = req.body;
   console.log(req.body);
-  Events.findOneAndDelete({_id: id })
+  Events.findOneAndDelete({ _id: id })
     .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(500));
 });
