@@ -4,6 +4,7 @@
 /* eslint-disable */
 
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import Sports from './SportsSelect';
 import Event from './Event.jsx';
@@ -14,10 +15,14 @@ import Switch from '@mui/material/Switch';
 
 const EventListings = (props) => {
   const [events, setEvents] = useState([]);
- 
+  let [searchParams, setSearchParams] = useSearchParams();
+  const param = searchParams.get("user");
+  console.log(param);
+  
 const getAllEvents = () => {
   axios.get('/api/eventListings')
   .then((eventData) => {
+
     console.log(eventData);
     setEvents(eventData.data);
   })

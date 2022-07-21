@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import React, {
-  useState, useEffect, useRef, useContext, Component,
+  useState, useEffect, useRef, useContext,
 } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { UserContext } from '../index';
@@ -38,10 +38,6 @@ const Map = () => {
   const [zoom, setZoom] = useState(12);
   const [marker, setMarker] = useState([]);
   let prevMarker = [];
-
-  function handleClick() {
-    console.log('click');
-  }
 
   useEffect(() => {
     console.log('context:', context);
@@ -95,11 +91,9 @@ const Map = () => {
           <p>${event.description}</p>
           <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
           <p><strong>Where: </strong>${event.address}</p>
-          <button class="btn" onclick="${handleClick}">Going</button>
+          <button id="btn-collectobj"><a href="/#/eventListings?user=bethany">Going</a></button>
           `))
-            .addTo(map.current)
-            .on('click', (e) => {
-            });
+            .addTo(map.current);
         });
       });
   });
