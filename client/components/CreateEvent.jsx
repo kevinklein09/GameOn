@@ -78,8 +78,8 @@ const CreateEvents = () => {
   };
 
   const handleSelectSport = (e) => {
-    console.log(e.target.value)
-    setSport(e.target.value);
+    console.log(e.category)
+    setSport(e.category);
   };
 
   const handleDescription = (e) => {

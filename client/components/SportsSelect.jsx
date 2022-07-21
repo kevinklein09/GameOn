@@ -24,14 +24,18 @@ const Sports = ({sport, handleSelectSport}) => {
     <div id='category'>
     <Select
       style={{ backgroundColor: 'white' }}
-      onChange={(e) => handleSelectSport(e)}
       inputProps={{
         defaultValue: 'test',
       }}
       >
       {/* // onChange={handleSelectSport} defaultValue='test'> */}
-      <MenuItem selected={true} disabled value='test'> {sport || 'pick a sport'} </MenuItem>
-      {sports.map((sportItem, index) => <MenuItem key={index}>{sportItem.category}</MenuItem>)}
+      <MenuItem disabled value='test'> {sport || 'choose a sport'} </MenuItem>
+      {sports.map(
+        (sportItem, index) =>
+        <MenuItem
+          onClick ={() => handleSelectSport(sportItem)}
+          key={index}
+        >{sportItem.category}</MenuItem>)}
       {/* <select required onChange={handleSelectSport} defaultValue='test'>
         <option disabled value='test'>TEST</option>
 
