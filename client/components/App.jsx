@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../index';
 import { Link, Outlet } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -39,7 +40,7 @@ const linkStyle = {
   textDecoration: 'none',
   color: 'black',
   fontSize: 17,
-};
+}; 
 const login = {
   margin: '1rem',
   textDecoration: 'none',
@@ -48,14 +49,28 @@ const login = {
   fontFamily: 'Roboto',
 };
 
-const App = () => (
+const App = () => {
+
+  const user = useContext(UserContext)
+  console.log('LINE 8 App USER', user)
+
+  const logout = () => {
+    axios.get("/logout").then(res => {
+      if(res.data) {
+        alert('logout successful');
+        window.location.href = '/';
+      }
+    }).catch(err => console.error(err))
+  }
+
+  return (
 
         <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
           <Grid item xs={9}></Grid>
           <Grid item xs={1}><Link to="/login" style={login}>LOGIN</Link></Grid>
-          <Grid item xs={1}><Link to="/logout" style={login}>LOGOUT</Link></Grid>
+          <Grid item xs={1}><Link onClick={ logout } to="/logout" style={login}>LOGOUT</Link></Grid>
             </Grid>
           <Typography align="center" variant="h2" component="h2" >Game<strong><SportsBasketballIcon sx={{ fontSize: 50 }}/>N</strong></Typography>
           <Grid container spacing={6} align="center" margin="auto">
@@ -69,7 +84,8 @@ const App = () => (
           <Typography><p align="center">Game<strong><SportsBasketballIcon sx={{ fontSize: 15 }}/>N</strong>: Your go-to app for local pickup games.</p></Typography>
         </Box>
         </ThemeProvider>
-);
+  );
+}
 
 export default App;
 
