@@ -1,13 +1,26 @@
-import axios from 'axios'
-import React, { useEffect } from 'react'
+// import React, { useEffect, useContext } from 'react';
+// import { UserContext } from '../index';
+// const axios = require('axios');
 
-const Logout = () => {
 
-  useEffect( () => {
-    axios.get('/logout')
-    .then((res) => {res.redirect('/login')})
-    .catch(err => console.error(err));
-  })
-};
+// const Logout = () => {
+//   const {context, setContext} = useContext(UserContext);
+//   console.log(context);
 
-export default Logout;
+//   useEffect(() => {
+//     axios.get('/logout')
+//       .then(() => {
+//         setContext(null);
+//         console.log('logged out');
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   });
+
+//   return (<div>
+//       Thanks for using our app! Come back anytime.
+//     </div>
+//   );
+// };
+// export default Logout;

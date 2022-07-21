@@ -66,9 +66,22 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  // console.log('map listings', req.query);
+  console.log('map listings', req.query);
   console.log('map GET request');
+<<<<<<< HEAD
   // search the events
+=======
+  const { userId, event } = req.query;
+  // // search the events
+  if (event) {
+    Events.findByIdAndUpdate(
+      { _id: event },
+      { $push: { attendees: userId } },
+    )
+      .then(() => { console.log('user added to event'); })
+      .catch((err) => { console.error(err); });
+  }
+>>>>>>> 735da91e4871036600fc810e7c20723536807da5
   Events.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -135,12 +148,23 @@ app.get(
   }
 );
 
+<<<<<<< HEAD
 app.get("/logout", (req, res) => {
   req.logout(() => res.redirect("/"));
+=======
+app.get('/logout', (req, res) => {
+  console.log('logout');
+  console.log('req.user:', req.user);
+  req.logout(() => {
+    console.log('execute req.logout');
+    res.redirect('/');
+  });
+>>>>>>> 735da91e4871036600fc810e7c20723536807da5
 });
 
 app.post("/api/event", (req, res) => {
   const {
+<<<<<<< HEAD
     address,
     description,
     date,
@@ -149,9 +173,13 @@ app.post("/api/event", (req, res) => {
     category,
     catName,
     players,
+=======
+    owner, address, description, date, time, coordinates, category, catName, players,
+>>>>>>> 735da91e4871036600fc810e7c20723536807da5
   } = req.body;
 
   Events.create({
+    owner,
     address,
     description,
     date,
@@ -164,6 +192,13 @@ app.post("/api/event", (req, res) => {
   })
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
+});
+app.delete('/api/event', (req, res) => {
+  const { id } = req.body;
+  console.log(req.body);
+  Events.findOneAndDelete({ _id: id })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(500));
 });
 
 app.listen(port, () => {

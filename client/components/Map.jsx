@@ -49,7 +49,7 @@ const Map = () => {
   // context username & userId
   useEffect(() => {
     if (user || event) {
-      axios.get(`/map?user=${user}&event=${event}`)
+      axios.get(`/map?user=${user}&userId=${userContext._id}&event=${event}`)
         .then((eventData) => {
           // console.log(eventData);
         })
@@ -99,16 +99,28 @@ const Map = () => {
             icon.style.width = '20px';
             icon.style.height = '20px';
             icon.style.backgroundSize = '100%';
+            let popupContent;
+            if (event.attendees.includes(userId)) {
+              popupContent = `
+              <h4>${event.catName}</h4>
+              <p>${event.description}</p>
+              <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
+              <p><strong>Where: </strong>${event.address}</p>
+              <button id="btn-collectobj" style="background-color:green"><a href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}">Going</a></button>
+              `;
+            } else {
+              popupContent = `
+              <h4>${event.catName}</h4>
+              <p>${event.description}</p>
+              <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
+              <p><strong>Where: </strong>${event.address}</p>
+              <button id="btn-collectobj"><a href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}">Not Going</a></button>
+              `;
+            }
 
             new mapboxgl.Marker(icon)
               .setLngLat([event.coordinates[0], event.coordinates[1]])
-              .setPopup(new mapboxgl.Popup().setHTML(`
-          <h4>${event.catName}</h4>
-          <p>${event.description}</p>
-          <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
-          <p><strong>Where: </strong>${event.address}</p>
-          <button id="btn-collectobj"><a href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}">Going</a></button>
-          `))
+              .setPopup(new mapboxgl.Popup().setHTML(popupContent))
               .addTo(map.current);
           });
         });
