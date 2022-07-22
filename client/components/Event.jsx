@@ -23,9 +23,9 @@ const Event = (props) => {
           console.error(err);
       })
   }
-  
+
  return (
-    
+
       <div>
         <div>-------------------------------------------</div>
         <h4>Type of Event: </h4>
