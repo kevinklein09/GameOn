@@ -16,12 +16,13 @@ passport.use(new GoogleStrategy(
   },
   ((accessToken, refreshToken, profile, cb) => {
     // eslint-disable-next-line max-len
-    // console.log(profile, 'PROFILE ID');
+    console.log(profile, 'PROFILE ID');
     Users.findOrCreate({
       email: profile.emails[0].value,
       firstName: profile.name.givenName,
       lastName: profile.name.familyName,
       googleIdNumber: profile.id,
+      image: profile.photos[0].value
     }, (err, user) => cb(err, user));
   }),
 ));

@@ -95,7 +95,7 @@ app.get('/users', (req, res) => {
   // console.log('GET REQ LINE 67 RES', res);
   Users.find({})
     .then((query) => {
-      console.log('user get request');
+      // console.log('user get request');
       res.status(200).send(query);
     })
     .catch((err) => {
@@ -115,6 +115,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const isLoggedIn = (req, res, next) => {
+  // console.log('LINE 116', req)
+  // console.log('LINE 117', res);
   req.user ? next() : res.sendStatus(401);
 };
 app.get('/auth/success', (req, res) => {
@@ -127,8 +129,8 @@ app.get('/auth/success', (req, res) => {
   }
 });
 
-app.get('/hidden', isLoggedIn, (req, res) => {
-  console.log(req);
+app.get("/hidden", isLoggedIn, (req, res) => {
+  // console.log('LINE 130', req);
   res.send(req.user);
 });
 
@@ -147,10 +149,10 @@ app.get(
 );
 
 app.get('/logout', (req, res) => {
-  console.log('logout');
-  console.log('req.user:', req.user);
+  // console.log('logout');
+  // console.log('req.user:', req.user);
   req.logout(() => {
-    console.log('execute req.logout');
+    // console.log('execute req.logout');
     res.redirect('/');
   });
 });
