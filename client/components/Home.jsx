@@ -7,8 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 const Home = () => (
       <div>
+        <br></br><br></br>
     <Typography variant="h4">Welcome to GameOn.</Typography>
-    <Typography>We're excited that you're here. If you want to find people to play local pick up games, you've come to the right place. With our app you can join scheduled games ranging from football to volleyball to even ping pong! Never again will you miss out on playing your favorite sport with like-minded people. <Link to="/login">Sign up</Link> for an account today to get started!</Typography>
+    <Typography>We're excited that you're here. If you want to find people to play local pick up games, you've come to the right place. With our app you can join scheduled games ranging from football to volleyball to even ping pong! Never again will you miss out on playing your favorite sport with like-minded people. <Link to="/login">Sign up</Link> for a free account today to get started!</Typography>
+    <br></br>
     <br></br>
     <Typography variant="h5">FAQs</Typography>
     <Accordion>
@@ -17,11 +19,11 @@ const Home = () => (
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Accordion 1</Typography>
+          <Typography>Do I have to Pay Anything?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            We're excited that you're here. If you want to find people to play local pick up games, you've come to the right place. lol jk get wreked loser go to some other website
+          Nope! Our app is completely free to use, just login with your Google account and you'll be ready to go!
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -31,12 +33,13 @@ const Home = () => (
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Accordion 2</Typography>
+          <Typography>How Do I Use Your App?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            If you want to browse the games happening in your area, simply visit
+            the <strong>Games</strong> tab at the top of the page.
+            If You want to host your own game, click on <strong>Post</strong>.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -46,12 +49,43 @@ const Home = () => (
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Accordion 2</Typography>
+          <Typography>What Sports Can I Host?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Our app currently supports the following sports activities:
+            <ul>
+              <li>
+                Volleyball
+              </li>
+              <li>
+                Basketball
+              </li>
+              <li>
+                Tennis
+              </li>
+              <li>
+                Football
+              </li>
+              <li>
+                Soccer
+              </li>
+              <li>
+                Ultimate Frisbee
+              </li>
+              <li>
+                Softball
+              </li>
+              <li>
+                Bowling
+              </li>
+              <li>
+                Rugby
+              </li>
+              <li>
+                Ping Pong
+              </li>
+            </ul>
           </Typography>
         </AccordionDetails>
       </Accordion>

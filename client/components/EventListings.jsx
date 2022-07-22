@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */ 
-/* eslint-disable import/extensions */ 
-/* eslint linebreak-style: ['error', 'windows'] */ 
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/extensions */
+/* eslint linebreak-style: ['error', 'windows'] */
 /* eslint-disable */
 
 import React, { useState, useEffect } from 'react';
@@ -35,6 +35,7 @@ useEffect(() => {
 
 return (
   <div>
+    <br></br><br></br>
     <h1>See all da events</h1>
     <Sports />
     { events.map((event, i) => {
