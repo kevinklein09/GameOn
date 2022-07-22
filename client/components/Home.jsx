@@ -49,7 +49,7 @@ const Home = () => (
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>What sports can we host?</Typography>
+          <Typography>What Sports Can I Host?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
