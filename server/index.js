@@ -184,6 +184,28 @@ app.delete('/api/event', (req, res) => {
     .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(500));
 });
+app.get('/api/event', (req, res) => {
+  Events.findOne({ _id: req.query.id })
+    .then((data) => res.status(200).send(data))
+    .catch((err) => res.sendStatus(500));
+})
+
+app.put('/api/event', (req, res) => {
+  console.log(req.body);
+  if (req.body.going) {
+    Events.updateOne(
+      { _id: req.body.id },
+      { $pullAll: { attendees: [req.body.userId] } }
+    ).then((data) => res.status(200).send(data))
+      .catch((err) => res.sendStatus(500));
+  } else {
+    Events.updateOne(
+      { _id: req.body.id },
+      { $push: { attendees: req.body.userId } },
+    ).then((data) => res.status(200).send(data))
+      .catch((err) => res.sendStatus(500));
+  }
+});
 
 app.listen(port, () => {
   console.log(`
