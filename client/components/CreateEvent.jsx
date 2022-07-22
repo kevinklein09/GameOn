@@ -47,8 +47,10 @@ const theme = createTheme({
 });
 
 
-
 const today = new Date();
+const hour = today.getHours();
+const minute = today.getMinutes();
+console.log('TIME', hour.toString() + ':' + minute.toString())
 
 const CreateEvents = () => {
   //user email from login
@@ -151,6 +153,7 @@ const CreateEvents = () => {
 
   const postEvent = (e) => {
     e.preventDefault();
+    if (sport && description && address){
 
       axios.post('/api/event', {
       owner: context.email,
@@ -167,7 +170,7 @@ const CreateEvents = () => {
     .then(() => {
 
       alert('your event was created!')
-      if (sport && description && address){
+
         setDescription('');
         setAddress('');
         setCity('');
@@ -182,10 +185,13 @@ const CreateEvents = () => {
         setTime('12:00');
         setEquipment([]);
         setItem('');
-  
-      }
+
     })
-    .catch(() => console.error('OOPs'));
+    .catch(() => alert('there are conflicting events'));
+      
+  } else {
+    alert('please fill out the required fields')
+  }
       
 
     // if (sport && description && address){
@@ -213,12 +219,12 @@ const CreateEvents = () => {
     <div>
       <ThemeProvider theme={theme}>
       <Typography
-        style={{color: '#5e35b1'}}
+        style={{color: '#172e36'}}
         align='center'
         variant='h3'
         gutterBottom={true}
       >
-        Create Your Event
+        CREATE EVENT
       </Typography>
 
       <form>
@@ -230,7 +236,7 @@ const CreateEvents = () => {
             style={{backgroundColor: 'white', marginTop: '10px'}}
             multiline={true}
             rows='5'
-            placeholder='enter description here'
+            placeholder='enter description here (*required)'
             fullWidth={true}
             inputProps={{
               maxLength: 500,
@@ -251,7 +257,7 @@ const CreateEvents = () => {
 
         <div id="playerLimit">
           <OutlinedInput
-            style= {{backgroundColor: 'white', marginTop: '10px'}}
+            style= {{backgroundColor: '#1c1c1c', color: '#ce93d8', marginTop: '10px'}}
             inputProps={{
               type:'number',
               onChange: (e) => handlePlayerLimit(e),
@@ -320,17 +326,39 @@ const CreateEvents = () => {
         <DateRangePicker/>
         </LocalizationProvider> */}
         <div style={{marginTop: '10px'}} id='dateTime'>
-          <input
+          <OutlinedInput
+            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: 'pink'}}
+            inputProps={{
+              color: 'pink',
+              type: 'date',
+              value: date,
+              onChange: (e) => handleDate(e),
+              min: `${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`,
+
+            }}
+          >
+          </OutlinedInput>
+          {/* <input
             value={date}
             onChange={(e) => handleDate(e)}
             type='date'
             min={`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`}
-          />
-          <input
+          /> */}
+          <OutlinedInput
+            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: 'pink'}}
+            inputProps={{
+              color: 'pink',
+              type: 'time',
+              onChange: (e) => handleTime(e),
+              value: time
+            }}
+          >
+          </OutlinedInput>
+          {/* <input
             type='time'
             value={time}
             onChange={(e) => handleTime(e)}
-          />
+          /> */}
         </div>
 
         <Fab style={{marginTop: '15px'}} size='small' variant='extended' color='primary' onClick={postEvent} type='submit'><BorderColorIcon/>     Create Event</Fab>
