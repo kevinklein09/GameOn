@@ -6,10 +6,12 @@ import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { UserContext} from '../index';
 //MUI
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { createTheme, ThemeProvider} from '@mui/material/styles';
+// import Typography from '@mui/material/Typography';
+// import Button from '@mui/material/Button';
+// import OutlinedInput from '@mui/material/OutlinedInput'
+// import { createTheme, ThemeProvider} from '@mui/material/styles';
+import { Typography, Button, Fab, OutlinedInput, createTheme, ThemeProvider} from '@mui/material';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 // import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
 // import AdapterJalaali from '@date-io/jalaali';
 //COMPONENTS
@@ -45,14 +47,15 @@ const theme = createTheme({
 });
 
 
-
 const today = new Date();
+const hour = today.getHours();
+const minute = today.getMinutes();
+console.log('TIME', hour.toString() + ':' + minute.toString())
 
 const CreateEvents = () => {
   //user email from login
   const context = useContext(UserContext);
-  console.log(context);
-
+  if (context) {
   //states
   const [sport, setSport] = useState('');
   const [description, setDescription] = useState('');
@@ -150,6 +153,7 @@ const CreateEvents = () => {
 
   const postEvent = (e) => {
     e.preventDefault();
+    if (sport && description && address){
 
       axios.post('/api/event', {
       owner: context.email,
@@ -164,8 +168,9 @@ const CreateEvents = () => {
       isOpen: true,
     })
     .then(() => {
+
       alert('your event was created!')
-      if (sport && description && address){
+
         setDescription('');
         setAddress('');
         setCity('');
@@ -180,10 +185,13 @@ const CreateEvents = () => {
         setTime('12:00');
         setEquipment([]);
         setItem('');
-  
-      }
+
     })
-    .catch(() => console.error('OOPs'));
+    .catch(() => alert('there are conflicting events'));
+      
+  } else {
+    alert('please fill out the required fields')
+  }
       
 
     // if (sport && description && address){
@@ -211,12 +219,12 @@ const CreateEvents = () => {
     <div>
       <ThemeProvider theme={theme}>
       <Typography
-        style={{color: '#5e35b1'}}
+        style={{color: '#172e36'}}
         align='center'
         variant='h3'
         gutterBottom={true}
       >
-        Create Your Event
+        CREATE EVENT
       </Typography>
 
       <form>
@@ -228,7 +236,7 @@ const CreateEvents = () => {
             style={{backgroundColor: 'white', marginTop: '10px'}}
             multiline={true}
             rows='5'
-            placeholder='enter description here'
+            placeholder='enter description here (*required)'
             fullWidth={true}
             inputProps={{
               maxLength: 500,
@@ -249,7 +257,7 @@ const CreateEvents = () => {
 
         <div id="playerLimit">
           <OutlinedInput
-            style= {{backgroundColor: 'white', marginTop: '10px'}}
+            style= {{backgroundColor: '#1c1c1c', color: '#ce93d8', marginTop: '10px'}}
             inputProps={{
               type:'number',
               onChange: (e) => handlePlayerLimit(e),
@@ -310,35 +318,66 @@ const CreateEvents = () => {
             value={item}
           /> */}
 
-          <Button  size='medium' color='primary' variant="contained" onClick={() => handleEquipmentList()}> add</Button>
+          <Button  style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} color='primary' variant="contained" onClick={() => handleEquipmentList()}> <b> + </b> </Button>
         </div>
 
         <EquipmentList equipment={equipment}/>
         {/* <LocalizationProvider dateAdapter={AdapterJalaali}>
         <DateRangePicker/>
         </LocalizationProvider> */}
-        <div id='date'>
-          <input
+        <div style={{marginTop: '10px'}} id='dateTime'>
+          <OutlinedInput
+            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: 'pink'}}
+            inputProps={{
+              color: 'pink',
+              type: 'date',
+              value: date,
+              onChange: (e) => handleDate(e),
+              min: `${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`,
+
+            }}
+          >
+          </OutlinedInput>
+          {/* <input
             value={date}
             onChange={(e) => handleDate(e)}
             type='date'
-          />
-        </div>
-
-        <div id='time'>
-          <input
+            min={`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`}
+          /> */}
+          <OutlinedInput
+            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: 'pink'}}
+            inputProps={{
+              color: 'pink',
+              type: 'time',
+              onChange: (e) => handleTime(e),
+              value: time
+            }}
+          >
+          </OutlinedInput>
+          {/* <input
             type='time'
             value={time}
             onChange={(e) => handleTime(e)}
-          />
+          /> */}
         </div>
 
-        <Button size='small' variant='contained' color='primary' onClick={postEvent} type='submit'>submit</Button>
+        <Fab style={{marginTop: '15px'}} size='small' variant='extended' color='primary' onClick={postEvent} type='submit'><BorderColorIcon/>     Create Event</Fab>
 
         </form>
       </ThemeProvider>
+
     </div>
   );
+  } else {
+    return (
+      <div align='center'>
+        <h3>
+        You must be logged in to create an event
+        </h3>
+        <img width='200' height='100%' src='https://manbitesfrog.com/wp-content/uploads/2021/10/giphy-1-2.gif'/>
+      </div>
+    )
+  }
 };
 
 export default CreateEvents;

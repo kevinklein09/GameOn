@@ -99,3 +99,7 @@ body {
     margin: 10px;
     background-color: #737373;
   }
+
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
