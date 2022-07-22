@@ -26,7 +26,7 @@ const Profile = () => {
   };
 
   // const [userAttendingEvents, setUserAttendingEvents] = useState([]);
-  // const getUserEvents = () => {
+  // const getUserAttendingEvents = () => {
   //   axios.get('/api/eventListings')
   //     .then((events) => {
   //       console.log(events.data.filter((event) => event.attendees.includes(user._id)));
