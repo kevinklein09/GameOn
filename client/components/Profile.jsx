@@ -73,7 +73,7 @@ const Profile = () => {
     }
   }
 
-
+  
     return (
       <div>
         <h1>
