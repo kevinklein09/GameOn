@@ -348,6 +348,7 @@ const CreateEvents = () => {
   } else {
     return (
       <div align='center'>
+        <br></br>
         <h3>
         You must be logged in to create an event
         </h3>

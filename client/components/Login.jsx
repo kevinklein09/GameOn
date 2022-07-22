@@ -1,10 +1,11 @@
 import React from 'react';
-
+import Typography from '@mui/material/Typography';
 const LOGIN = () => (
-      <div>
-        <h1>
-            THIS IS WHERE YOU LOGIN
-        </h1>
+      <div align='center'>
+        <br></br>
+      <h3>
+    Please Login to Use Our App
+    </h3>
         <form action="http://localhost:3000/auth/google">
           <button type="submit" className="google-button">
             <span className="google-button__icon">

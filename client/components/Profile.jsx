@@ -189,6 +189,7 @@ const Profile = () => {
   } else {
     return (
       <div>
+        <br></br>
         <h1>PLEASE LOG IN </h1>
       </div>
     )
