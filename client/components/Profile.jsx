@@ -18,11 +18,24 @@ const Profile = () => {
     axios.get('/api/eventListings')
       .then((events) => {
         console.log(events.data.filter((event) => event.owner === user.email));
+        console.log(events.data.filter((event) => event.attendees.includes(user._id)));
   
-        setUserEvents(events.data.filter((event) => event.owner === user.email))
+        setUserEvents(events.data.filter((event) => event.owner === user.email));
       })
       .catch(() => console.log(oops));
   };
+
+  // const [userAttendingEvents, setUserAttendingEvents] = useState([]);
+  // const getUserEvents = () => {
+  //   axios.get('/api/eventListings')
+  //     .then((events) => {
+  //       console.log(events.data.filter((event) => event.attendees.includes(user._id)));
+  
+  //       setUserEvents(events.data.filter((event) => event.owner === user.email));
+  //     })
+  //     .catch(() => console.log(oops));
+  // };
+
 
   
 
