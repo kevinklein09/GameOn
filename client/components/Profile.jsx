@@ -43,6 +43,7 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       getUserEvents();
+      getUserAttendingEvents();
     }
   }, [])
 
@@ -102,13 +103,21 @@ const Profile = () => {
             <p style={{marginLeft: '10px'}}>{event.catName}</p>
             <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}</p>
             <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
-            <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
+            {/* <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button> */}
           </div>
           )}
         </div>
         <div>
           <h2>EVENTS ATTENDING</h2>
-          <input type='text' id='eventAttending' name ='eventsAttending' value='{modifiable events user is attending here}'></input>
+          {userAttendingEvents.map((event, i) =>
+          <div key={i} style={{display: 'flex', backgroundColor: 'white', marginTop: '10px', whiteSpace: 'nowrap'}}>
+            <p style={{marginLeft: '10px'}}>{event.catName}<br />{'\n'}{'\n'}</p>{'\n'}
+            <p><br /></p>
+            <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}{'\n'}</p>{'\n'}
+            <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}{'\n'}</p>{'\n'}
+            <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
+          </div>
+          )}        
         </div>
       </div>
     );
