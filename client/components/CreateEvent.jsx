@@ -10,6 +10,10 @@ import { UserContext} from '../index';
 // import Button from '@mui/material/Button';
 // import OutlinedInput from '@mui/material/OutlinedInput'
 // import { createTheme, ThemeProvider} from '@mui/material/styles';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+
 import { Typography, Button, Fab, OutlinedInput, createTheme, ThemeProvider} from '@mui/material';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 // import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
@@ -217,6 +221,7 @@ const CreateEvents = () => {
 
   return (
     <div>
+
       <ThemeProvider theme={theme}>
       <Typography
         style={{color: '#172e36'}}
