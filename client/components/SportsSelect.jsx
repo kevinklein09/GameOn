@@ -23,16 +23,19 @@ const Sports = ({sport, handleSelectSport}) => {
   return (
     <div id='category'>
     <Select
-      style={{ backgroundColor: 'white' }}
+      autoWidth= {true} 
+      variant='standard'
+      style={{ padding: '10px', backgroundColor: '#1c1c1c', color: '#ce93d8' }}
       inputProps={{
         defaultValue: 'test',
       }}
       >
       {/* // onChange={handleSelectSport} defaultValue='test'> */}
-      <MenuItem disabled value='test'> {sport || 'choose a sport'} </MenuItem>
+      <MenuItem style={{ backgroundColor: '#ce93d8', color: '#1c1c1c' }} disabled value='test'> <b>{sport || 'choose a sport'}</b> </MenuItem>
       {sports.map(
         (sportItem, index) =>
         <MenuItem
+          style={{ backgroundColor: '#ce93d8', color: '#1c1c1c' }}
           onClick ={() => handleSelectSport(sportItem)}
           key={index}
         >{sportItem.category}</MenuItem>)}

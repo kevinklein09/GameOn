@@ -59,6 +59,8 @@ const App = () => {
       if(res.data) {
         alert('logout successful');
         window.location.href = '/';
+        history.push('/');
+        history.push('/profile');
       }
     }).catch(err => console.error(err))
   }

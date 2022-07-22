@@ -20,6 +20,7 @@ const userSchema = new Schema({
   firstName: String,
   lastName: String,
   googleIdNumber: Number,
+  image: String
 });
 
 userSchema.plugin(passportLocalMongoose);

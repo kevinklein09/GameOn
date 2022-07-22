@@ -18,11 +18,24 @@ const Profile = () => {
     axios.get('/api/eventListings')
       .then((events) => {
         console.log(events.data.filter((event) => event.owner === user.email));
+        console.log(events.data.filter((event) => event.attendees.includes(user._id)));
   
-        setUserEvents(events.data.filter((event) => event.owner === user.email))
+        setUserEvents(events.data.filter((event) => event.owner === user.email));
       })
       .catch(() => console.log(oops));
   };
+
+  const [userAttendingEvents, setUserAttendingEvents] = useState([]);
+  const getUserAttendingEvents = () => {
+    axios.get('/api/eventListings')
+      .then((events) => {
+        console.log(events.data.filter((event) => event.attendees.includes(user._id)));
+  
+        setUserAttendingEvents(events.data.filter((event) => event.attendees.includes(user._id)));
+      })
+      .catch(() => console.log(err => console.error(err)));
+  };
+
 
   
 
@@ -60,12 +73,15 @@ const Profile = () => {
     }
   }
 
-
+  
     return (
       <div>
         <h1>
             WELCOME TO THE PROFILE PAGE
         </h1>
+        <div>
+          <img src={user.image} height={200} width={200} />
+        </div>
         <p>Hello, User: </p>
         <div>
           <h2>NAME</h2>
