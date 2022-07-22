@@ -1,26 +1,26 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-require("dotenv").config();
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const session = require("express-session");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const findOrCreate = require("mongoose-findorcreate");
-const path = require("path");
-const express = require("express");
-const mongoose = require("mongoose");
-const User = require("../DB/Users");
-const ENV = require("../.env");
-require("./passport");
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const findOrCreate = require('mongoose-findorcreate');
+const path = require('path');
+const express = require('express');
+const mongoose = require('mongoose');
+const User = require('../DB/Users');
+const ENV = require('../.env');
+require('./passport');
 
-const DB = require("../DB/index");
-const { Events, Sports, Users } = require("../DB/models");
+const DB = require('../DB/index');
+const { Events, Sports, Users } = require('../DB/models');
 
 const port = 3000;
-const distPath = path.resolve(__dirname, "..", "dist");
+const distPath = path.resolve(__dirname, '..', 'dist');
 const app = express();
 // const styles = require('../client/styles.css');
 app.use(cors());
@@ -119,12 +119,11 @@ const isLoggedIn = (req, res, next) => {
   // console.log('LINE 117', res);
   req.user ? next() : res.sendStatus(401);
 };
-app.get("/auth/success", (req, res) => {
-  // console.log(req)
+app.get('/auth/success', (req, res) => {
   if (req.user) {
     res.status(200).json({
       user: req.user,
-      message: "success",
+      message: 'success',
       success: true,
     });
   }
@@ -136,16 +135,16 @@ app.get("/hidden", isLoggedIn, (req, res) => {
 });
 
 app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
-    res.redirect("/");
+    res.redirect('/');
   }
 );
 
@@ -158,7 +157,7 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.post("/api/event", (req, res) => {
+app.post('/api/event', (req, res) => {
   const {
     owner, address, description, date, time, coordinates, category, catName, players,
   } = req.body;
