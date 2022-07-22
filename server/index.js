@@ -42,11 +42,9 @@ app.get('/api/eventListings', (req, res) => {
       res.sendStatus(500);
     });
 });
-app.get('/api/eventListings'), (req, res) => {
-  
-}
+
 app.put('/api/eventListings', (req, res) => {
-  console.log(req.body);
+  console.log("it's right here →→→→→→→", req.body);
   const { eventID, userId } = req.body;
   Events.findByIdAndUpdate({ _id: eventID }, { $push: { attendees: userId } })
     .then(() => {

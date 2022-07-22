@@ -63,7 +63,9 @@ const Event = (props) => {
     .then(() => setGoing(going => !going))
 
   }
-
+if (context) {
+  
+}
  return (
   <ThemeProvider theme={theme}>
      <div class="card">
