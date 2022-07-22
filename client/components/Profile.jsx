@@ -5,10 +5,58 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../index';
 import axios from 'axios';
+import { styled } from '@mui/material/styles';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
 
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  '&:not(:last-child)': {
+    borderBottom: 0,
+  },
+  '&:before': {
+    display: 'none',
+  },
+}));
+
+const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
+    {...props}
+  />
+))(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? 'rgba(255, 255, 255, .05)'
+      : 'rgba(0, 0, 0, .03)',
+  flexDirection: 'row-reverse',
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    transform: 'rotate(90deg)',
+  },
+  '& .MuiAccordionSummary-content': {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: '1px solid rgba(0, 0, 0, .125)',
+}));
 
 const Profile = () => {
+  
   const user = useContext(UserContext);
+  
+  const [expanded, setExpanded] = React.useState(null);
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
   console.log(user);
 
   if (user) {
@@ -98,26 +146,42 @@ const Profile = () => {
         </div>
         <div>
           <h2>EVENTS CREATED</h2>
-          {userEvents.map((event, i) =>
-          <div key={i} style={{display: 'flex', backgroundColor: 'white', marginTop: '10px', whiteSpace: 'nowrap'}}>
-            <p style={{marginLeft: '10px'}}>{event.catName}</p>
-            <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}</p>
-            <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
-            {/* <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button> */}
-          </div>
-          )}
+            {userEvents.map((event, i) =>
+            <div>
+              <Accordion onChange={handleChange('panel1')}>
+                <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                  <Typography>{event.catName + event.date}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    <p style={{marginLeft: '10px'}}>{event.catName}</p>
+                    <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}</p>
+                    <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
+                    <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+            )}
         </div>
         <div>
           <h2>EVENTS ATTENDING</h2>
-          {userAttendingEvents.map((event, i) =>
-          <div key={i} style={{display: 'flex', backgroundColor: 'white', marginTop: '10px', whiteSpace: 'nowrap'}}>
-            <p style={{marginLeft: '10px'}}>{event.catName}<br />{'\n'}{'\n'}</p>{'\n'}
-            <p><br /></p>
-            <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}{'\n'}</p>{'\n'}
-            <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}{'\n'}</p>{'\n'}
-            <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
-          </div>
-          )}        
+            {userAttendingEvents.map((event, i) =>
+              <div>
+                <Accordion onChange={handleChange('panel1')}>
+                  <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                    <Typography>{event.catName + event.date}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      <p style={{marginLeft: '10px'}}>{event.catName}</p>
+                      <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}</p>
+                      <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              </div>
+            )}
         </div>
       </div>
     );
@@ -129,6 +193,7 @@ const Profile = () => {
       </div>
     )
   }
-};
+}
+
 
 export default Profile;
