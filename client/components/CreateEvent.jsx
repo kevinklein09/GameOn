@@ -14,41 +14,14 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-import { Typography, Button, Fab, OutlinedInput, createTheme, ThemeProvider} from '@mui/material';
+import { Typography, Button, Fab, OutlinedInput, ThemeProvider} from '@mui/material';
+import theme from './Theme.jsx';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
-// import AdapterJalaali from '@date-io/jalaali';
 //COMPONENTS
 import Sports from './SportsSelect';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
 
-
-
-
-const theme = createTheme({
-  typography: {
-    h3: {
-      fontFamily: 'Roboto',
-    },
-    t: {
-      fontFamily: 'Roboto'
-    }
-  },
-  status: {
-    danger: '#e53e3e',
-  },
-  palette: {
-    primary: {
-      main: '#ce93d8',
-      darker: '#5e35b1',
-    },
-    neutral: {
-      main: '#64748B',
-      contrastText: '#fff',
-    },
-  },
-});
 
 
 const today = new Date();
@@ -57,7 +30,6 @@ const minute = today.getMinutes();
 console.log('TIME', hour.toString() + ':' + minute.toString())
 
 const CreateEvents = () => {
-  //user email from login
   const context = useContext(UserContext);
   if (context) {
   //states
