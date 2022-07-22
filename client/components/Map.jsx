@@ -132,6 +132,7 @@ const Map = () => {
     return (
         <div>
         <Typography align="center" variant="h2" component="h2" >Hello, {userContext.firstName}!</Typography>
+        <img src="https://avatars.githubusercontent.com/u/70044056?v=4" alt="Italian Trulli"></img>
         <Typography align="center" variant="body1">Check out all of the games near you!</Typography>
         <div id="map" className="map-container" ref={mapDiv}></div>
       </div>
