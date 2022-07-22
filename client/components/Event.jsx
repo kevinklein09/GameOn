@@ -24,6 +24,35 @@ const Event = (props) => {
       })
   }
 
+  const handleRemovalChange = (e) => {
+    setGoing(e.target.checked);
+    axios.delete('/api/eventListings/')
+    
+  }
+  const renderSwitch = () => {
+    
+    const attArr = props.eventData.attendees;
+    let switchyBoi = '';
+     
+    if (attArr.includes(props.userContext._id)){
+      setGoing(true);
+      switchyBoi =
+        `<FormGroup>
+        <FormControlLabel control=${<Switch color="warning" onChange={ handleRemovalChange } checked={ going } id={ props.eventData._id }/>} label="Going" />
+      </FormGroup>`
+
+      
+    } else {
+      switchyBoi =
+      `<FormGroup>
+        <FormControlLabel control=${<Switch color="warning" onChange={ handleChange } checked={ going } id={ props.eventData._id }/>} label="Going" />
+      </FormGroup>`
+  }
+  return switchyBoi;
+  }
+
+
+
  return (
 
       <div>
@@ -38,10 +67,9 @@ const Event = (props) => {
       <div>{ props.eventData.address }</div>
       <h4>What day?: </h4>
       <div>{ props.eventData.date.substring(0, 10) }</div>
-      
-      <FormGroup>
-      <FormControlLabel control={<Switch color="warning" onChange={ handleChange } checked={ going } id={ props.eventData._id }/>} label="Going" />
-    </FormGroup>
+    {/* // add a conditional that will make a new FormGroup containing the handleRemovalChange function 
+    //and a default unchecked state if the user was an attendee but switches it off to revoke that status  */}
+      { renderSwitch }
       <div>-------------------------------------------</div>
       </div>
     
