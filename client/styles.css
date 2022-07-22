@@ -1,16 +1,18 @@
 body {
   width: auto;
-  background-image: url("https://images.unsplash.com/photo-1502014822147-1aedfb0676e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: rgb(255, 255, 255);
+  background-color: #395B64;
+  color: white;
 }
 
 .app-body {
   max-width: 700px;
   margin: auto;
   padding: 20px;
-  background-color: rgb(194, 210, 255);
+  background-color: #2C3333;
+}
+
+#text {
+  color: white;
 }
 
 .map-container {
@@ -19,7 +21,14 @@ body {
 
 .mapboxgl-popup {
   max-width: 400px;
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font: 12px/20px 'Roboto';
+  background-color: #a373ab;
+}
+
+.mapboxgl-popup-content {
+  background-color: #CE93D8;
+  font: 12px/20px 'Roboto';
+  color: black;
 }
 
 .icon {
@@ -95,6 +104,15 @@ body {
     font-family: 'Roboto', arial, sans-serif;
   }
 
+  .card-text {
+    color: black;
+  }
+
+  .card {
+    background-color: #A5C9CA;
+    margin: 20px;
+    padding: 20px;
+  }
   .event {
     margin: 10px;
     background-color: #737373;

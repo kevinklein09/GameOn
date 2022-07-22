@@ -70,15 +70,25 @@ app.get('/api/categories', (req, res) => {
 app.get('/map', (req, res) => {
   console.log('map listings', req.query);
   console.log('map GET request');
-  const { userId, event } = req.query;
-
+  const { userId, event, status } = req.query;
+  console.log(status);
   if (event) {
-    Events.findByIdAndUpdate(
-      { _id: event },
-      { $push: { attendees: userId } },
-    )
-      .then(() => { console.log('user added to event'); })
-      .catch((err) => { console.error(err); });
+    if (status === 'Going') {
+      Events.updateOne({ _id: event }, { $pullAll: { attendees: [userId] } })
+        .then((eventData) => {
+          console.log('removed-----');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      Events.findByIdAndUpdate(
+        { _id: event },
+        { $push: { attendees: userId } },
+      )
+        .then(() => { console.log('user added to event'); })
+        .catch((err) => { console.error(err); });
+    }
   }
   Events.find({})
     .then((query) => {
@@ -109,7 +119,7 @@ app.use(
     secret: ENV.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -129,14 +139,14 @@ app.get('/auth/success', (req, res) => {
   }
 });
 
-app.get("/hidden", isLoggedIn, (req, res) => {
+app.get('/hidden', isLoggedIn, (req, res) => {
   // console.log('LINE 130', req);
   res.send(req.user);
 });
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 app.get(
   '/auth/google/callback',
@@ -145,7 +155,7 @@ app.get(
     // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
     res.redirect('/');
-  }
+  },
 );
 
 app.get('/logout', (req, res) => {

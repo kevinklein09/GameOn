@@ -41,7 +41,7 @@ function UserContextProvider({ children }) {
             firstName: res.data.firstName,
             lastName: res.data.lastName,
             image: res.data.image,
-            _id: res.data._id
+            _id: res.data._id,
           });
           if (res.status === 200) { return res; }
         })

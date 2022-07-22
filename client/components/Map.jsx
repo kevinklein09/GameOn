@@ -35,6 +35,7 @@ const Map = () => {
   const user = searchParams.get('user');
   const event = searchParams.get('event');
   const userId = searchParams.get('userId');
+  const status = searchParams.get('status');
   if (userContext !== null) {
     console.log(`userParam: ${user}, event: ${event}, signedIn: ${userContext.email}, userId: ${userContext._id}`);
   }
@@ -45,11 +46,10 @@ const Map = () => {
   const [lng, setLng] = useState(-90.10);
   const [lat, setLat] = useState(29.96);
   const [zoom, setZoom] = useState(12);
-
   // context username & userId
   useEffect(() => {
     if (user || event) {
-      axios.get(`/map?user=${user}&userId=${userContext._id}&event=${event}`)
+      axios.get(`/map?user=${user}&userId=${userContext._id}&event=${event}&status=${status}`)
         .then((eventData) => {
           // console.log(eventData);
         })
@@ -57,7 +57,7 @@ const Map = () => {
           console.error(err);
         });
     }
-    if (userContext) {
+    if (userContext !== null) {
       mapboxgl.accessToken = MAP_TOKEN;
       map.current = new mapboxgl.Map({
         container: mapDiv.current,
@@ -101,14 +101,15 @@ const Map = () => {
               icon.style.height = '20px';
               icon.style.backgroundSize = '100%';
               let popupContent;
-              if (event.attendees.includes(userId)) {
+
+              if (event.attendees.includes(userContext._id)) {
                 console.log('user attending');
                 popupContent = `
               <h4>${event.catName}</h4>
               <p>${event.description}</p>
               <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
               <p><strong>Where: </strong>${event.address}</p>
-              <button id="btn-collectobj" style="background-color:green"><a href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}">Going</a></button>
+              <button id="btn-collectobj" style="background-color:black; color:white"><a style="color:white; text-decoration: none" href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}&status=Going">Going</a></button>
               `;
               } else {
                 popupContent = `
@@ -116,10 +117,9 @@ const Map = () => {
               <p>${event.description}</p>
               <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
               <p><strong>Where: </strong>${event.address}</p>
-              <button id="btn-collectobj"><a href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}">Not Going</a></button>
+              <button id="btn-collectobj"><a style="color:black; text-decoration: none" href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}&status=NotGoing">Not Going</a></button>
               `;
               }
-
               new mapboxgl.Marker(icon)
                 .setLngLat([event.coordinates[0], event.coordinates[1]])
                 .setPopup(new mapboxgl.Popup().setHTML(popupContent))
