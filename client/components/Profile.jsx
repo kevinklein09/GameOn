@@ -25,16 +25,16 @@ const Profile = () => {
       .catch(() => console.log(oops));
   };
 
-  // const [userAttendingEvents, setUserAttendingEvents] = useState([]);
-  // const getUserAttendingEvents = () => {
-  //   axios.get('/api/eventListings')
-  //     .then((events) => {
-  //       console.log(events.data.filter((event) => event.attendees.includes(user._id)));
+  const [userAttendingEvents, setUserAttendingEvents] = useState([]);
+  const getUserAttendingEvents = () => {
+    axios.get('/api/eventListings')
+      .then((events) => {
+        console.log(events.data.filter((event) => event.attendees.includes(user._id)));
   
-  //       setUserEvents(events.data.filter((event) => event.owner === user.email));
-  //     })
-  //     .catch(() => console.log(oops));
-  // };
+        setUserAttendingEvents(events.data.filter((event) => event.attendees.includes(user._id)));
+      })
+      .catch(() => console.log(err => console.error(err)));
+  };
 
 
   
