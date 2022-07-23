@@ -5,9 +5,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
+import FormControl from '@mui/material/FormControl';
 const Sports = ({ sport, handleSelectSport }) => {
   const [sports, setSports] = useState([]);
+  const [sportDrop, setSport] = useState('');
   const getAllSports = () => {
     axios
       .get('/api/categories')
@@ -17,11 +18,16 @@ const Sports = ({ sport, handleSelectSport }) => {
       .catch((err) => console.error(err));
   };
 
+  const handleChange = (event) => {
+    setSport(event.target.value);
+  };
+
   useEffect(() => {
     getAllSports();
   }, []);
   return (
     <div id='category'>
+    <FormControl>
     <Select
       autoWidth= {true}
       variant='standard'
@@ -37,10 +43,13 @@ const Sports = ({ sport, handleSelectSport }) => {
         <MenuItem
           style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }}
           onClick ={() => handleSelectSport(sportItem)}
+          onChange = {handleChange}
           key={index}
+          value={sportItem.category}
         >{sportItem.category}</MenuItem>,
       )}
       </Select>*required
+      </FormControl>
     </div>
   );
 };
