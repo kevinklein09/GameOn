@@ -56,6 +56,13 @@ app.put('/api/eventListings', (req, res) => {
     });
 });
 
+app.get("/api/eventByCategories"),
+  (req, res) => {
+    const { catName } = req.body;
+    Events.find({ catName }).where({ catName: req.body }).sort("date");
+    console.log("category name ?????????????????????????????", catName);
+  };
+
 app.get("/api/categories", (req, res) => {
   Sports.find({})
     .then((query) => {
