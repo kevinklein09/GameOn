@@ -117,7 +117,7 @@ const Profile = () => {
         <div>
           <img src={user.image} height={200} width={200} />
         </div>
-        <p>Hello, User: </p>
+        <p>Your Info: </p>
         <div>
           <h2>NAME</h2>
           <p>{ user.firstName } { user.lastName }</p>
@@ -125,10 +125,6 @@ const Profile = () => {
         <div>
           <h2>EMAIL</h2>
           <p>{ user.email }</p>
-        </div>
-        <div>
-          <h2>USERNAME</h2>
-          <input type='text' id='username' name ='username' value='{modifiable username here}'></input>
         </div>
         <div>
           <h2>EVENTS CREATED</h2>

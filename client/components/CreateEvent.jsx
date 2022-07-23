@@ -35,7 +35,8 @@ const CreateEvents = () => {
   //states
   const [sport, setSport] = useState('');
   const [description, setDescription] = useState('');
-  // const [location, setLocation] = useState('');
+
+  const [location, setLocation] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -49,7 +50,7 @@ const CreateEvents = () => {
   const [equipment, setEquipment] = useState([]);
   const [item, setItem] = useState('');
   let categoryId;
-  let location = `${address} ${city} ${state} ${zip}`
+  let fullAddress = `${address} ${city} ${state} ${zip}`
 
   if (playerLimit < 1) {
     setPlayerLimit(1)
@@ -89,6 +90,11 @@ const CreateEvents = () => {
     setDate(e.target.value);
   };
 
+  const handleLocation = (e) => {
+    console.log(e.target.value)
+    setLocation(e.target.value)
+  };
+
   const handleTime = (e) => {
     setTime(e.target.value);
   };
@@ -112,7 +118,7 @@ const CreateEvents = () => {
   };
 
   const getCoords = () => {
-    const query = location.split(' ').join('_');
+    const query = fullAddress.split(' ').join('_');
     const queryUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?type=poi&access_token=${MAP_TOKEN}`;
     axios.get(queryUrl)
       .then((results) => {
@@ -133,7 +139,8 @@ const CreateEvents = () => {
 
       axios.post('/api/event', {
       owner: context.email,
-      address: location,
+      address: fullAddress,
+      locName: location,
       description,
       date,
       time,
@@ -142,6 +149,7 @@ const CreateEvents = () => {
       catName: sport,
       players: playerLimit,
       isOpen: true,
+      attendees: [context._id]
     })
     .then(() => {
 
@@ -155,7 +163,7 @@ const CreateEvents = () => {
         // setCoords([]);
         setLong(0);
         setLat(0);
-        // setLocation('');
+        setLocation('');
         setPlayerLimit(1);
         setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
         setTime('12:00');
@@ -196,7 +204,7 @@ const CreateEvents = () => {
 
       <ThemeProvider theme={theme}>
       <Typography
-        style={{color: '#172e36'}}
+        style={{color: '#A5C9CA'}}
         align='center'
         variant='h3'
         gutterBottom={true}
@@ -234,7 +242,7 @@ const CreateEvents = () => {
 
         <div id="playerLimit">
           <OutlinedInput
-            style= {{backgroundColor: '#1c1c1c', color: '#ce93d8', marginTop: '10px'}}
+            style= {{backgroundColor: '#1c1c1c', color: '#A5C9CA', marginTop: '10px'}}
             inputProps={{
               type:'number',
               onChange: (e) => handlePlayerLimit(e),
@@ -252,6 +260,18 @@ const CreateEvents = () => {
             value={playerLimit}
           /> */}
         </div>
+
+        <OutlinedInput
+            style={{backgroundColor: 'white', marginTop: '10px'}}
+            rows='1'
+            placeholder='location name (optional)'
+            fullWidth={true}
+            inputProps={{
+              maxLength: 500,
+              onChange: (e) => handleLocation(e),
+              value: location
+            }}
+        />
 
         <AddressField 
           handleAddress={handleAddress}
@@ -304,7 +324,7 @@ const CreateEvents = () => {
         </LocalizationProvider> */}
         <div style={{marginTop: '10px'}} id='dateTime'>
           <OutlinedInput
-            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: 'pink'}}
+            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: '#A5C9CA'}}
             inputProps={{
               color: 'pink',
               type: 'date',
@@ -322,7 +342,7 @@ const CreateEvents = () => {
             min={`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`}
           /> */}
           <OutlinedInput
-            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: 'pink'}}
+            style={{marginRight: '10px', backgroundColor: '#1c1c1c', color: '#A5C9CA'}}
             inputProps={{
               color: 'pink',
               type: 'time',
