@@ -20,7 +20,7 @@ import SportsFootballIcon from '@mui/icons-material/SportsFootball';
 import AlbumIcon from '@mui/icons-material/Album';
 import BlurCircularIcon from '@mui/icons-material/BlurCircular';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-
+const moment = require('moment');
 
 const theme = createTheme({
   palette: {
@@ -84,7 +84,7 @@ const Event = (props) => {
      <div class="card">
      <Typography variant="h4"><p class="card-text"><SportsBasketballIcon sx={{ color: black }} /> {props.eventData.catName}</p></Typography>
        <p class="card-text">{props.eventData.description}</p>
-       <p class="card-text"><CalendarMonthIcon sx={{ color: black }} /> {new Date(props.eventData.date.substring(0, 10)).toDateString()} | {props.eventData.time}</p> 
+       <p class="card-text"><CalendarMonthIcon sx={{ color: black }} /> {moment(props.eventData.date).add(1, 'day').format('MMMM Do YYYY, h:mm a')}</p> 
        <p class="card-text"><LocationOnIcon sx={{ color: black }} />{props.eventData.address}</p>
        <FormGroup>
          <FormControlLabel
