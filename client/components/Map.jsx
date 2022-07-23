@@ -101,7 +101,6 @@ const Map = () => {
               icon.style.height = '20px';
               icon.style.backgroundSize = '100%';
               let popupContent;
-              console.log('event time:', moment(event.time, 'h:mm a').format('h:mm a'));
               if (event.attendees.includes(userContext._id)) {
                 console.log('user attending');
                 popupContent = `
