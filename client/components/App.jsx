@@ -11,6 +11,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import axios from 'axios';
+import ImageAvatar from './ImageAvatar';
 import { teal } from '@mui/material/colors';
 import { UserContext } from '../index';
 
