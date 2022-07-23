@@ -169,11 +169,13 @@ app.get('/logout', (req, res) => {
 
 app.post('/api/event', (req, res) => {
   const {
-    owner, address, description, date, time, coordinates, category, catName, players,
+    owner, attendees, locName, address, description, date, time, coordinates, category, catName, players,
   } = req.body;
 
   Events.create({
     owner,
+    attendees,
+    locName,
     address,
     description,
     date,
