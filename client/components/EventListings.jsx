@@ -18,14 +18,28 @@ const EventListings = (props) => {
   console.log(param);
 
 const handleSelectSport = (e) => {
-  console.log(e);
-  setEvents(
-    events.filter((e) => {
-      catName === e.category;
+  axios.get('/api/eventListings')
+      .then((eventData) => {
+        console.log(eventData);
+        setEvents(
+          eventData.data.filter((current) => e.category === current.catName) 
+          );
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
 
-    })
-  )
-}
+//   events.filter((e) => {
+    // console.log(e);
+    // getAllEvents()
+    // .then((eventData) => {
+    //   setEvents()
+      
+    //   )
+  //     eventData.catName === e.category;
+
+  // )})
   // call the handleselect sport function that already exist within the sport component as the change handle
   // to then make the axios request to grab the specified category that was selected by the user
 const getAllEvents = () => {
