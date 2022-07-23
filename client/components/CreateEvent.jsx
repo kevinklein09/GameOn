@@ -27,7 +27,6 @@ import AddressField from './AddressField.jsx';
 const today = new Date();
 const hour = today.getHours();
 const minute = today.getMinutes();
-console.log('TIME', hour.toString() + ':' + minute.toString())
 
 const CreateEvents = () => {
   const context = useContext(UserContext);
@@ -72,13 +71,11 @@ const CreateEvents = () => {
   };
 
   const handleItem = (e) => {
-    console.log(e.target.value)
     setItem(e.target.value);
     
   };
 
   const handleSelectSport = (e) => {
-    console.log(e.category)
     setSport(e.category);
   };
 
@@ -91,7 +88,6 @@ const CreateEvents = () => {
   };
 
   const handleLocation = (e) => {
-    console.log(e.target.value)
     setLocation(e.target.value)
   };
 
@@ -267,7 +263,7 @@ const CreateEvents = () => {
             placeholder='location name (optional)'
             fullWidth={true}
             inputProps={{
-              maxLength: 500,
+              maxLength: 20,
               onChange: (e) => handleLocation(e),
               value: location
             }}
