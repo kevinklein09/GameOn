@@ -1,26 +1,26 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-require('dotenv').config();
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const session = require('express-session');
-const passport = require('passport');
-const passportLocalMongoose = require('passport-local-mongoose');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const findOrCreate = require('mongoose-findorcreate');
-const path = require('path');
-const express = require('express');
-const mongoose = require('mongoose');
-const User = require('../DB/Users');
-const ENV = require('../.env');
-require('./passport');
+require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const findOrCreate = require("mongoose-findorcreate");
+const path = require("path");
+const express = require("express");
+const mongoose = require("mongoose");
+const User = require("../DB/Users");
+const ENV = require("../.env");
+require("./passport");
 
-const DB = require('../DB/index');
-const { Events, Sports, Users } = require('../DB/models');
+const DB = require("../DB/index");
+const { Events, Sports, Users } = require("../DB/models");
 
 const port = 3000;
-const distPath = path.resolve(__dirname, '..', 'dist');
+const distPath = path.resolve(__dirname, "..", "dist");
 const app = express();
 // const styles = require('../client/styles.css');
 app.use(cors());
@@ -30,10 +30,10 @@ app.use(express.urlencoded({ extended: true })); // Parses url
 app.use(express.static(distPath)); // Statically serve up client directory
 // app.use(express.static(styles)); // Statically serve up styles
 
-app.get('/api/eventListings', (req, res) => {
+app.get("/api/eventListings", (req, res) => {
   // console.log('normal listings', req.query);
   Events.find({})
-    .sort('date')
+    .sort("date")
     .then((query) => {
       res.status(200).send(query);
     })
@@ -42,13 +42,14 @@ app.get('/api/eventListings', (req, res) => {
       res.sendStatus(500);
     });
 });
-app.get('/api/eventByCategories'),
+app.get("/api/eventByCategories"),
   (req, res) => {
-    const { eventID } = req.body;
-    Events.find({ eventID }).where({ category: eventID.category }).sort('date')
+    const { catName } = req.body;
+    Events.find({ catName }).where({ catName: req.body }).sort("date");
+    console.log("category name ?????????????????????????????", catName);
   };
 
-app.put('/api/eventListings', (req, res) => {
+app.put("/api/eventListings", (req, res) => {
   console.log(`it's right here →→→→→→→`, req.body);
   const { eventID, userId } = req.body;
   Events.findByIdAndUpdate({ _id: eventID }, { $push: { attendees: userId } })
@@ -61,7 +62,7 @@ app.put('/api/eventListings', (req, res) => {
     });
 });
 
-app.get('/api/categories', (req, res) => {
+app.get("/api/categories", (req, res) => {
   Sports.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -72,15 +73,15 @@ app.get('/api/categories', (req, res) => {
     });
 });
 
-app.get('/map', (req, res) => {
-  console.log('map listings', req.query);
-  console.log('map GET request');
+app.get("/map", (req, res) => {
+  console.log("map listings", req.query);
+  console.log("map GET request");
   const { userId, event } = req.query;
 
   if (event) {
     Events.findByIdAndUpdate({ _id: event }, { $push: { attendees: userId } })
       .then(() => {
-        console.log('user added to event');
+        console.log("user added to event");
       })
       .catch((err) => {
         console.error(err);
@@ -96,7 +97,7 @@ app.get('/map', (req, res) => {
     });
 });
 
-app.get('/users', (req, res) => {
+app.get("/users", (req, res) => {
   // console.log('GET REQ LINE 66 REQ', req);
   // console.log('GET REQ LINE 67 RES', res);
   Users.find({})
@@ -125,45 +126,45 @@ const isLoggedIn = (req, res, next) => {
   // console.log('LINE 117', res);
   req.user ? next() : res.sendStatus(401);
 };
-app.get('/auth/success', (req, res) => {
+app.get("/auth/success", (req, res) => {
   if (req.user) {
     res.status(200).json({
       user: req.user,
-      message: 'success',
+      message: "success",
       success: true,
     });
   }
 });
 
-app.get('/hidden', isLoggedIn, (req, res) => {
+app.get("/hidden", isLoggedIn, (req, res) => {
   // console.log('LINE 130', req);
   res.send(req.user);
 });
 
 app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
     // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
-    res.redirect('/');
+    res.redirect("/");
   }
 );
 
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   // console.log('logout');
   // console.log('req.user:', req.user);
   req.logout(() => {
     // console.log('execute req.logout');
-    res.redirect('/');
+    res.redirect("/");
   });
 });
 
-app.post('/api/event', (req, res) => {
+app.post("/api/event", (req, res) => {
   const {
     owner,
     address,
@@ -191,20 +192,20 @@ app.post('/api/event', (req, res) => {
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
 });
-app.delete('/api/event', (req, res) => {
+app.delete("/api/event", (req, res) => {
   const { id } = req.body;
   console.log(req.body);
   Events.findOneAndDelete({ _id: id })
     .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(500));
 });
-app.get('/api/event', (req, res) => {
+app.get("/api/event", (req, res) => {
   Events.findOne({ _id: req.query.id })
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
 });
 
-app.put('/api/event', (req, res) => {
+app.put("/api/event", (req, res) => {
   console.log(req.body);
   if (req.body.going) {
     Events.updateOne(
