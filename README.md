@@ -17,6 +17,7 @@
  <h2 align='left'>SETUP YOUR ENVIRONMENT</h2>
 
 ---
+The current project is configured for use with MongoDB Cloud. You will need to update the DB server files (DB URI) for your specific configuration. 
 
 In your .env file, add the following environment variables:
   - MONGODB_PASS= if using MongoDB Cloud, use your connection password here
@@ -41,7 +42,7 @@ The following are the various bugs we were unable to resolve during the course o
 
 <h4 align='left'>MAP COMPONENT</h4>
 
-  - For events at the same location, map overlaps icon markers and prevents popup on click
+  - For events at the same location, map overlaps icon markers and prevents popup of the underlying event.
   - onClick functions do not work within the popup button HTML
   - After a user updates their RSVP and the URL changes with their parameters, refreshing that page breaks that component. For 
   example: localhost:3000/#/map?user=user@gmail.com&userId=62dadc628024c191c8328edd&event=62dadc272bb727037ff7ba04&status=Going
@@ -49,6 +50,8 @@ The following are the various bugs we were unable to resolve during the course o
 <h4 align='left'>EVENT COMPONENT</h4>
 
   - Dropdown does not automatically close upon interaction
+  - Toggle switch triggers multiple times upon click
+
 
 ---
   <h2 align='center'>Available Resources</h2>
