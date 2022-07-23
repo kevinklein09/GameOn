@@ -6,7 +6,6 @@ import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tab from '@mui/material/Tab';
 import SportsFootballIcon from '@mui/icons-material/SportsFootball';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import Grid from '@mui/material/Grid';
@@ -86,7 +85,7 @@ const App = () => {
           <Grid xs={2}><Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon sx={{ color: teal[100] }} />} style={styles.tab} label='GAMES'/>}</Link></Grid>
           <Grid xs={2}><Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon sx={{ color: teal[100] }} />} style={styles.tab} label='MAP'/>}</Link></Grid>
           <Grid xs={2}><Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon sx={{ color: teal[100] }}/>} style={styles.tab} label='POST'/>}</Link></Grid>
-          <Grid xs={2}><Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon sx={{ color: teal[100] }} />} style={styles.tab} label='PROFILE' />}</Link></Grid>
+          <ImageAvatar />
           </Grid>
           <Outlet/>
           <Typography><p align="center">Game<strong><SportsBasketballIcon sx={{ fontSize: 15 }}/>N</strong>: Your go-to app for local pickup games.</p></Typography>
