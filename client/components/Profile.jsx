@@ -30,7 +30,7 @@ const AccordionSummary = styled((props) => (
     {...props}
   />
 ))(({ theme }) => ({
-  backgroundColor:
+  backgroundColor: 
     theme.palette.mode === 'dark'
       ? 'rgba(255, 255, 255, .05)'
       : 'rgba(0, 0, 0, .03)',
@@ -147,15 +147,15 @@ const Profile = () => {
         <div>
           <h2>EVENTS CREATED</h2>
             {userEvents.map((event, i) =>
-            <div>
+            <div class='card'>
               <Accordion onChange={handleChange('panel1')}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                  <Typography>{event.catName + event.date}</Typography>
+                  <Typography>{event.catName + '| Date: ' + event.date.substring(0, 10)}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>
                     <p style={{marginLeft: '10px'}}>{event.catName}</p>
-                    <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}</p>
+                    <p style={{marginLeft: '30px'}}><b>Time: </b>{`${event.time}`}</p>
                     <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
                     <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
                   </Typography>
@@ -167,15 +167,15 @@ const Profile = () => {
         <div>
           <h2>EVENTS ATTENDING</h2>
             {userAttendingEvents.map((event, i) =>
-              <div>
+              <div class='card'>
                 <Accordion onChange={handleChange('panel1')}>
                   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography>{event.catName + event.date}</Typography>
+                    <Typography>{event.catName + ' ' +event.date.substring(0, 10)}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
                       <p style={{marginLeft: '10px'}}>{event.catName}</p>
-                      <p style={{marginLeft: '30px'}}><b>Date: </b>{`${event.date}`.substring(0, 10)}</p>
+                      <p style={{marginLeft: '30px'}}><b>Time: </b>{`${event.time}`}</p>
                       <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
                     </Typography>
                   </AccordionDetails>
