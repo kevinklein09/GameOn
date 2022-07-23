@@ -42,14 +42,9 @@ app.get('/api/eventListings', (req, res) => {
       res.sendStatus(500);
     });
 });
-app.get('/api/eventByCategories'),
-  (req, res) => {
-    const { eventID } = req.body;
-    Events.find({ eventID }).where({ category: eventID.category }).sort('date')
-  };
 
 app.put('/api/eventListings', (req, res) => {
-  console.log(`it's right here →→→→→→→`, req.body);
+  console.log(req.body);
   const { eventID, userId } = req.body;
   Events.findByIdAndUpdate({ _id: eventID }, { $push: { attendees: userId } })
     .then(() => {
@@ -75,16 +70,25 @@ app.get('/api/categories', (req, res) => {
 app.get('/map', (req, res) => {
   console.log('map listings', req.query);
   console.log('map GET request');
-  const { userId, event } = req.query;
-
+  const { userId, event, status } = req.query;
+  console.log(status);
   if (event) {
-    Events.findByIdAndUpdate({ _id: event }, { $push: { attendees: userId } })
-      .then(() => {
-        console.log('user added to event');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    if (status === 'Going') {
+      Events.updateOne({ _id: event }, { $pullAll: { attendees: [userId] } })
+        .then((eventData) => {
+          console.log('removed-----');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      Events.findByIdAndUpdate(
+        { _id: event },
+        { $push: { attendees: userId } },
+      )
+        .then(() => { console.log('user added to event'); })
+        .catch((err) => { console.error(err); });
+    }
   }
   Events.find({})
     .then((query) => {
@@ -115,7 +119,7 @@ app.use(
     secret: ENV.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -142,7 +146,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 app.get(
   '/auth/google/callback',
@@ -151,7 +155,7 @@ app.get(
     // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
     res.redirect('/');
-  }
+  },
 );
 
 app.get('/logout', (req, res) => {
@@ -165,15 +169,7 @@ app.get('/logout', (req, res) => {
 
 app.post('/api/event', (req, res) => {
   const {
-    owner,
-    address,
-    description,
-    date,
-    time,
-    coordinates,
-    category,
-    catName,
-    players,
+    owner, address, description, date, time, coordinates, category, catName, players,
   } = req.body;
 
   Events.create({
@@ -202,7 +198,7 @@ app.get('/api/event', (req, res) => {
   Events.findOne({ _id: req.query.id })
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
-});
+})
 
 app.put('/api/event', (req, res) => {
   console.log(req.body);
@@ -210,15 +206,13 @@ app.put('/api/event', (req, res) => {
     Events.updateOne(
       { _id: req.body.id },
       { $pullAll: { attendees: [req.body.userId] } }
-    )
-      .then((data) => res.status(200).send(data))
+    ).then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   } else {
     Events.updateOne(
       { _id: req.body.id },
-      { $push: { attendees: req.body.userId } }
-    )
-      .then((data) => res.status(200).send(data))
+      { $push: { attendees: req.body.userId } },
+    ).then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   }
 });
