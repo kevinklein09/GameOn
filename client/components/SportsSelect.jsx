@@ -6,7 +6,7 @@ import axios from 'axios';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-const Sports = ({sport, handleSelectSport}) => {
+const Sports = ({ sport, handleSelectSport }) => {
   const [sports, setSports] = useState([]);
   const getAllSports = () => {
     axios
@@ -23,7 +23,7 @@ const Sports = ({sport, handleSelectSport}) => {
   return (
     <div id='category'>
     <Select
-      autoWidth= {true} 
+      autoWidth= {true}
       variant='standard'
       style={{ padding: '10px', backgroundColor: '#1c1c1c', color: '#A5C9CA' }}
       inputProps={{
@@ -38,11 +38,8 @@ const Sports = ({sport, handleSelectSport}) => {
           style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }}
           onClick ={() => handleSelectSport(sportItem)}
           key={index}
-        >{sportItem.category}</MenuItem>)}
-      {/* <select required onChange={handleSelectSport} defaultValue='test'>
-        <option disabled value='test'>TEST</option>
-
-      </select> */}
+        >{sportItem.category}</MenuItem>,
+      )}
       </Select>*required
     </div>
   );
