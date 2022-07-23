@@ -3,10 +3,8 @@
 /* eslint-disable import/extensions */
 const mongoose = require('mongoose');
 const ENV = require('../.env');
-const Models = require('./models');
-const seed = require('./seed');
 
-const { MONGODB_PASS, USERNAME, DB_URI} = ENV;
+const { DB_URI } = ENV;
 // mongoose.connection.dropDatabase();
 
 

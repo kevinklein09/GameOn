@@ -7,7 +7,8 @@ body {
   height: 100%;
   margin-top: 50px;
   width: auto;
-  background-image: linear-gradient(#395b64, #a5c9ca);
+  background: rgb(42,67,74);
+  background: linear-gradient(180deg, rgba(42,67,74,1) 0%, rgba(57,91,100,1) 44%, rgba(107,148,157,1) 100%);
   background-size: cover;
   background-size: contain;
   color: white;
@@ -23,6 +24,7 @@ body {
   padding: 20px;
   background-color: #2C3333;
   box-shadow: 3px 5px 10px #0e0f0f;
+  border-radius: 15px;
 }
 
 #text {
