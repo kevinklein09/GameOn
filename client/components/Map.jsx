@@ -24,7 +24,7 @@ const Softball = new URL('../images/softball_icon.png', import.meta.url);
 const Tennis = new URL('../images/tennis_icon.png', import.meta.url);
 const Volleyball = new URL('../images/volleyball_icon.png', import.meta.url);
 const mapboxgl = require('mapbox-gl');
-
+const moment = require('moment');
 const ENV = require('../../.env');
 
 const { MAP_TOKEN } = ENV;
@@ -101,13 +101,13 @@ const Map = () => {
               icon.style.height = '20px';
               icon.style.backgroundSize = '100%';
               let popupContent;
-
+              console.log(`${moment(event.date).add(1, 'day').format('MMMM Do YYYY, h:mm a')}`);
               if (event.attendees.includes(userContext._id)) {
                 console.log('user attending');
                 popupContent = `
               <h4>${event.catName}</h4>
               <p>${event.description}</p>
-              <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
+              <p><strong>When: </strong>${moment(event.date).add(1, 'day').format('MMMM Do YYYY, h:mm a')}</p>
               <p><strong>Where: </strong>${event.address}</p>
               <button id="btn-collectobj" style="background-color:black; color:white"><a style="color:white; text-decoration: none" href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}&status=Going">Going</a></button>
               `;
@@ -115,7 +115,7 @@ const Map = () => {
                 popupContent = `
               <h4>${event.catName}</h4>
               <p>${event.description}</p>
-              <p><strong>When: </strong>${new Date(event.date.substring(0, 10)).toDateString()} | ${event.time}</p>
+              <p><strong>When: </strong>${moment(event.date).add(1, 'day').format('MMMM Do YYYY, h:mm a')}</p>
               <p><strong>Where: </strong>${event.address}</p>
               <button id="btn-collectobj"><a style="color:black; text-decoration: none" href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}&status=NotGoing">Not Going</a></button>
               `;
