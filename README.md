@@ -19,8 +19,6 @@
 ---
 
 In your .env file, add the following environment variables:
-  - GOOGLE_MAPS_API=
-  - GOOGLE_PLACES=
   - MONGODB_PASS= 
   - USERNAME='root';
   - MAP_TOKEN=
