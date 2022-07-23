@@ -19,7 +19,7 @@ const Home = () => (
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Do I have to Pay Anything?</Typography>
+          <Typography>Do I have to pay anything?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -33,7 +33,7 @@ const Home = () => (
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>How Do I Use Your App?</Typography>
+          <Typography>How do I use your app?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -49,7 +49,7 @@ const Home = () => (
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>What Sports Can I Host?</Typography>
+          <Typography>What sports can I host?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>

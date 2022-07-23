@@ -11,7 +11,6 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -23,7 +22,6 @@ const Accordion = styled((props) => (
     display: 'none',
   },
 }));
-
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
     expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
@@ -42,23 +40,19 @@ const AccordionSummary = styled((props) => (
     marginLeft: theme.spacing(1),
   },
 }));
-
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
-
 const Profile = () => {
   
   const user = useContext(UserContext);
   
   const [expanded, setExpanded] = React.useState(null);
-
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
   console.log(user);
-
   if (user) {
     
   const [userEvents, setUserEvents] = useState([]);
@@ -72,7 +66,6 @@ const Profile = () => {
       })
       .catch(() => console.log(oops));
   };
-
   const [userAttendingEvents, setUserAttendingEvents] = useState([]);
   const getUserAttendingEvents = () => {
     axios.get('/api/eventListings')
@@ -83,18 +76,13 @@ const Profile = () => {
       })
       .catch(() => console.log(err => console.error(err)));
   };
-
-
   
-
-
   useEffect(() => {
     if (user) {
       getUserEvents();
       getUserAttendingEvents();
     }
   }, [])
-
   // console.log('LINE 8 PROFILE USER', user)
   // useEffect(() => {
   //   axios.get('/users')
@@ -105,7 +93,6 @@ const Profile = () => {
   //       console.error(err);
   //     });
   // });
-
   const handleDelete = (eventId) => {
     const deleteConfirmation = confirm('Are you sure you wish to delete this event?')
     if (deleteConfirmation) {
@@ -121,7 +108,6 @@ const Profile = () => {
       .catch((err) => console.error(err));
     }
   }
-
   
     return (
       <div>
@@ -150,7 +136,8 @@ const Profile = () => {
             <div class='card'>
               <Accordion onChange={handleChange('panel1')}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                  <Typography>{event.catName + '| Date: ' + event.date.substring(0, 10)}</Typography>
+                  <Typography>{event.catName + ' | Date: ' + event.date.substring(0, 10)}</Typography>
+
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>
@@ -185,7 +172,6 @@ const Profile = () => {
         </div>
       </div>
     );
-
   } else {
     return (
       <div>
@@ -195,6 +181,5 @@ const Profile = () => {
     )
   }
 }
-
 
 export default Profile;
