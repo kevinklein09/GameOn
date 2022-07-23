@@ -57,7 +57,7 @@ app.put('/api/eventListings', (req, res) => {
 });
 
 app.get('/api/categories', (req, res) => {
-  Sports.find({})
+  Sports.find({}).sort({ category: 1 })
     .then((query) => {
       res.status(200).send(query);
     })
