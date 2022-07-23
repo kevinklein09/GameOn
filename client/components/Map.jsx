@@ -36,9 +36,6 @@ const Map = () => {
   const event = searchParams.get('event');
   const userId = searchParams.get('userId');
   const status = searchParams.get('status');
-  if (userContext !== null) {
-    console.log(`userParam: ${user}, event: ${event}, signedIn: ${userContext.email}, userId: ${userContext._id}`);
-  }
 
   // https://reactjs.org/docs/hooks-reference.html#useref
   const mapDiv = useRef(null);
@@ -51,7 +48,6 @@ const Map = () => {
     if (user || event) {
       axios.get(`/map?user=${user}&userId=${userContext._id}&event=${event}&status=${status}`)
         .then((eventData) => {
-          // console.log(eventData);
         })
         .catch((err) => {
           console.error(err);
@@ -102,20 +98,19 @@ const Map = () => {
               icon.style.backgroundSize = '100%';
               let popupContent;
               if (event.attendees.includes(userContext._id)) {
-                console.log('user attending');
                 popupContent = `
               <h4>${event.catName}</h4>
-              <p>${event.description}</p>
+              <p><strong>Description: </strong>${event.description}</p>
               <p><strong>When: </strong>${moment(event.date).add(1, 'day').format('MMMM Do YYYY')} | ${moment(event.time, 'h:mm a').format('h:mm a')}</p>
-              <p><strong>Where: </strong>${event.address}</p>
+              <p><strong>Where: </strong><strong>${event.locName}</strong> ${event.address}</p>
               <button id="btn-collectobj" style="background-color:black; color:white"><a style="color:white; text-decoration: none" href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}&status=Going">Going</a></button>
               `;
               } else {
                 popupContent = `
               <h4>${event.catName}</h4>
-              <p>${event.description}</p>
+              <p><strong>Description: </strong>${event.description}</p>
               <p><strong>When: </strong>${moment(event.date).add(1, 'day').format('MMMM Do YYYY')} | ${moment(event.time, 'h:mm a').format('h:mm a')}</p>
-              <p><strong>Where: </strong>${event.address}</p>
+              <p><strong>Where: </strong><strong>${event.locName}</strong> ${event.address}</p>
               <button id="btn-collectobj"><a style="color:black; text-decoration: none" href="/#/map?user=${userContext.email}&userId=${userContext._id}&event=${event._id}&status=NotGoing">Not Going</a></button>
               `;
               }
