@@ -41,7 +41,7 @@ In your .env file, add the following environment variables:
   - CLIENT_SECRET=
   - EXPRESS_SECRET= 
   - DB_URI= your MongoDB connection string
-  
+
 ---
   <h2 align='center'>Available Resources</h2>
 

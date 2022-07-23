@@ -52,6 +52,11 @@ const Map = () => {
     if (user || event) { // checks if a parameter has been passed into the URL
       // GET request for when a user clicks on the Going/NotGoing button
       axios.get(`/map?user=${user}&userId=${userContext._id}&event=${event}&status=${status}`)
+<<<<<<< HEAD
+=======
+        .then((eventData) => {
+        })
+>>>>>>> 33c9fdd97ac17e9f5da876eab7bb3725d7c167c1
         .catch((err) => {
           console.error(err);
         });
