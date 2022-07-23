@@ -28,7 +28,7 @@ const AccordionSummary = styled((props) => (
     {...props}
   />
 ))(({ theme }) => ({
-  backgroundColor: 
+  backgroundColor:
     theme.palette.mode === 'dark'
       ? 'rgba(255, 255, 255, .05)'
       : 'rgba(0, 0, 0, .03)',
@@ -44,55 +44,54 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
+
 const Profile = () => {
-  
+  // set context to usercontext defined in index.jsx
   const user = useContext(UserContext);
-  
+
+  // set state for accordion list expansion animation
   const [expanded, setExpanded] = React.useState(null);
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-  console.log(user);
+
+  // if conditional to prevent user from viewing profile page if not logged in
+  // wrapped around whole functions body
   if (user) {
-    
+
+  // set State to get user events that they have created to populate list of these event in profile
   const [userEvents, setUserEvents] = useState([]);
+  // same as line above except for events that user has rsvp'd to in games section
+  const [userAttendingEvents, setUserAttendingEvents] = useState([]);
+
+  // function to get user events from database and set state to reflect this data
   const getUserEvents = () => {
     axios.get('/api/eventListings')
       .then((events) => {
-        console.log(events.data.filter((event) => event.owner === user.email));
-        console.log(events.data.filter((event) => event.attendees.includes(user._id)));
-  
         setUserEvents(events.data.filter((event) => event.owner === user.email));
       })
       .catch(() => console.log(oops));
   };
-  const [userAttendingEvents, setUserAttendingEvents] = useState([]);
+
+  // function to get user events rsvp'd to from database and set state to reflect this data
   const getUserAttendingEvents = () => {
     axios.get('/api/eventListings')
       .then((events) => {
-        console.log(events.data.filter((event) => event.attendees.includes(user._id)));
-  
         setUserAttendingEvents(events.data.filter((event) => event.attendees.includes(user._id)));
       })
-      .catch(() => console.log(err => console.error(err)));
+      .catch(err => console.error(err));
   };
-  
+
+  // call these functions on page load which will
+  // populate components in which the are called below in Profile return statement
   useEffect(() => {
     if (user) {
       getUserEvents();
       getUserAttendingEvents();
     }
   }, [])
-  // console.log('LINE 8 PROFILE USER', user)
-  // useEffect(() => {
-  //   axios.get('/users')
-  //     .then((usersData) => {
-  //       console.log(usersData);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // });
+
+  // function to define delete button in user events created list
   const handleDelete = (eventId) => {
     const deleteConfirmation = confirm('Are you sure you wish to delete this event?')
     if (deleteConfirmation) {
@@ -102,17 +101,28 @@ const Profile = () => {
         }
       })
       .then(() => {
-        console.log('event deleted')
-        getUserEvents(); 
+        getUserEvents();
       })
       .catch((err) => console.error(err));
     }
   }
-  
+
+  // function to define delete button in user events attending list
+  const handleAttendingDelete = (eventId) => {
+    axios.put('/api/event', {
+      id: eventId,
+      // see Event.jsx and server/index.jsx for more detail on 'going' value
+      going: true,
+      userId: user._id
+    })
+      .then(getUserAttendingEvents)
+      .catch((err) => console.error(err));
+  }
+
     return (
       <div>
         <h1>
-            WELCOME TO THE PROFILE PAGE
+          WELCOME TO THE PROFILE PAGE
         </h1>
         <div>
           <img src={user.image} height={200} width={200} />
@@ -128,12 +138,12 @@ const Profile = () => {
         </div>
         <div>
           <h2>EVENTS CREATED</h2>
+          {/* map through userEvents state data and render accordion component for each item */}
             {userEvents.map((event, i) =>
             <div class='card'>
               <Accordion onChange={handleChange('panel1')}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                   <Typography>{event.catName + ' | Date: ' + event.date.substring(0, 10)}</Typography>
-
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>
@@ -149,6 +159,7 @@ const Profile = () => {
         </div>
         <div>
           <h2>EVENTS ATTENDING</h2>
+            {/* map through userAttendingEvents state data and render accordion component for each item */}
             {userAttendingEvents.map((event, i) =>
               <div class='card'>
                 <Accordion onChange={handleChange('panel1')}>
@@ -160,6 +171,7 @@ const Profile = () => {
                       <p style={{marginLeft: '10px'}}>{event.catName}</p>
                       <p style={{marginLeft: '30px'}}><b>Time: </b>{`${event.time}`}</p>
                       <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
+                      <button onClick={() => handleAttendingDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -168,6 +180,7 @@ const Profile = () => {
         </div>
       </div>
     );
+    // if user is not logged in, the below is rendered instead
   } else {
     return (
       <div>
