@@ -157,10 +157,12 @@ app.get(
 );
 app.get(
   "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: '/auth/google/success',
-    failureRedirect: '/auth/google/failure'
-  }),
+  passport.authenticate("google", { failureRedirect: "/" }),
+  (req, res) => {
+    // console.log('RESPONE LINE 97', res);
+    // Successful authentication, redirect secrets.
+    res.redirect('/');
+  },
 );
 
 app.get("/logout", (req, res) => {
