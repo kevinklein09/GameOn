@@ -7,6 +7,7 @@ body {
 }
 
 .app-body {
+  margin-top: 50px;
   max-width: 700px;
   margin: auto;
   padding: 20px;
@@ -58,6 +59,8 @@ body {
     display:block;
     width:fit-content;
     margin:auto;
+    margin-top:20px;
+    margin-bottom:20px;
   }
 
   .google-button:hover,
@@ -75,7 +78,6 @@ body {
 
   .google-button__icon {
     display: inline-block;
-    vertical-align: middle;
     margin: 0px 0 0px 8px;
     width: 18px;
     height: 18px;
@@ -95,6 +97,21 @@ body {
     font-family: 'Roboto', arial, sans-serif;
   }
 
+<<<<<<< HEAD
+=======
+  .card-text {
+    color: black;
+  }
+
+  .card {
+    background-color: #A5C9CA;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+>>>>>>> c39175b8a4b5e1ab204a4a1a07064c579a48135d
   .event {
     margin: 10px;
     background-color: #737373;

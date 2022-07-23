@@ -142,6 +142,7 @@ const Map = () => {
   }
   return (
     <div align='center'>
+      <br></br>
     <h3>
     You must be logged in to view the map
     </h3>

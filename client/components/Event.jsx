@@ -6,6 +6,21 @@ import Switch from '@mui/material/Switch';
 import { UserContext } from '../index.jsx';
 import axios from 'axios';
 import { createTheme, ThemeProvider} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+
+import SportsRugbyIcon from '@mui/icons-material/SportsRugby';
+import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
+import SportsTennisIcon from '@mui/icons-material/SportsTennis';
+import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
+import { black } from '@mui/material/colors';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import SportsFootballIcon from '@mui/icons-material/SportsFootball';
+import AlbumIcon from '@mui/icons-material/Album';
+import BlurCircularIcon from '@mui/icons-material/BlurCircular';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -63,18 +78,21 @@ const Event = (props) => {
     .then(() => setGoing(going => !going))
 
   }
+<<<<<<< HEAD
 if (context) {
   
 }
+=======
+>>>>>>> c39175b8a4b5e1ab204a4a1a07064c579a48135d
  return (
   <ThemeProvider theme={theme}>
      <div class="card">
-       <p class="card-text">{props.eventData.catName}</p>
+     <Typography variant="h4"><p class="card-text"><SportsBasketballIcon sx={{ color: black }} /> {props.eventData.catName}</p></Typography>
        <p class="card-text">{props.eventData.description}</p>
-       <p class="card-text">{props.eventData.time} | {props.eventData.date.substring(0, 10)}</p>
-       <p class="card-text">{props.eventData.address}</p>
+       <p class="card-text"><CalendarMonthIcon sx={{ color: black }} /> {new Date(props.eventData.date.substring(0, 10)).toDateString()} | {props.eventData.time}</p> 
+       <p class="card-text"><LocationOnIcon sx={{ color: black }} />{props.eventData.address}</p>
        <FormGroup>
-         <FormControlLabel control={<Switch checked={going} color='primary' onChange={handleToggle} />} />
+         <FormControlLabel control={<Switch checked={going} color='primary' onChange={handleToggle}/>} style={{fontWeight: 'bolder'}}label="RSVP"/>
        </FormGroup>
     </div>
       </ThemeProvider>
