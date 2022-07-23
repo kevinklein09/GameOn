@@ -27,6 +27,10 @@ body {
   border-radius: 15px;
 }
 
+.profile-pic {
+    border-radius: 15%;
+}
+
 #text {
   color: white;
 }
