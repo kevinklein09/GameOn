@@ -267,7 +267,7 @@ const CreateEvents = () => {
             placeholder='location name (optional)'
             fullWidth={true}
             inputProps={{
-              maxLength: 500,
+              maxLength: 20,
               onChange: (e) => handleLocation(e),
               value: location
             }}
