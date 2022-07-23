@@ -84,7 +84,7 @@ const Event = (props) => {
      <div class="card">
      <Typography variant="h4"><p class="card-text"><SportsBasketballIcon sx={{ color: black }} /> {props.eventData.catName}</p></Typography>
        <p class="card-text">{props.eventData.description}</p>
-       <p class="card-text"><CalendarMonthIcon sx={{ color: black }} /> {moment(props.eventData.date).add(1, 'day').format('MMMM Do YYYY, h:mm a')}</p> 
+       <p class="card-text"><CalendarMonthIcon sx={{ color: black }} /> {moment(props.eventData.date).add(1, 'day').format('MMMM Do YYYY')} | {moment(props.eventData.time, 'h:mm a').format('h:mm a')}</p> 
        <p class="card-text"><LocationOnIcon sx={{ color: black }} />{props.eventData.address}</p>
        <FormGroup>
          <FormControlLabel
