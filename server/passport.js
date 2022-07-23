@@ -11,7 +11,7 @@ passport.use(new GoogleStrategy(
   {
     clientID: ENV.CLIENT_ID,
     clientSecret: ENV.CLIENT_SECRET,
-    callbackURL: 'http://ec2-54-68-83-206.us-west-2.compute.amazonaws.com:3000/auth/google/callback',
+    callbackURL: '/auth/google/callback',
     userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
   },
   ((accessToken, refreshToken, profile, cb) => {
