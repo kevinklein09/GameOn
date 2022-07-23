@@ -7,19 +7,11 @@ import { UserContext } from '../index.jsx';
 import axios from 'axios';
 import { createTheme, ThemeProvider} from '@mui/material';
 import Typography from '@mui/material/Typography';
-import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
-import SportsRugbyIcon from '@mui/icons-material/SportsRugby';
-import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
-import SportsTennisIcon from '@mui/icons-material/SportsTennis';
-import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
 import { black } from '@mui/material/colors';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import SportsFootballIcon from '@mui/icons-material/SportsFootball';
-import AlbumIcon from '@mui/icons-material/Album';
-import BlurCircularIcon from '@mui/icons-material/BlurCircular';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
 const moment = require('moment');
 
 const theme = createTheme({
@@ -82,7 +74,7 @@ const Event = (props) => {
  return (
   <ThemeProvider theme={theme}>
      <div class="card">
-     <Typography variant="h4"><p class="card-text"><SportsBasketballIcon sx={{ color: black }} /> {props.eventData.catName}</p></Typography>
+     <Typography variant="h4"><p class="card-text">{props.eventData.catName}</p></Typography>
        <p class="card-text">{props.eventData.description}</p>
        <p class="card-text"><CalendarMonthIcon sx={{ color: black }} /> {moment(props.eventData.date).add(1, 'day').format('MMMM Do YYYY')} | {moment(props.eventData.time, 'h:mm a').format('h:mm a')}</p> 
        <p class="card-text"><LocationOnIcon sx={{ color: black }} /><strong>{props.eventData.locName}</strong> {props.eventData.address}</p>

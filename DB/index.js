@@ -7,7 +7,6 @@ const ENV = require('../.env');
 const { DB_URI } = ENV;
 // mongoose.connection.dropDatabase();
 
-
 mongoose.connect(DB_URI)
   .then((connection) => {
     console.log('connected');
