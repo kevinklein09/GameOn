@@ -53,7 +53,7 @@ The following are the various bugs we were unable to resolve during the course o
 
 
 ---
-  <h2 align='center'>Available Resources</h2>
+  <h2 align='left'>Available Resources</h2>
 
   - https://www.mongodb.com/docs/cloud-manager/tutorial/connect-to-mongodb/
   - https://docs.mapbox.com/help/getting-started/access-tokens/

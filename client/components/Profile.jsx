@@ -6,6 +6,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../index';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
@@ -125,7 +126,11 @@ const Profile = () => {
           WELCOME TO THE PROFILE PAGE
         </h1>
         <div>
-          <img src={user.image} height={200} width={200} />
+        <Avatar
+                alt= {user.firstName[0] + user.lastName[0]}
+                src={user.image}
+                sx={{ width: 175, height: 175 }}
+              />
         </div>
         <p>Your Info: </p>
         <div>
