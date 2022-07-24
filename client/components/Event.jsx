@@ -17,7 +17,7 @@ const moment = require('moment');
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#a373ab',
+      main: '#476A83',
       darker: '#395B64',
     },
     neutral: {
@@ -80,11 +80,11 @@ const Event = (props) => {
        <p class="card-text"><LocationOnIcon sx={{ color: black }} /><strong>{props.eventData.locName}</strong> {props.eventData.address}</p>
        <FormGroup>
          <FormControlLabel
-          control={<Switch checked={going} color='primary' onChange={handleToggle}/>}
+          control={<Switch checked={going} sx={{ color: '#476A83' }} onChange={handleToggle}/>}
           label=
             {going
               ? <div style={{color: 'green', fontWeight: 'bolder'}}> GOING <CheckCircleOutlineIcon/></div>
-              : <div style={{color: '#395B64', fontWeight: 'bolder'}}>RSVP?</div>}
+              : <div style={{color: '#234D6A', fontWeight: 'bolder'}}>RSVP?</div>}
         />
        </FormGroup>
 

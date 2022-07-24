@@ -7,13 +7,12 @@ body {
   height: 100%;
   margin-top: 50px;
   width: auto;
-  background: rgb(42,67,74);
-  background: linear-gradient(180deg, rgba(42,67,74,1) 0%, rgba(57,91,100,1) 44%, rgba(107,148,157,1) 100%);
+  background: url("https://img.freepik.com/premium-vector/seamless-pattern-with-sport-theme_103032-15.jpg"), linear-gradient(180deg, rgba(42,67,74,1) 19%, rgba(58,92,101,1) 96%);
+  color: white;
   background-size: cover;
   background-size: contain;
-  color: white;
-  background-repeat: no-repeat;
   background-attachment: fixed;
+  background-blend-mode: overlay;
 }
 
 .app-body {
@@ -42,13 +41,13 @@ body {
 .mapboxgl-popup {
   max-width: 400px;
   font: 12px/20px 'Roboto';
-  background-color: #a373ab;
+  background-color: #234D6A;
 }
 
 .mapboxgl-popup-content {
-  background-color: #CE93D8;
+  background-color: #234D6A;
   font: 12px/20px 'Roboto';
-  color: black;
+  color: white;
 }
 
 .icon {
@@ -137,6 +136,7 @@ body {
     margin-bottom: 20px;
     padding: 20px;
   }
+  
   .event {
     margin: 10px;
     background-color: #737373;
