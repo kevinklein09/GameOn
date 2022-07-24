@@ -62,6 +62,18 @@ The following are the various bugs we were unable to resolve during the course o
   - No ability to delete an event if you no longer want to see it on the page.
   - Dropdown bar dynamically resizes by the lenght of the new category selected, instead of staying a consistent amount of pixelation like other static buttons throughout the program.
   
+  - Dropdown does not automatically close upon interaction
+  - Toggle switch triggers multiple times upon click
+
+  <h4 align='left'>CREATE EVENT COMPONENT</h4>
+
+  - currently the equipment list doesn't serve any functionality. it is not storing anything in the database.
+
+  - The Calendar date selection wont let you click on a date thats before the current date. but a user can still enter it manually.
+
+  - User will get an error in the dev console if they try to backspace all of the input from the player limit. this was initially done to prevent them from entering a number less than 1.
+
+  - Sometimes addresses entered from google chromes saved addresses will populate the full address inside of the first address field
 
 ---
   <h2 align='left'>Available Resources</h2>
