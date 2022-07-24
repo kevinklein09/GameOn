@@ -12,6 +12,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -58,8 +59,7 @@ const Profile = () => {
 
   // if conditional to prevent user from viewing profile page if not logged in
   // wrapped around whole functions body
-  if (user) {
-
+  
   // set State to get user events that they have created to populate list of these event in profile
   const [userEvents, setUserEvents] = useState([]);
   // same as line above except for events that user has rsvp'd to in games section
@@ -107,7 +107,7 @@ const Profile = () => {
       .catch((err) => console.error(err));
     }
   }
-
+  
   // function to define delete button in user events attending list
   const handleAttendingDelete = (eventId) => {
     axios.put('/api/event', {
@@ -116,10 +116,23 @@ const Profile = () => {
       going: true,
       userId: user._id
     })
-      .then(getUserAttendingEvents)
-      .catch((err) => console.error(err));
+    .then(getUserAttendingEvents)
+    .catch((err) => console.error(err));
   }
 
+  // if user is not logged in, return statement below is rendered 
+  if(!user) {
+    return (
+      <div>
+        <br></br>
+        <h1> PLEASE LOG IN </h1>
+      </div>
+    )
+  }
+
+  // if conditional to prevent user from viewing profile page if not logged in
+  // wrapped around whole functions body
+  if (user) {
     return (
       <div>
         <h1>
@@ -185,14 +198,6 @@ const Profile = () => {
         </div>
       </div>
     );
-    // if user is not logged in, the below is rendered instead
-  } else {
-    return (
-      <div>
-        <br></br>
-        <h1>PLEASE LOG IN </h1>
-      </div>
-    )
   }
 }
 
