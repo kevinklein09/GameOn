@@ -29,16 +29,4 @@ userSchema.plugin(findOrCreate);
 // Users Model
 const Users = mongoose.model('Users', userSchema);
 
-// Test Users Model
-Users.create({
-  username: 'royce',
-  email: 'j@gmail.com',
-  address: '143 Street',
-  phone: '2812246335',
-  secret: String,
-})
-  .catch((err) => {
-    console.log('no duplicates allowed', err);
-  });
-
 module.exports = mongoose.model('Users', userSchema);
