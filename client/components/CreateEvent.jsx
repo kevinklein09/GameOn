@@ -1,9 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
-/* eslint-disable no-underscore-dangle */
-// eslint-disable-next-line import/no-unresolved
-
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
@@ -19,17 +13,16 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import theme from './Theme.jsx';
 
 // IMPORTED COMPONENTS
-import Sports from './SportsSelect';
+import Sports from './SportsSelect.jsx';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
 
 // IMPORTED google context
-import { UserContext } from '../index';
+import { UserContext } from '../index.jsx';
 
 const CreateEvents = () => {
   const today = new Date();
-  const hour = today.getHours();
-  const minute = today.getMinutes();
+
   const context = useContext(UserContext);
 
   // if user is logged in
@@ -103,7 +96,7 @@ const CreateEvents = () => {
     };
 
     const handleLocation = (e) => {
-      setLocation(e.target.value)
+      setLocation(e.target.value);
     };
 
     const handleTime = (e) => {

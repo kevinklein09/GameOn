@@ -1,65 +1,54 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
-/* eslint linebreak-style: ['error', 'windows'] */
-/* eslint-disable */
-
 import React, { useState, useEffect, useContext } from 'react';
-import { useSearchParams } from "react-router-dom";
 import axios from 'axios';
-import Sports from './SportsSelect';
+import Typography from '@mui/material/Typography';
+import Sports from './SportsSelect.jsx';
 import Event from './Event.jsx';
 import { UserContext } from '../index.jsx';
-import Typography from '@mui/material/Typography';
-const EventListings = (props) => {
+
+const EventListings = () => {
   const context = useContext(UserContext);
   const [events, setEvents] = useState([]);
-  let [searchParams, setSearchParams] = useSearchParams();
-  const param = searchParams.get("user");
-  console.log(param);
-
-const handleSelectSport = (e) => {
-  axios.get('/api/eventListings')
+  // event handler that will send an axios request to the server/index.js file that
+  // will filter out the rendered events based off of the sports categor selected
+  const handleSelectSport = (e) => {
+    axios.get('/api/eventListings')
       .then((eventData) => {
-        console.log(eventData);
         setEvents(
-          eventData.data.filter((current) => e.category === current.catName) 
-          );
+          eventData.data.filter((current) => e.category === current.catName),
+        );
       })
       .catch((err) => {
         console.error(err);
-      })
-  }
-
-const getAllEvents = () => {
-      axios.get('/api/eventListings')
+      });
+  };
+  // This is what will grab all of the events from the database and
+  // render them onto the screen on the pageload time
+  const getAllEvents = () => {
+    axios.get('/api/eventListings')
       .then((eventData) => {
-        console.log(eventData);
         setEvents(eventData.data);
       })
       .catch((err) => {
         console.error(err);
-      })
-  }
+      });
+  };
 
-useEffect(() => {
-  getAllEvents()
-}, []);
+  useEffect(() => {
+    getAllEvents();
+  }, []);
 
-
-if (context) {
-return (
+  if (context) {
+    return (
   <div>
     <br></br><br></br>
     <Typography variant="h4">See all da events</Typography><button id='all-button' onClick={getAllEvents}>Show All</button>
     <Sports handleSelectSport={ handleSelectSport }/>
-    { events.map((event, i) => {
-      return <><Event eventData={ event } class="event" key={ `event: ${i}` }/></> 
-    }) }
+    { events.map((event, i) => <><Event eventData={ event } class="event" key={ `event: ${i}` }/></>) }
   </div>
-)
+    );
   }
 
-return (
+  return (
   <div align='center'>
     <br></br>
   <h3>
@@ -67,11 +56,6 @@ return (
   </h3>
   <img width='200' height='100%' src='https://giffiles.alphacoders.com/102/102598.gif'/>
 </div>
-);
-
+  );
 };
 export default EventListings;
-
-/*
-https://reactrouter.com/docs/en/v6/hooks/use-search-params
-*/

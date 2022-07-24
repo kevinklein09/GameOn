@@ -25,7 +25,7 @@ const Home = () => (
       <div>
         <br></br><br></br>
     <Typography variant="h4">Welcome to GameOn.</Typography>
-    <Typography>We're excited that you're here. If you want to find people to play local pick up games, you've come to the right place. With our app you can join scheduled games ranging from football to volleyball to even ping pong! Never again will you miss out on playing your favorite sport with like-minded people. <Link to="/login">Sign up</Link> for a free account today to get started!</Typography>
+    <Typography>We are excited that you are here. If you want to find people to play local pick up games, you have come to the right place. With our app you can join scheduled games ranging from football to volleyball to even ping pong! Never again will you miss out on playing your favorite sport with like-minded people. <Link to="/login">Sign up</Link> for a free account today to get started!</Typography>
     <br></br>
     <br></br>
     <Typography variant="h5">FAQs</Typography>
@@ -44,7 +44,8 @@ const Home = () => (
           backgroundColor: '#A5C9CA',
         }}>
           <Typography>
-          Nope! Our app is completely free to use, just login with your Google account and you'll be ready to go!
+          Nope! Our app is completely free to use, just login with your Google account and
+          you will be ready to go!
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -65,7 +66,7 @@ const Home = () => (
           <Typography>
             If you want to browse the games happening in your area, simply visit
             the <strong>Games</strong> tab at the top of the page.
-            If You want to host your own game, click on <strong>Post</strong>.
+            If you want to host your own game, click on <strong>Post</strong>.
           </Typography>
         </AccordionDetails>
       </Accordion>

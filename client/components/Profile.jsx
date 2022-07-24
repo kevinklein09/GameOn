@@ -168,7 +168,7 @@ const Profile = () => {
                     <p style={{marginLeft: '10px'}}>{event.catName}</p>
                     <p style={{marginLeft: '30px'}}><b>Time: </b>{`${event.time}`}</p>
                     <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
-                    <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
+                    <button onClick={() => handleDelete(event._id)} style={{marginLeft: 'auto'}}> Cancel Event </button>
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -189,7 +189,7 @@ const Profile = () => {
                       <p style={{marginLeft: '10px'}}>{event.catName}</p>
                       <p style={{marginLeft: '30px'}}><b>Time: </b>{`${event.time}`}</p>
                       <p style={{marginLeft: '30px'}}><b>Location: </b>{event.address}</p>
-                      <button onClick={() => handleAttendingDelete(event._id)} style={{marginLeft: 'auto'}}> delete </button>
+                      <button onClick={() => handleAttendingDelete(event._id)} style={{marginLeft: 'auto'}}> Don't Attend </button>
                     </Typography>
                   </AccordionDetails>
                 </Accordion>

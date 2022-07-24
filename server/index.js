@@ -22,16 +22,13 @@ const { Events, Sports, Users } = require("../DB/models");
 const port = 3000;
 const distPath = path.resolve(__dirname, "..", "dist");
 const app = express();
-// const styles = require('../client/styles.css');
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json()); // Parse the request body
 app.use(express.urlencoded({ extended: true })); // Parses url
 app.use(express.static(distPath)); // Statically serve up client directory
-// app.use(express.static(styles)); // Statically serve up styles
 
 app.get("/api/eventListings", (req, res) => {
-  // console.log('normal listings', req.query);
   Events.find({})
     .sort("date")
     .then((query) => {
@@ -44,7 +41,6 @@ app.get("/api/eventListings", (req, res) => {
 });
 
 app.put('/api/eventListings', (req, res) => {
-  console.log(req.body);
   const { eventID, userId } = req.body;
   Events.findByIdAndUpdate({ _id: eventID }, { $push: { attendees: userId } })
     .then(() => {
@@ -68,16 +64,10 @@ app.get("/api/categories", (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  console.log('map listings', req.query);
-  console.log('map GET request');
   const { userId, event, status } = req.query;
-  console.log(status);
   if (event) {
     if (status === 'Going') {
       Events.updateOne({ _id: event }, { $pullAll: { attendees: [userId] } })
-        .then((eventData) => {
-          console.log('removed-----');
-        })
         .catch((err) => {
           console.error(err);
         });
@@ -101,11 +91,8 @@ app.get('/map', (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-  // console.log('GET REQ LINE 66 REQ', req);
-  // console.log('GET REQ LINE 67 RES', res);
   Users.find({})
     .then((query) => {
-      // console.log('user get request');
       res.status(200).send(query);
     })
     .catch((err) => {
@@ -125,8 +112,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const isLoggedIn = (req, res, next) => {
-  // console.log('LINE 116', req)
-  // console.log('LINE 117', res);
   req.user ? next() : res.sendStatus(401);
 };
 app.get("/auth/success", (req, res) => {
@@ -140,7 +125,6 @@ app.get("/auth/success", (req, res) => {
 });
 
 app.get("/hidden", isLoggedIn, (req, res) => {
-  // console.log('LINE 130', req);
   res.send(req.user);
 });
 
@@ -152,17 +136,13 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    // console.log('RESPONE LINE 97', res);
     // Successful authentication, redirect secrets.
     res.redirect('/');
   },
 );
 
 app.get("/logout", (req, res) => {
-  // console.log('logout');
-  // console.log('req.user:', req.user);
   req.logout(() => {
-    // console.log('execute req.logout');
     res.redirect("/");
   });
 });
@@ -191,7 +171,6 @@ app.post("/api/event", (req, res) => {
 });
 app.delete("/api/event", (req, res) => {
   const { id } = req.body;
-  console.log(req.body);
   Events.findOneAndDelete({ _id: id })
     .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(500));
@@ -203,7 +182,6 @@ app.get("/api/event", (req, res) => {
 })
 
 app.put("/api/event", (req, res) => {
-  console.log(req.body);
   if (req.body.going) {
     Events.updateOne(
       { _id: req.body.id },

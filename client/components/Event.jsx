@@ -13,7 +13,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const moment = require('moment');
-
+// create materialUi theme
 const theme = createTheme({
   palette: {
     primary: {
@@ -32,7 +32,7 @@ const Event = (props) => {
   const [going, setGoing] = useState(false);
   
   const context = useContext(UserContext);
-
+// This will read the current status of whether the user is attending or not based off of what is currently in the database on page load
   const setStatus = () => {
     axios.get('/api/event', {
       params: {
@@ -52,9 +52,8 @@ const Event = (props) => {
   useEffect(() => {
     setStatus();
   })
-
+// This will update the database based off of the position of the toggle switch that is selected by the user (based off of whether they are going or not)
   const handleToggle = () => {
-    console.log('toggled');
     axios.get('/api/event', {
       params: {
         id: props.eventData._id

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -11,9 +11,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-import ImageAvatar from './ImageAvatar';
 import { teal } from '@mui/material/colors';
-import { UserContext } from '../index';
+import ImageAvatar from './ImageAvatar.jsx';
 
 const theme = createTheme({
   components: {
@@ -57,9 +56,9 @@ const login = {
 };
 
 const App = () => {
-  const user = useContext(UserContext);
-  console.log('LINE 8 App USER', user);
-
+  /**
+  * This function executes an axios GET request to log out the current user.
+  */
   const logout = () => {
     axios.get('/logout').then((res) => {
       if (res.data) {
@@ -96,8 +95,3 @@ const App = () => {
 };
 
 export default App;
-
-/*
-https://styled-components.com/docs/basics#installation
-const App = () => (
-*/
