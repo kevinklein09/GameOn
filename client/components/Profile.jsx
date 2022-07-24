@@ -127,10 +127,10 @@ const Profile = () => {
         </h1>
         <div>
         <Avatar
-                alt= {user.firstName[0] + user.lastName[0]}
-                src={user.image}
-                sx={{ width: 175, height: 175 }}
-              />
+          alt= {user.firstName[0] + user.lastName[0]}
+          src={user.image}
+          sx={{ width: 175, height: 175 }}
+        />
         </div>
         <p>Your Info: </p>
         <div>
