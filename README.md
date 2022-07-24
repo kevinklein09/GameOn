@@ -49,7 +49,6 @@ The following are the various bugs we were unable to resolve during the course o
 
 <h4 align='left'>EVENT COMPONENT</h4>
 
-  - Dropdown does not automatically close upon interaction
   - Toggle switch triggers multiple times upon click
 
 
