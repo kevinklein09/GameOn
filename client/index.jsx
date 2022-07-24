@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 // import ReactDOM from "react-dom";
@@ -11,7 +12,6 @@ import Profile from './components/Profile.jsx';
 import EventListings from './components/EventListings.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
-import Logout from './components/Logout.jsx';
 import Home from './components/Home.jsx';
 import './styles.css';
 
@@ -41,7 +41,7 @@ function UserContextProvider({ children }) {
             firstName: res.data.firstName,
             lastName: res.data.lastName,
             image: res.data.image,
-            _id: res.data._id
+            _id: res.data._id,
           });
           if (res.status === 200) { return res; }
         })

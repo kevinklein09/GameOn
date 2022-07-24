@@ -9,6 +9,5 @@ const { DB_URI } = ENV;
 
 mongoose.connect(DB_URI)
   .then((connection) => {
-    console.log('connected');
   })
   .catch((err) => console.error(err));

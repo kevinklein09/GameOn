@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../index';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import Tab from '@mui/material/Tab';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { teal } from '@mui/material/colors';
-
+import { UserContext } from '../index.jsx';
 
 const styles = {
   tab: {
@@ -23,8 +22,7 @@ const linkStyle = {
 
 export default function ImageAvatar(props) {
   const user = useContext(UserContext);
-  console.log(props)
-  if (user){
+  if (user) {
     return (
       <Grid xs={2}>
         <Link to="/profile" style={linkStyle}>{
@@ -43,10 +41,8 @@ export default function ImageAvatar(props) {
         </Link>
       </Grid>
     );
-  } else{
-    return (
-      <Grid xs={2}><Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon sx={{ color: teal[100] }} />} style={styles.tab} label='PROFILE' />}</Link></Grid>
-      )
-
   }
+  return (
+      <Grid xs={2}><Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon sx={{ color: teal[100] }} />} style={styles.tab} label='PROFILE' />}</Link></Grid>
+  );
 }

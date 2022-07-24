@@ -97,7 +97,7 @@ const Map = () => {
               };
               // create a div to store the images above, these are used as the map markers
               const icon = document.createElement('div');
-              icon.className = 'icon';
+              icon.class = 'icon';
               icon.style.backgroundImage = `url(${image()})`;
               icon.style.width = '20px';
               icon.style.height = '20px';
@@ -130,7 +130,7 @@ const Map = () => {
           <br></br><br></br>
         <Typography variant="h4" >Hello, {userContext.firstName}!</Typography>
         <Typography align="center" variant="body1">Check out all of the games near you!</Typography>
-        <div id="map" className="map-container" ref={mapDiv}></div>
+        <div id="map" class="map-container" ref={mapDiv}></div>
       </div>
     );
   }
