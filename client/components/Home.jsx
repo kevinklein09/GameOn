@@ -5,7 +5,23 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#a373ab',
+      darker: '#395B64',
+    },
+    neutral: {
+      main: '#64748B',
+      contrastText: '#fff',
+    },
+  },
+});
+
 const Home = () => (
+  <ThemeProvider theme={theme}>
       <div>
         <br></br><br></br>
     <Typography variant="h4">Welcome to GameOn.</Typography>
@@ -18,10 +34,15 @@ const Home = () => (
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          sx={{
+            backgroundColor: '#A5C9CA',
+          }}
         >
-          <Typography>Do I have to pay anything?</Typography>
+          <Typography><strong>Do I have to pay anything?</strong></Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{
+          backgroundColor: '#A5C9CA',
+        }}>
           <Typography>
           Nope! Our app is completely free to use, just login with your Google account and you'll be ready to go!
           </Typography>
@@ -32,10 +53,15 @@ const Home = () => (
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
           id="panel2a-header"
+          sx={{
+            backgroundColor: '#A5C9CA',
+          }}
         >
-          <Typography>How do I use your app?</Typography>
+          <Typography><strong>How do I use your app?</strong></Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{
+          backgroundColor: '#A5C9CA',
+        }}>
           <Typography>
             If you want to browse the games happening in your area, simply visit
             the <strong>Games</strong> tab at the top of the page.
@@ -48,10 +74,16 @@ const Home = () => (
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
           id="panel2a-header"
+          sx={{
+            backgroundColor: '#A5C9CA',
+          }}
         >
-          <Typography>What sports can I host?</Typography>
+          <Typography><strong>What sports can I host?</strong></Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails
+                  sx={{
+                    backgroundColor: '#A5C9CA',
+                  }}>
           <Typography>
             Our app currently supports the following sports activities:
             <ul>
@@ -90,5 +122,6 @@ const Home = () => (
         </AccordionDetails>
       </Accordion>
       </div>
+      </ThemeProvider>
 );
 export default Home;

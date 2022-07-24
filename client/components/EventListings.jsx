@@ -9,7 +9,7 @@ import axios from 'axios';
 import Sports from './SportsSelect';
 import Event from './Event.jsx';
 import { UserContext } from '../index.jsx';
-
+import Typography from '@mui/material/Typography';
 const EventListings = (props) => {
   const context = useContext(UserContext);
   const [events, setEvents] = useState([]);
@@ -50,7 +50,7 @@ if (context) {
 return (
   <div>
     <br></br><br></br>
-    <h1>See all da events</h1><button onClick={getAllEvents}>Show All</button>
+    <Typography variant="h4">See all da events</Typography><button onClick={getAllEvents}>Show All</button>
     <Sports handleSelectSport={ handleSelectSport }/>
     { events.map((event, i) => {
       return <><Event eventData={ event } class="event" key={ `event: ${i}` }/></> 
