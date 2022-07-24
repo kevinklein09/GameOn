@@ -50,7 +50,7 @@ if (context) {
 return (
   <div>
     <br></br><br></br>
-    <Typography variant="h4">See all da events</Typography><button onClick={getAllEvents}>Show All</button>
+    <Typography variant="h4">See all da events</Typography><button id='all-button' onClick={getAllEvents}>Show All</button>
     <Sports handleSelectSport={ handleSelectSport }/>
     { events.map((event, i) => {
       return <><Event eventData={ event } class="event" key={ `event: ${i}` }/></> 

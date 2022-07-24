@@ -30,7 +30,16 @@ In your .env file, add the following environment variables:
 
 
 ---
+ <h2 align='left'>INSTRUCTIONS FOR EVENTS LIST (SPORTS DISPLAY) PAGE/COMOPONENTS</h2>
 
+  - There must be at least some seeded data for the page to render the event cards in the browser. 
+  - There no way currently to remove an entire event card from the 'current state' of the page, so keep that in mind while navigating. 
+  - The 'going/not going' toggle should be toggled according to the current attendees array in the database whether the user joined from a different page/component or not. 
+  - Context will be referenced to make use of the current states that are available at runtime. 
+  - Both the SportsSelect.jsx component and the Event.jsx component are being rendered on the EventListings.jsx component repesctively. 
+  - The EventListings component has functinoality to map through the data being pulled from the database to render each Event.jsx component based off of what is currently being returned from the request handlers in /server/index.js
+  
+--- 
  <h2 align='left'>KNOWN BUGS</h2>
 
 ---
@@ -49,9 +58,22 @@ The following are the various bugs we were unable to resolve during the course o
 
 <h4 align='left'>EVENT COMPONENT</h4>
 
+  - Toggle switch triggers multiple times upon click, but only aesthetically, it still only adds or removes once from the database, as inteded. 
+  - No ability to delete an event if you no longer want to see it on the page.
+  - Dropdown bar dynamically resizes by the lenght of the new category selected, instead of staying a consistent amount of pixelation like other static buttons throughout the program.
+  
   - Dropdown does not automatically close upon interaction
   - Toggle switch triggers multiple times upon click
 
+  <h4 align='left'>CREATE EVENT COMPONENT</h4>
+
+  - currently the equipment list doesn't serve any functionality. it is not storing anything in the database.
+
+  - The Calendar date selection wont let you click on a date thats before the current date. but a user can still enter it manually.
+
+  - User will get an error in the dev console if they try to backspace all of the input from the player limit. this was initially done to prevent them from entering a number less than 1.
+
+  - Sometimes addresses entered from google chromes saved addresses will populate the full address inside of the first address field
 
 ---
   <h2 align='left'>Available Resources</h2>
