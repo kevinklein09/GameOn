@@ -1,26 +1,26 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-require("dotenv").config();
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const session = require("express-session");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const findOrCreate = require("mongoose-findorcreate");
-const path = require("path");
-const express = require("express");
-const mongoose = require("mongoose");
-const User = require("../DB/Users");
-const ENV = require("../.env");
-require("./passport");
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const findOrCreate = require('mongoose-findorcreate');
+const path = require('path');
+const express = require('express');
+const mongoose = require('mongoose');
+const User = require('../DB/Users');
+const ENV = require('../.env');
+require('./passport');
 
-const DB = require("../DB/index");
-const { Events, Sports, Users } = require("../DB/models");
+const DB = require('../DB/index');
+const { Events, Sports, Users } = require('../DB/models');
 
 const port = 3000;
-const distPath = path.resolve(__dirname, "..", "dist");
+const distPath = path.resolve(__dirname, '..', 'dist');
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -28,9 +28,9 @@ app.use(express.json()); // Parse the request body
 app.use(express.urlencoded({ extended: true })); // Parses url
 app.use(express.static(distPath)); // Statically serve up client directory
 
-app.get("/api/eventListings", (req, res) => {
+app.get('/api/eventListings', (req, res) => {
   Events.find({})
-    .sort("date")
+    .sort('date')
     .then((query) => {
       res.status(200).send(query);
     })
@@ -52,7 +52,7 @@ app.put('/api/eventListings', (req, res) => {
     });
 });
 
-app.get("/api/categories", (req, res) => {
+app.get('/api/categories', (req, res) => {
   Sports.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -90,7 +90,7 @@ app.get('/map', (req, res) => {
     });
 });
 
-app.get("/users", (req, res) => {
+app.get('/users', (req, res) => {
   Users.find({})
     .then((query) => {
       res.status(200).send(query);
@@ -114,17 +114,17 @@ app.use(passport.session());
 const isLoggedIn = (req, res, next) => {
   req.user ? next() : res.sendStatus(401);
 };
-app.get("/auth/success", (req, res) => {
+app.get('/auth/success', (req, res) => {
   if (req.user) {
     res.status(200).json({
       user: req.user,
-      message: "success",
+      message: 'success',
       success: true,
     });
   }
 });
 
-app.get("/hidden", isLoggedIn, (req, res) => {
+app.get('/hidden', isLoggedIn, (req, res) => {
   res.send(req.user);
 });
 
@@ -133,23 +133,24 @@ app.get(
   passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect secrets.
     res.redirect('/');
   },
 );
 
-app.get("/logout", (req, res) => {
+app.get('/logout', (req, res) => {
   req.logout(() => {
-    res.redirect("/");
+    res.redirect('/');
   });
 });
 
-app.post("/api/event", (req, res) => {
+app.post('/api/event', (req, res) => {
   const {
-    owner, attendees, locName, address, description, date, time, coordinates, category, catName, players,
+    owner, attendees, locName, address, description, date, time,
+    coordinates, category, catName, players,
   } = req.body;
 
   Events.create({
@@ -169,23 +170,23 @@ app.post("/api/event", (req, res) => {
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
 });
-app.delete("/api/event", (req, res) => {
+app.delete('/api/event', (req, res) => {
   const { id } = req.body;
   Events.findOneAndDelete({ _id: id })
     .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(500));
 });
-app.get("/api/event", (req, res) => {
+app.get('/api/event', (req, res) => {
   Events.findOne({ _id: req.query.id })
     .then((data) => res.status(200).send(data))
     .catch((err) => res.sendStatus(500));
-})
+});
 
-app.put("/api/event", (req, res) => {
+app.put('/api/event', (req, res) => {
   if (req.body.going) {
     Events.updateOne(
       { _id: req.body.id },
-      { $pullAll: { attendees: [req.body.userId] } }
+      { $pullAll: { attendees: [req.body.userId] } },
     ).then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   } else {
@@ -199,7 +200,7 @@ app.put("/api/event", (req, res) => {
 
 app.listen(port, () => {
   console.log(`
-  Listening at: http://ec2-54-214-179-90.us-west-2.compute.amazonaws.com:${port}
+  Listening at: localhost:${port}
   `);
 });
 

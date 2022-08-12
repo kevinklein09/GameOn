@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable */
 
 import React from 'react';
 import { AddressAutofill } from '@mapbox/search-js-react';
