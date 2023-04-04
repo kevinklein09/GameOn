@@ -10,6 +10,7 @@ import App from './components/App.jsx';
 import Map from './components/Map.jsx';
 import Profile from './components/Profile.jsx';
 import EventListings from './components/EventListings.jsx';
+import EventPage from './components/EventPage.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
@@ -67,6 +68,7 @@ root.render(
         <Route path="login" element={<Login />} />
         <Route path="map" element={<Map />} />
         <Route path="eventListings" element={<EventListings />} />
+        <Route path="eventPage" element={<EventPage />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
         <Route path="logout" />
