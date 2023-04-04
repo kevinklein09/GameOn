@@ -112,6 +112,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const isLoggedIn = (req, res, next) => {
+  // eslint-disable-next-line
   req.user ? next() : res.sendStatus(401);
 };
 app.get('/auth/success', (req, res) => {

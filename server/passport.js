@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 require('dotenv').config();
-const ENV = require('../.env');
+
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const ENV = require('../.env');
 const { Users } = require('../DB/models');
 
 passport.use(Users.createStrategy());
