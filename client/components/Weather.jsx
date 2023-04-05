@@ -4,10 +4,10 @@ import axios from 'axios';
 // import icons for weather forecast
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSun, faCloud, faCloudRain, faSnowflake,
+  faSun, faCloud, faCloudRain, faSnowflake, faCloudSun, faCloudShowersHeavy,
 } from '@fortawesome/free-solid-svg-icons';
 
-const API_URL = 'https://api.open-meteo.com/v1/forecast?latitude=0&longitude=0&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,precipitation,rain,showers,snowfall,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum&current_weather=true&windspeed_unit=mph&timezone=auto';
+const API_URL = 'https://api.open-meteo.com/v1/forecast?latitude=29.95&longitude=-90.08&hourly=temperature_2m,rain,showers,snowfall,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto';
 
 const Weather = () => {
   // giving state
@@ -18,13 +18,13 @@ const Weather = () => {
     axios
       .get(API_URL)
       .then((res) => {
-        setWeatherData(res.data);
+        setWeatherData(Object.values(res.data.daily));
       })
       .catch((err) => {
         console.error('Failed to GET', err);
       });
   }, []);
-
+  console.log(weatherData, 'This is the weatherData');
   // loading screen display
   if (!weatherData) {
     return <div>Loading weather data...</div>;
@@ -47,13 +47,13 @@ const Weather = () => {
       case 'clear':
         return <FontAwesomeIcon icon={faSun} />;
       case 'partly-cloudy':
-        return <FontAwesomeIcon icon={faCloud} />;
+        return <FontAwesomeIcon icon={faCloudSun}/>;
       case 'cloudy':
         return <FontAwesomeIcon icon={faCloud} />;
       case 'light-rain':
         return <FontAwesomeIcon icon={faCloudRain} />;
       case 'heavy-rain':
-        return <FontAwesomeIcon icon={faCloudRain} />;
+        return <FontAwesomeIcon icon={faCloudShowersHeavy} />;
       case 'snow':
         return <FontAwesomeIcon icon={faSnowflake} />;
       default:
@@ -64,6 +64,9 @@ const Weather = () => {
   return (
     <div className='weather-forecast'>
       <h2>Weekly Weather Forecast</h2>
+{weatherData.map(() => (
+    <p className="test">{weatherData}</p>
+))}
     </div>
   );
 };
