@@ -7,15 +7,6 @@ const Leaderboard = () => {
   // const [leaderboardData, setLeaderboardData] = useState([]);
   const [users, setUsers] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get('/api/leaderboard')
-  //     .then((lbData) => {
-  //       setLeaderboardData(lbData.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, []);
   const getUsers = () => {
     axios.get('/users')
       .then((usersObj) => {
