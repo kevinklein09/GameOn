@@ -1,6 +1,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+const io = require('socket.io')(8081, {
+  cors: {
+    origin: ['http://localhost:3000'],
+  },
+});
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -15,6 +20,14 @@ const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
 require('./passport');
+
+io.on('connection', (socket) => {
+  socket.on('message', (message) => {
+    console.log(`got message: ${message}`);
+
+    io.emit('message', message);
+  });
+});
 
 const DB = require('../DB/index');
 const { Events, Sports, Users } = require('../DB/models');
@@ -63,21 +76,37 @@ app.get('/api/categories', (req, res) => {
     });
 });
 
+app.put('/user', (req, res) => {
+  Users.findByIdAndUpdate(req.body.id, {
+    eventCount: req.body.eventCount,
+  })
+    .then((user) => {
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 app.get('/map', (req, res) => {
   const { userId, event, status } = req.query;
   if (event) {
     if (status === 'Going') {
-      Events.updateOne({ _id: event }, { $pullAll: { attendees: [userId] } })
+      Events.updateOne(
+        { _id: event },
+        { $pullAll: { attendees: [userId] } }
+      ).catch((err) => {
+        console.error(err);
+      });
+    } else {
+      Events.findByIdAndUpdate({ _id: event }, { $push: { attendees: userId } })
+        .then(() => {
+          console.log('user added to event');
+        })
         .catch((err) => {
           console.error(err);
         });
-    } else {
-      Events.findByIdAndUpdate(
-        { _id: event },
-        { $push: { attendees: userId } },
-      )
-        .then(() => { console.log('user added to event'); })
-        .catch((err) => { console.error(err); });
     }
   }
   Events.find({})
@@ -117,7 +146,7 @@ app.use(
     secret: ENV.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -142,7 +171,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 app.get(
   '/auth/google/callback',
@@ -150,7 +179,7 @@ app.get(
   (req, res) => {
     // Successful authentication, redirect secrets.
     res.redirect('/');
-  },
+  }
 );
 
 app.get('/logout', (req, res) => {
@@ -161,8 +190,17 @@ app.get('/logout', (req, res) => {
 
 app.post('/api/event', (req, res) => {
   const {
-    owner, attendees, locName, address, description, date, time,
-    coordinates, category, catName, players,
+    owner,
+    attendees,
+    locName,
+    address,
+    description,
+    date,
+    time,
+    coordinates,
+    category,
+    catName,
+    players,
   } = req.body;
 
   Events.create({
@@ -198,14 +236,16 @@ app.put('/api/event', (req, res) => {
   if (req.body.going) {
     Events.updateOne(
       { _id: req.body.id },
-      { $pullAll: { attendees: [req.body.userId] } },
-    ).then((data) => res.status(200).send(data))
+      { $pullAll: { attendees: [req.body.userId] } }
+    )
+      .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   } else {
     Events.updateOne(
       { _id: req.body.id },
-      { $push: { attendees: req.body.userId } },
-    ).then((data) => res.status(200).send(data))
+      { $push: { attendees: req.body.userId } }
+    )
+      .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   }
 });
@@ -246,7 +286,7 @@ app.post('/event/:eventId/message', (req, res) => {
       } else {
         res.status(200).send(updatedEvent);
       }
-    },
+    }
   );
 });
 
