@@ -25,24 +25,39 @@ export default function ImageAvatar(props) {
   if (user) {
     return (
       <Grid xs={2}>
-        <Link to="/profile" style={linkStyle}>{
-          <Tab
-            icon={
-              <Avatar
-                alt= {user.firstName[0] + user.lastName[0]}
-                src={user.image}
-                sx={{ width: 24, height: 24 }}
-              />
-            }
-            style={styles.tab}
-            label='PROFILE'
-          />
-        }
+        <Link to='/profile' style={linkStyle}>
+          {
+            <Tab
+              icon={
+                <Avatar
+                  alt={
+                    user.lastName
+                      ? user.firstName[0] + user.lastName[0]
+                      : user.firstName[0]
+                  }
+                  src={user.image}
+                  sx={{ width: 24, height: 24 }}
+                />
+              }
+              style={styles.tab}
+              label='PROFILE'
+            />
+          }
         </Link>
       </Grid>
     );
   }
   return (
-      <Grid xs={2}><Link to="/profile" style={linkStyle}>{<Tab icon={<AccountCircleIcon sx={{ color: teal[100] }} />} style={styles.tab} label='PROFILE' />}</Link></Grid>
+    <Grid xs={2}>
+      <Link to='/profile' style={linkStyle}>
+        {
+          <Tab
+            icon={<AccountCircleIcon sx={{ color: teal[100] }} />}
+            style={styles.tab}
+            label='PROFILE'
+          />
+        }
+      </Link>
+    </Grid>
   );
 }
