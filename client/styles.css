@@ -157,3 +157,14 @@ body {
   ::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-link {
+  margin-left: auto;
+  color: #234D6A;
+  font-weight: bold;
+}

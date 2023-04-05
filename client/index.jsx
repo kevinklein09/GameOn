@@ -10,9 +10,11 @@ import App from './components/App.jsx';
 import Map from './components/Map.jsx';
 import Profile from './components/Profile.jsx';
 import EventListings from './components/EventListings.jsx';
+import EventPage from './components/EventPage.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
+import Leaderboard from './components/Leaderboard.jsx';
 import './styles.css';
 
 const root = createRoot(document.getElementById('root'));
@@ -67,7 +69,9 @@ root.render(
         <Route path="login" element={<Login />} />
         <Route path="map" element={<Map />} />
         <Route path="eventListings" element={<EventListings />} />
+        <Route path="eventPage/:eventId" element={<EventPage />} />
         <Route path="postEvent" element={<CreateEvents />} />
+        <Route path="leaderboard" element={<Leaderboard />} />
         <Route path="profile" element={<Profile />} />
         <Route path="logout" />
         <Route path="*" element= {<Login />}/>
