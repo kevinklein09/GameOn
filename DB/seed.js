@@ -193,7 +193,6 @@ const usersData = [
     secret: String,
   },
 
-
 ];
 
 usersData.forEach((event) => {

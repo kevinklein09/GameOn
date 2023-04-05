@@ -101,6 +101,17 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.get('api/users', (req, res) => {
+  Users.find({})
+    .then((query) => {
+      res.status(200).send(query);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 app.use(
   session({
     secret: ENV.EXPRESS_SECRET,
