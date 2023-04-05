@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from '../index.jsx';
 
 const CreateTeam = () => {
+    const context = useContext(UserContext)
 
    if (context) {
-
-    return (
+     return (
         <div>This is where the Team Creation feature will be</div>
     )
    }
