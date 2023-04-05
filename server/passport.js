@@ -7,7 +7,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { Users } = require('../DB/models');
 
 passport.use(Users.createStrategy());
-console.log(process.env.CLIENT_ID);
+
 passport.use(
   new GoogleStrategy(
     {
