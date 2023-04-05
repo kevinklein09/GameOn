@@ -18,6 +18,7 @@ import Home from './components/Home.jsx';
 import Leaderboard from './components/Leaderboard.jsx';
 import TeamList from './components/TeamList.jsx';
 import CreateTeam from './components/CreateTeam.jsx';
+import Weather from './components/Weather.jsx';
 import './styles.css';
 
 const root = createRoot(document.getElementById('root'));
@@ -48,19 +49,18 @@ function UserContextProvider({ children }) {
             lastName: res.data.lastName,
             image: res.data.image,
             _id: res.data._id,
+            eventCount: res.data.eventCount,
           });
-          if (res.status === 200) { return res; }
+          if (res.status === 200) {
+            return res;
+          }
         })
         .catch((err) => console.error(err, '***ERROR***'));
     };
     getUser();
   }, []);
 
-  return (
-    <UserContext.Provider value = {user} >
-      { children }
-      </UserContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }
 
 root.render(
@@ -76,6 +76,7 @@ root.render(
         <Route path="eventPage/:eventId" element={<EventPage />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="leaderboard" element={<Leaderboard />} />
+         <Route path="forecast" element={<Weather />} />
         <Route path="teamList" element={<TeamList/>} />
         <Route path="createTeam" element={<CreateTeam />} />
         <Route path="profile" element={<Profile />} />
