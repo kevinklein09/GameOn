@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable import/no-cycle */
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
@@ -52,7 +54,7 @@ const EventListings = () => {
   <div align='center'>
     <br></br>
   <h3>
-  You must be logged in to view the events
+  You must be logged in to view the teams
   </h3>
   <img width='200' height='100%' src='https://giffiles.alphacoders.com/102/102598.gif'/>
 </div>

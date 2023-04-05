@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-cycle */
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
@@ -15,12 +16,15 @@ import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
 import Leaderboard from './components/Leaderboard.jsx';
+import TeamList from './components/TeamList.jsx';
+import CreateTeam from './components/CreateTeam.jsx';
 import './styles.css';
 
 const root = createRoot(document.getElementById('root'));
 
 export const UserContext = React.createContext();
 
+// eslint-disable-next-line react/prop-types
 function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
 
@@ -72,6 +76,8 @@ root.render(
         <Route path="eventPage/:eventId" element={<EventPage />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="leaderboard" element={<Leaderboard />} />
+        <Route path="teamList" element={<TeamList/>} />
+        <Route path="createTeam" element={<CreateTeam />} />
         <Route path="profile" element={<Profile />} />
         <Route path="logout" />
         <Route path="*" element= {<Login />}/>
