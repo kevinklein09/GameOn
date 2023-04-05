@@ -4,7 +4,6 @@ import { makeStyles } from '@mui/styles';
 import { Typography, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
 const Leaderboard = () => {
-  // const [leaderboardData, setLeaderboardData] = useState([]);
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
