@@ -31,6 +31,7 @@ const theme = createTheme({
 
 const Event = (props) => {
   const [going, setGoing] = useState(false);
+  const [eventCount, setEventCount] = useState(0);
   
   const context = useContext(UserContext);
 // This will read the current status of whether the user is attending or not based off of what is currently in the database on page load
@@ -65,7 +66,19 @@ const Event = (props) => {
         going,
         userId: context._id
         
-      }).then((data) => console.log(data))
+      })
+      .then((data) => {
+        // console.log('this is data from handleToggle:', data);
+        if (going) {
+          axios.put('/api/user', {
+            id: context._id,
+            eventCount: context.eventCount + 1
+          })
+          .then((userData) => {
+            context.setEvent
+          })
+        }
+      })
       .catch((err) => console.error(err));
     })
     .then(() => setGoing(going => !going))
