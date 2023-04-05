@@ -69,7 +69,7 @@ const Event = (props) => {
             going,
             userId: context._id,
           })
-          .then((data) => {
+          .then(() => {
             console.log('eventCount before update:', context.eventCount);
             if (going) {
               axios
