@@ -44,7 +44,7 @@ function UserContextProvider({ children }) {
             lastName: res.data.lastName,
             image: res.data.image,
             _id: res.data._id,
-            eventCount: 0,
+            eventCount: res.data.eventCount,
           });
           if (res.status === 200) {
             return res;
