@@ -44,18 +44,10 @@ const TeamList = () => {
   if (context) {
     return (
       <div>
-        <br></br>
-        <br></br>
-        <Typography variant='h4'>See all Teams</Typography>
-        <button id='all-button' onClick={getAllTeams}>
-          Show All
-        </button>
-        <TeamSelect handleTeamSelect={handleTeamSelect} />
-        {teams.map((team, i) => (
-          <>
-            <Team teamData={team} class='team' key={`team: ${i}`} />
-          </>
-        ))}
+        <br></br><br></br>
+        <Typography variant='h4'>Teams</Typography><button id='all-button' onClick={getAllTeams}>Show All Teams</button>
+        <TeamSelect handleTeamSelect={ handleTeamSelect } />
+        {teams.map((team, i) => (<><Team teamData={team} class='team' key={`team: ${i}`} /></>))}
       </div>
     );
   }
