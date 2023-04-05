@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 require('dotenv').config();
-const ENV = require('../.env');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const findOrCreate = require('mongoose-findorcreate');
 const passportLocalMongoose = require('passport-local-mongoose');
+const ENV = require('../.env');
 
 const { Schema } = mongoose;
 // Users collection Schema --------------------------
@@ -21,7 +21,10 @@ const userSchema = new Schema({
   lastName: String,
   googleIdNumber: Number,
   image: String,
-  eventCount: Number,
+  eventCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 userSchema.plugin(passportLocalMongoose);
