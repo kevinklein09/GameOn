@@ -70,7 +70,7 @@ const Event = (props) => {
             userId: context._id,
           })
           .then(() => {
-            console.log('eventCount before update:', context.eventCount);
+            // console.log('eventCount before update:', context.eventCount);
             if (going) {
               axios
                 .put('/user', {
@@ -78,10 +78,10 @@ const Event = (props) => {
                   eventCount: context.eventCount + 1,
                 })
                 .then((userData) => {
-                  console.log(
-                    'evenCount after increment',
-                    userData.data.eventCount
-                  );
+                  // console.log(
+                  //   'evenCount after increment',
+                  //   userData.data.eventCount
+                  // );
                   setEventCount(userData.data.eventCount);
                 })
                 .catch((err) => {
