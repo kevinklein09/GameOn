@@ -44,9 +44,12 @@ const eventSchema = new Schema({
 });
 eventSchema.index(
   {
-    owner: 1, location: 1, date: 1, time: 1,
+    owner: 1,
+    location: 1,
+    date: 1,
+    time: 1,
   },
-  { unique: true },
+  { unique: true }
 );
 // Event Model
 
