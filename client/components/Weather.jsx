@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'; import axios from 'axios';
 
 // import icons for weather forecast
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSun, faCloud, faCloudRain, faSnowflake,
-} from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import {
+//   faSun, faCloud, faCloudRain, faSnowflake,
+// } from '@fortawesome/free-solid-svg-icons';
 
 const API_URL = 'https://api.open-meteo.com/v1/forecast/daily';
 
@@ -57,3 +57,5 @@ const Weather = () => {
     </div>
   );
 };
+
+export default Weather;
