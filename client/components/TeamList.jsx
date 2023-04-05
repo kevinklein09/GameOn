@@ -12,7 +12,7 @@ const TeamList = () => {
     const [teams, setTeams] = useState([]);
     
     // Function to retrieve teams that are selected by the TeamSelect button
-    const handleSelectTeam = (e) => {
+    const handleTeamSelect = (e) => {
       axios.get('/api/teamList')
         .then((teamData) => {
           setTeams(
@@ -45,3 +45,10 @@ const TeamList = () => {
     <div>
     <br></br><br></br>
     <Typography variant="h4">See all Teams</Typography><button id='all-button' onClick={getAllTeams}>Show All</button>
+    <TeamSelect handleTeamSelect={ handleTeamSelect }/>
+    { teams.map((team, i) => <><Team teamData={ teamData } class="team" key={ `team: ${i}` }/></>) }
+    </div>
+    )
+  }
+  
+}
