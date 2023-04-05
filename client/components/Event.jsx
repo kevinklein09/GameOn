@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -77,15 +78,18 @@ const Event = (props) => {
        <p class="card-text">{props.eventData.description}</p>
        <p class="card-text"><CalendarMonthIcon sx={{ color: black }} /> {moment(props.eventData.date).add(1, 'day').format('MMMM Do YYYY')} | {moment(props.eventData.time, 'h:mm a').format('h:mm a')}</p> 
        <p class="card-text"><LocationOnIcon sx={{ color: black }} /><strong>{props.eventData.locName}</strong> {props.eventData.address}</p>
-       <FormGroup>
-         <FormControlLabel
-          control={<Switch checked={going} sx={{ color: '#476A83' }} onChange={handleToggle}/>}
-          label=
-            {going
-              ? <div style={{color: 'green', fontWeight: 'bolder'}}> GOING <CheckCircleOutlineIcon/></div>
-              : <div style={{color: '#234D6A', fontWeight: 'bolder'}}>RSVP?</div>}
-        />
-       </FormGroup>
+       <div className="form-container">
+          <FormGroup>
+            <FormControlLabel
+              control={<Switch checked={going} sx={{ color: '#476A83' }} onChange={handleToggle} />}
+              label=
+                {going
+                  ? <div style={{ color: 'green', fontWeight: 'bolder' }}> GOING <CheckCircleOutlineIcon /></div>
+                  : <div style={{ color: '#234D6A', fontWeight: 'bolder' }}>RSVP?</div>}
+            />
+          </FormGroup>
+          <Link to={`/eventPage/${props.eventData._id}`} className="card-link">Bulletin Board</Link>
+        </div>
 
     </div>
       </ThemeProvider>

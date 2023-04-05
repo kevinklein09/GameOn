@@ -123,6 +123,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const isLoggedIn = (req, res, next) => {
+  // eslint-disable-next-line
   req.user ? next() : res.sendStatus(401);
 };
 app.get('/auth/success', (req, res) => {
@@ -207,6 +208,46 @@ app.put('/api/event', (req, res) => {
     ).then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   }
+});
+
+app.get('/eventPage/:eventId', (req, res) => {
+  const id = req.params.eventId;
+  Events.findById(id)
+    .then((event) => {
+      if (event) {
+        res.status(200).send(event);
+      } else {
+        res.status(404).send('event not found');
+      }
+    })
+    .catch(() => {
+      res.sendStatus(500);
+    });
+});
+
+app.post('/event/:eventId/message', (req, res) => {
+  const { eventId } = req.params;
+  const { message, username } = req.body;
+  console.log(req.body);
+  const newMessage = {
+    message,
+    username,
+    createdAt: new Date(),
+  };
+
+  Events.findByIdAndUpdate(
+    eventId,
+    { $push: { messages: newMessage } },
+    { new: true },
+    (err, updatedEvent) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('could not add message to event');
+      } else {
+        res.status(200).send(updatedEvent);
+      }
+    },
+  );
 });
 
 app.listen(port, () => {

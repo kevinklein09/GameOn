@@ -9,7 +9,6 @@ const Leaderboard = () => {
   const getUsers = () => {
     axios.get('/users')
       .then((usersObj) => {
-        console.log(usersObj);
         setUsers(usersObj.data);
       })
       .catch((err) => {
