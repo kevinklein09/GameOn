@@ -29,6 +29,7 @@
     "@mapbox/search-js-web": "^1.0.0-beta.11",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.1",
+    "@mui/styles": "^5.11.16",
     "@mui/x-date-pickers-pro": "^5.0.0-beta.1",
     "axios": "^0.27.2",
     "cookie-parser": "^1.4.6",
