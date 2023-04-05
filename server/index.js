@@ -146,7 +146,7 @@ app.get('api/users', (req, res) => {
 
 app.use(
   session({
-    secret: ENV.EXPRESS_SECRET,
+    secret: process.env.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
   }),
