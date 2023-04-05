@@ -1,6 +1,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+const io = require('socket.io')(8081, {
+  cors: {
+    origin: ['http://localhost:3000'],
+  },
+});
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -15,6 +20,14 @@ const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
 require('./passport');
+
+io.on('connection', (socket) => {
+  socket.on('message', (message) => {
+    console.log(`got message: ${message}`);
+
+    io.emit('message', message);
+  });
+});
 
 const DB = require('../DB/index');
 const { Events, Sports, Users } = require('../DB/models');
