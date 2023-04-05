@@ -4,14 +4,19 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import { UserContext } from '../index.jsx';
 
+// const ENV = require('../../.env');
+
+// const { SOCKET_URL } = ENV;
+
 function EventPage() {
+  console.log(process.env.SOCKET_URL);
   const { eventId } = useParams();
   const context = useContext(UserContext);
   // use the eventId to fetch data for the specific event
   const [event, setEvent] = useState({});
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const socket = io('http://localhost:8081');
+  const socket = io(process.env.SOCKET_URL);
   socket.on('connect', () => {
     console.log('ur in');
   });
