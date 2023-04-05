@@ -168,3 +168,24 @@ body {
   color: #234D6A;
   font-weight: bold;
 }
+
+.messages {
+  /* border: 1px solid #ddd; */
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-weight: bolder;
+  /* max-height: 80vh;
+  overflow-y: auto; */
+}
+.bulletin {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-weight: bolder;
+  max-height: 80vh;
+  overflow-y: auto;
+}
