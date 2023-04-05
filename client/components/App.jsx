@@ -8,6 +8,7 @@ import Tab from '@mui/material/Tab';
 import SportsFootballIcon from '@mui/icons-material/SportsFootball';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import HomeIcon from '@mui/icons-material/Home';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import axios from 'axios';
@@ -83,6 +84,7 @@ const App = () => {
             <Grid container spacing={6} align="center" margin="auto">
             <Grid xs={2}><Link to="/home" style={linkStyle}>{<Tab icon={<HomeIcon sx={{ color: teal[100] }} />} style={styles.tab} label='HOME'/>}</Link> </Grid>
             <Grid xs={2}><Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon sx={{ color: teal[100] }} />} style={styles.tab} label='GAMES'/>}</Link></Grid>
+            <Grid xs={2}><Link to="/leaderboard" style={linkStyle}>{<Tab icon={<LeaderboardIcon sx={{ color: teal[100] }} />} style={styles.tab} label='LEADERBOARD'/>}</Link></Grid>
             <Grid xs={2}><Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon sx={{ color: teal[100] }} />} style={styles.tab} label='MAP'/>}</Link></Grid>
             <Grid xs={2}><Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon sx={{ color: teal[100] }}/>} style={styles.tab} label='POST'/>}</Link></Grid>
             <ImageAvatar />

@@ -21,6 +21,7 @@ const userSchema = new Schema({
   lastName: String,
   googleIdNumber: Number,
   image: String,
+  eventCount: Number,
 });
 
 userSchema.plugin(passportLocalMongoose);

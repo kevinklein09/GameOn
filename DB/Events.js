@@ -31,6 +31,16 @@ const eventSchema = new Schema({
   players: Number,
   isOpen: Boolean,
   isExpired: Boolean,
+  messages: [
+    {
+      message: String,
+      username: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 eventSchema.index(
   {
