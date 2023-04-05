@@ -3,16 +3,16 @@ require('dotenv').config();
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const ENV = require('../.env');
+// const ENV = require('../.env');
 const { Users } = require('../DB/models');
 
 passport.use(Users.createStrategy());
-
+console.log(process.env.CLIENT_ID);
 passport.use(
   new GoogleStrategy(
     {
-      clientID: ENV.CLIENT_ID,
-      clientSecret: ENV.CLIENT_SECRET,
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
       callbackURL: '/auth/google/callback',
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
     },
@@ -27,10 +27,10 @@ passport.use(
           image: profile.photos[0].value,
           eventCount: 0,
         },
-        (err, user) => cb(err, user)
+        (err, user) => cb(err, user),
       );
-    }
-  )
+    },
+  ),
 );
 
 passport.serializeUser((user, done) => {
