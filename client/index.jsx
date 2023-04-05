@@ -15,6 +15,7 @@ import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
 import Leaderboard from './components/Leaderboard.jsx';
+import Weather from './components/Weather.jsx';
 import './styles.css';
 
 const root = createRoot(document.getElementById('root'));
@@ -71,7 +72,8 @@ root.render(
           <Route path='eventPage/:eventId' element={<EventPage />} />
           <Route path='postEvent' element={<CreateEvents />} />
           <Route path='leaderboard' element={<Leaderboard />} />
-          <Route path='profile' element={<Profile />} />
+          <Route path="forecast" element={<Weather />} />
+        <Route path='profile' element={<Profile />} />
           <Route path='logout' />
           <Route path='*' element={<Login />} />
         </Route>
