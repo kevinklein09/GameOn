@@ -34,7 +34,7 @@ body {
   color: white;
 }
 
-.map-container { 
+.map-container {
   height: 400px;
 }
 
@@ -136,7 +136,7 @@ body {
     margin-bottom: 20px;
     padding: 20px;
   }
-  
+
   .event {
     margin: 10px;
     background-color: #737373;
@@ -151,7 +151,7 @@ body {
     font-family: 'Roboto', arial, sans-serif;
     font-display: left;
     font-weight: bolder;
-    
+
   }
 
   ::-webkit-calendar-picker-indicator {
@@ -167,4 +167,53 @@ body {
   margin-left: auto;
   color: #234D6A;
   font-weight: bold;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.messages {
+  border-radius: 5px;
+  padding: 20px;
+  font-family: sans-serif;
+  font-weight: bolder;
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: 0;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.input-container input {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.input-container button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.message {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
