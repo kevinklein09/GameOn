@@ -88,7 +88,7 @@ const Event = (props) => {
                   : <div style={{ color: '#234D6A', fontWeight: 'bolder' }}>RSVP?</div>}
             />
           </FormGroup>
-          <Link to="/event-page" className="card-link" >Link</Link>
+          <Link to={`/eventPage/${props.eventData._id}`} className="card-link">Bulletin Board</Link>
         </div>
 
     </div>

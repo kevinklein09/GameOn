@@ -68,7 +68,7 @@ root.render(
         <Route path="login" element={<Login />} />
         <Route path="map" element={<Map />} />
         <Route path="eventListings" element={<EventListings />} />
-        <Route path="eventPage" element={<EventPage />} />
+        <Route path="eventPage/:eventId" element={<EventPage />} />
         <Route path="postEvent" element={<CreateEvents />} />
         <Route path="profile" element={<Profile />} />
         <Route path="logout" />
