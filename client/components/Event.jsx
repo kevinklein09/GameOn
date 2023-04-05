@@ -75,7 +75,22 @@ const Event = (props) => {
             eventCount: context.eventCount + 1
           })
           .then((userData) => {
-            context.setEvent
+            // console.log(userData);
+            setEventCount(userData.data.eventCount);
+          })
+          .catch((err) => {
+            console.error(err);
+          })
+        } else {
+          axios.put('/api/user', {
+            id: context._id,
+            eventCount: context.eventCount - 1
+          })
+          .then((userData) => {
+            setEventCount(userData.data.eventCount);
+          })
+          .catch((err) => {
+            console.error(err);
           })
         }
       })
