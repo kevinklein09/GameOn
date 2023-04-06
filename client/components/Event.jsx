@@ -51,6 +51,7 @@ const Event = (props) => {
       })
       .catch((err) => console.error(err));
   };
+
   useEffect(() => {
     setStatus();
   });
@@ -71,35 +72,35 @@ const Event = (props) => {
           })
           .then(() => {
             // console.log('eventCount before update:', context.eventCount);
-            if (going) {
-              axios
-                .put('/user', {
-                  id: context._id,
-                  eventCount: context.eventCount + 1,
-                })
-                .then((userData) => {
-                  // console.log(
-                  //   'evenCount after increment',
-                  //   userData.data.eventCount
-                  // );
-                  setEventCount(userData.data.eventCount);
-                })
-                .catch((err) => {
-                  console.error(err);
-                });
-            } else {
-              axios
-                .put('/user', {
-                  id: context._id,
-                  eventCount: context.eventCount - 1,
-                })
-                .then((userData) => {
-                  setEventCount(userData.data.eventCount);
-                })
-                .catch((err) => {
-                  console.error(err);
-                });
-            }
+            // if (going) {
+            //   axios
+            //     .put('/user', {
+            //       id: context._id,
+            //       eventCount: context.eventCount + 1,
+            //     })
+            //     .then((userData) => {
+            //       console.log(
+            //         'evenCount after increment',
+            //         userData.data.eventCount
+            //       );
+            //       setEventCount(userData.data.eventCount);
+            //     })
+            //     .catch((err) => {
+            //       console.error(err);
+            //     });
+            // } else {
+            //   axios
+            //     .put('/user', {
+            //       id: context._id,
+            //       eventCount: context.eventCount - 1,
+            //     })
+            //     .then((userData) => {
+            //       setEventCount(userData.data.eventCount);
+            //     })
+            //     .catch((err) => {
+            //       console.error(err);
+            //     });
+            // }
           })
           .catch((err) => console.error(err));
       })
