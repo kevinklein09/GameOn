@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
 });
 
 const DB = require('../DB/index');
-const { Events, Sports, Users } = require('../DB/models');
+const { Events, Sports, Users, TeamList } = require('../DB/models');
 
 const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');

@@ -60,7 +60,7 @@ const handlePlayerList = () => {
     e.preventDefault();
     // if user filled out the required fields, allow them to post
     if (teamName && playerList) {
-      axios.post('/api/team', {
+      axios.post('/api/teamList', {
         owner: context.email,
         teamName: teamName,
         playerList: playerList
