@@ -290,6 +290,34 @@ app.post('/event/:eventId/message', (req, res) => {
   );
 });
 
+// Team Routes
+
+// Retrieve teams from database - TeamList.jsx
+app.get('/api/get', (req, res) => {
+  TeamList.findOne({ _id: req.query.id })
+    .then((teams) => res.status(200).send(teams))
+    .catch((error) => res.sendStatus(500));
+});
+
+// Add a team - CreateTeam.jsx
+app.post('/api/teamList', (req, res) => {
+  const {
+    owner,
+    teamName,
+    playerList
+  } = req.body;
+
+  TeamList.create({
+    owner,
+    teamName,
+    playerList
+  })
+    .then((team) => res.status(200).send(team))
+    .catch((error) => res.sendStatus(500));
+});
+
+
+
 app.listen(port, () => {
   console.log(`
   Listening at: localhost:${port}
