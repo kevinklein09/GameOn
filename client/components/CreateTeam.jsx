@@ -14,6 +14,7 @@ import {
     OutlinedInput,
     ThemeProvider,
   } from '@mui/material';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 import theme from './Theme.jsx';
 
 // Other Imports
@@ -35,15 +36,50 @@ const CreateTeam = () => {
 
 
 
-const [description, setTeamName] = useState('');
-const [player, setPlayers] = useState([]);
+const [teamName, setTeamName] = useState('');
+const [playerList, setPlayerList] = useState([]);
+const [player, setPlayer] = useState([]);
+const [state, setState] = useState('');
+
 
 const handleTeamName = (e) => {
     setTeamName(e.target.value);
   };
 
-const handlePlayers = (e) => {
-    setPlayers
+const handlePlayerList = () => {
+    setPlayerList([...playerList, player]);
+    setPlayer('')
+  };
+
+  const handlePlayer = (e) => {
+    setPlayer(e.target.value);
+  };
+
+  const addTeam = (e) => {
+    // prevent form from refreshing upon submit
+    e.preventDefault();
+    // if user filled out the required fields, allow them to post
+    if (teamName && playerList) {
+      axios.post('/api/team', {
+        owner: context.email,
+        teamName: teamName,
+        playerList: playerList
+      })
+        .then(() => {
+          // upon successful post...
+          alert('your team was added')
+          // reset states
+          setTeamName('');
+          setPlayerList([]);
+          setPlayer('');
+          setState('')
+        })
+        // failed event create handling
+        .catch(() => alert('Unable to add team!'));
+    } else {
+      alert('please add a team name and players ');
+    }
+  };
 
 
 
@@ -69,10 +105,42 @@ const handlePlayers = (e) => {
             inputProps={{
               maxLength: 500,
               onChange: (e) => handleTeamName(e),
-              value: description,
+              value: teamName,
             }}
           />
         </div>
+
+        <div id='playerList'>
+          <OutlinedInput
+            style= {{ backgroundColor: 'white', marginTop: '10px' }}
+            inputProps={{
+              onChange: (e) => handlePlayer(e),
+              maxLength: '20',
+              placeholder: 'add player here',
+              value: player,
+            }}
+          />
+
+          <Button
+            style={{ maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', marginLeft: '5px' }}
+            color='primary'
+            variant='contained'
+            onClick={() => handlePlayerList()}
+          ><b> + </b>
+          </Button>
+        </div>
+
+        <PlayerList playerList={playerList}/>
+
+        <Fab
+          style={{ marginTop: '15px' }}
+          size='small'
+          variant='extended'
+          color='primary'
+          onClick={addTeam}
+          type='submit'
+        ><BorderColorIcon/>Add Team
+        </Fab>
 
       </ThemeProvider>
       </div>
@@ -88,6 +156,6 @@ const handlePlayers = (e) => {
         </div>
     );
   };
-};
+
 
   export default CreateTeam;
