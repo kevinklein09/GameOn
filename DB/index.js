@@ -11,5 +11,6 @@ require('dotenv').config();
 
 mongoose.connect(process.env.DB_URI)
   .then((connection) => {
+    console.log(process.env.DB_URI);
   })
   .catch((err) => console.error(err));
