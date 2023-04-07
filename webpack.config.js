@@ -2,6 +2,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const Dotenv = require('dotenv-webpack');
 
 const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
@@ -38,6 +39,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv(),
     new WebpackBar(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
