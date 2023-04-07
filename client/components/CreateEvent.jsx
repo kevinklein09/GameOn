@@ -82,10 +82,18 @@ const CreateEvents = () => {
           console.error(err);
         });
     }
+
     // HANDLERS
     const handleEquipmentList = () => {
-      setEquipment([...equipment, item]);
-      setItem('');
+      axios
+        .post('/api/equipment', { item })
+        .then(() => {
+          setEquipment([...equipment, item]);
+          setItem('');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     };
 
     const handleItem = (e) => {

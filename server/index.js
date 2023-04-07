@@ -13,6 +13,7 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../DB/Users');
+const EquipmentList = require('../DB/EquipmentList');
 const ENV = require('../.env');
 require('./passport');
 
@@ -317,22 +318,16 @@ app.get('/api/teamList', (req, res) => {
 
 // Add a team - CreateTeam.jsx
 app.post('/api/teamList', (req, res) => {
-  const {
-    owner,
-    teamName,
-    playerList
-  } = req.body;
+  const { owner, teamName, playerList } = req.body;
 
   TeamList.create({
     owner,
     teamName,
-    playerList
+    playerList,
   })
     .then((team) => res.status(200).send(team))
     .catch((error) => res.sendStatus(500));
 });
-
-
 
 app.listen(port, () => {
   console.log(`
