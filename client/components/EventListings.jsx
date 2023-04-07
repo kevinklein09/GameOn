@@ -11,6 +11,9 @@ const EventListings = () => {
   const context = useContext(UserContext);
   const [events, setEvents] = useState([]);
   const [eventCount, setEventCount] = useState(0);
+  // const [eventCount, setEventCount] = useState(
+  //   parseInt(localStorage.getItem('eventCount')) || context.eventCount
+  // );
   // event handler that will send an axios request to the server/index.js file that
   // will filter out the rendered events based off of the sports categor selected
   const handleSelectSport = (e) => {
@@ -38,12 +41,31 @@ const EventListings = () => {
       });
   };
 
+  // const [users, setUsers] = useState([]);
+
+  // const getUsers = () => {
+  //   axios
+  //     .get('/users')
+  //     .then((usersObj) => {
+  //       console.log(usersObj.data);
+  //       setEventCount(usersObj.data.eventCount);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // };
+
   useEffect(() => {
     getAllEvents();
+    // getUsers();
     if (context) {
       setEventCount(context.eventCount);
     }
   }, [context]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('eventCount', eventCount.toString());
+  // }, [eventCount]);
 
   if (context) {
     return (
