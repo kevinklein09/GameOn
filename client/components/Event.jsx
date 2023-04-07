@@ -30,9 +30,10 @@ const theme = createTheme({
 
 const Event = (props) => {
   const [going, setGoing] = useState(false);
-  const [eventCount, setEventCount] = useState(0);
+  // const [eventCount, setEventCount] = useState(0);
 
   const context = useContext(UserContext);
+  // console.log(eventCount);
   // This will read the current status of whether the user is attending or not based off of what is currently in the database on page load
   const setStatus = () => {
     axios
@@ -53,7 +54,7 @@ const Event = (props) => {
   };
   useEffect(() => {
     setStatus();
-  });
+  }, []);
   // This will update the database based off of the position of the toggle switch that is selected by the user (based off of whether they are going or not)
   const handleToggle = () => {
     axios
@@ -70,19 +71,19 @@ const Event = (props) => {
             userId: context._id,
           })
           .then(() => {
-            // console.log('eventCount before update:', context.eventCount);
+            console.log('eventCount before update:', props.eventCount);
             if (going) {
               axios
                 .put('/user', {
                   id: context._id,
-                  eventCount: context.eventCount + 1,
+                  eventCount: props.eventCount - 1,
                 })
                 .then((userData) => {
                   // console.log(
                   //   'evenCount after increment',
                   //   userData.data.eventCount
                   // );
-                  setEventCount(userData.data.eventCount);
+                  props.setEventCount((prevState) => prevState - 1);
                 })
                 .catch((err) => {
                   console.error(err);
@@ -91,10 +92,10 @@ const Event = (props) => {
               axios
                 .put('/user', {
                   id: context._id,
-                  eventCount: context.eventCount - 1,
+                  eventCount: props.eventCount + 1,
                 })
                 .then((userData) => {
-                  setEventCount(userData.data.eventCount);
+                  props.setEventCount((prevState) => prevState + 1);
                 })
                 .catch((err) => {
                   console.error(err);

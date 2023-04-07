@@ -39,6 +39,7 @@ const eventSchema = new Schema({
         type: Date,
         default: Date.now,
       },
+      room: String,
     },
   ],
 });
@@ -49,7 +50,7 @@ eventSchema.index(
     date: 1,
     time: 1,
   },
-  { unique: true }
+  { unique: true },
 );
 // Event Model
 
