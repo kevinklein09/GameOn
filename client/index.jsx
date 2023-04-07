@@ -58,7 +58,7 @@ function UserContextProvider({ children }) {
         .catch((err) => console.error(err, '***ERROR***'));
     };
     getUser();
-  }, []);
+  });
 
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }

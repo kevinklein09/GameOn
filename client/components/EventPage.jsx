@@ -17,6 +17,7 @@ function EventPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const socket = io(process.env.SOCKET_URL);
+  const room = eventId;
   socket.on('connect', () => {
     console.log('ur in');
   });
@@ -39,11 +40,17 @@ function EventPage() {
           context.lastName ? ` ${context.lastName}` : ''
         }`,
         message,
+        room,
       })
       .then(getEvent)
       .catch((err) => {
         console.error('could not post message:', err);
       });
+    socket.emit('message', {
+      username: `${context.firstName} ${context?.lastName}`,
+      message: input,
+      room,
+    });
   };
 
   const handleInputChange = (e) => {
@@ -62,7 +69,9 @@ function EventPage() {
   useEffect(() => {
     getEvent();
     socket.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
+      if (message.room === room) {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      }
     });
   }, []);
 

@@ -20,7 +20,10 @@ const Leaderboard = () => {
     axios
       .get('/users')
       .then((usersObj) => {
-        setUsers(usersObj.data);
+        const sortedUsers = usersObj.data.sort(
+          (a, b) => b.eventCount - a.eventCount
+        );
+        setUsers(sortedUsers);
       })
       .catch((err) => {
         console.error(err);
