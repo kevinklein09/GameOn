@@ -65,27 +65,27 @@ function UserContextProvider({ children }) {
 
 root.render(
   <UserContextProvider>
-  <HashRouter>
-    <Routes>
-      <Route path="/" element= {<App />}>
-        <Route path="/" element={<Home />} />
-        <Route path="home" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="map" element={<Map />} />
-        <Route path="eventListings" element={<EventListings />} />
-        <Route path="eventPage/:eventId" element={<EventPage />} />
-        <Route path="postEvent" element={<CreateEvents />} />
-        <Route path="leaderboard" element={<Leaderboard />} />
-         <Route path="forecast" element={<Weather />} />
-        <Route path="teamList" element={<TeamList/>} />
-        <Route path="createTeam" element={<CreateTeam />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="logout" />
-        <Route path="*" element= {<Login />}/>
-      </Route>
-    </Routes>
-  </HashRouter>
-  </UserContextProvider>,
+    <HashRouter>
+      <Routes>
+        <Route path='/' element={<App />}>
+          <Route path='/' element={<Home />} />
+          <Route path='home' element={<Home />} />
+          <Route path='login' element={<Login />} />
+          <Route path='map' element={<Map />} />
+          <Route path='eventListings' element={<EventListings />} />
+          <Route path='eventPage/:eventId' element={<EventPage />} />
+          <Route path='postEvent' element={<CreateEvents />} />
+          <Route path='leaderboard' element={<Leaderboard />} />
+          <Route path='forecast' element={<Weather />} />
+          <Route path='teamList' element={<TeamList />} />
+          <Route path='createTeam' element={<CreateTeam />} />
+          <Route path='profile' element={<Profile />} />
+          <Route path='logout' />
+          <Route path='*' element={<Login />} />
+        </Route>
+      </Routes>
+    </HashRouter>
+  </UserContextProvider>
 );
 
 export default UserContextProvider;
