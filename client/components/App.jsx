@@ -87,7 +87,7 @@ const App = () => {
             <Grid xs={2}><Link to="/eventListings" style={linkStyle}>{<Tab icon={<SportsFootballIcon sx={{ color: teal[100] }} />} style={styles.tab} label='GAMES'/>}</Link></Grid>
             <Grid xs={2}><Link to="/leaderboard" style={linkStyle}>{<Tab icon={<LeaderboardIcon sx={{ color: teal[100] }} />} style={styles.tab} label='LEADERBOARD'/>}</Link></Grid>
             <Grid xs={2}><Link to="/map" style={linkStyle}>{<Tab icon={<MapOutlinedIcon sx={{ color: teal[100] }} />} style={styles.tab} label='MAP'/>}</Link></Grid>
-            <Grid xs={2}><Link to="/forecast" style={linkStyle}>{<Tab icon={<StormIcon sx={{ color: teal[100] }} />} style={styles.tab} label='LEADERBOARD'/>}</Link></Grid>
+            <Grid xs={2}><Link to="/forecast" style={linkStyle}>{<Tab icon={<StormIcon sx={{ color: teal[100] }} />} style={styles.tab} label='FORECAST'/>}</Link></Grid>
             <Grid xs={2}><Link to="/postEvent" style={linkStyle}>{<Tab icon={<AddCircleIcon sx={{ color: teal[100] }}/>} style={styles.tab} label='POST'/>}</Link></Grid>
             <ImageAvatar />
             </Grid>
