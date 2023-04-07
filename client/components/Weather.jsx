@@ -90,7 +90,7 @@ const Weather = () => {
         return null;
     }
   };
-
+  // daily forecast
   return (
     <div className='weather-forecast'>
       <h2>Weekly Weather Forecast</h2>
