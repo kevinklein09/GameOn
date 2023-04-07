@@ -25,6 +25,10 @@ const userSchema = new Schema({
     type: Number,
     default: 0,
   },
+  eventCreated: {
+    type: Number,
+    default: 0,
+  },
 });
 
 userSchema.plugin(passportLocalMongoose);
