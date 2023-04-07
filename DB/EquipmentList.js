@@ -9,7 +9,7 @@ const equipmentListSchema = new Schema({
     ref: 'Events',
     required: true,
   },
-  equipment: [String],
+  item: [String],
 });
 
 module.exports = mongoose.model('EquipmentList', equipmentListSchema);
