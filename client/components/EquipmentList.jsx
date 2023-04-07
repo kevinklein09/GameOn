@@ -3,11 +3,7 @@
 /* eslint linebreak-style: ['error', 'windows'] */
 import React from 'react';
 
-
-const EquipmentList = ({ equipment }) => (
-  equipment.map((item, i) => (
-    <li key={i}>{item}</li>
-  ))
-);
+const EquipmentList = ({ equipment }) =>
+  equipment.map((item, i) => <li key={i}>{item}</li>);
 
 export default EquipmentList;
