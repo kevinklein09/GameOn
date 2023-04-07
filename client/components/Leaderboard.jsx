@@ -14,6 +14,7 @@ import {
 
 const Leaderboard = () => {
   const [users, setUsers] = useState([]);
+  // console.log(users);
 
   const getUsers = () => {
     axios
@@ -43,7 +44,15 @@ const Leaderboard = () => {
             <TableCell>Score</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody></TableBody>
+        <TableBody>
+          {users.map((user, index) => (
+            <TableRow key={index}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
+              <TableCell>{user.eventCount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );
