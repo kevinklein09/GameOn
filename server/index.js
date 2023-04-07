@@ -92,13 +92,26 @@ app.put('/user', (req, res) => {
     });
 });
 
+app.put('/user', (req, res) => {
+  Users.findById(req.body.id, {
+    eventCount: req.body.eventCount,
+  })
+    .then((user) => {
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 app.get('/map', (req, res) => {
   const { userId, event, status } = req.query;
   if (event) {
     if (status === 'Going') {
       Events.updateOne(
         { _id: event },
-        { $pullAll: { attendees: [userId] } },
+        { $pullAll: { attendees: [userId] } }
       ).catch((err) => {
         console.error(err);
       });
@@ -149,7 +162,7 @@ app.use(
     secret: process.env.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -174,7 +187,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 app.get(
   '/auth/google/callback',
@@ -182,7 +195,7 @@ app.get(
   (req, res) => {
     // Successful authentication, redirect secrets.
     res.redirect('/');
-  },
+  }
 );
 
 app.get('/logout', (req, res) => {
@@ -239,14 +252,14 @@ app.put('/api/event', (req, res) => {
   if (req.body.going) {
     Events.updateOne(
       { _id: req.body.id },
-      { $pullAll: { attendees: [req.body.userId] } },
+      { $pullAll: { attendees: [req.body.userId] } }
     )
       .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   } else {
     Events.updateOne(
       { _id: req.body.id },
-      { $push: { attendees: req.body.userId } },
+      { $push: { attendees: req.body.userId } }
     )
       .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
@@ -289,7 +302,7 @@ app.post('/event/:eventId/message', (req, res) => {
       } else {
         res.status(200).send(updatedEvent);
       }
-    },
+    }
   );
 });
 
