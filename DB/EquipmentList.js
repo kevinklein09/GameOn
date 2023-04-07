@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const equipmentListSchema = new Schema({
   eventId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Event',
+    ref: 'Events',
     required: true,
   },
   equipment: [String],

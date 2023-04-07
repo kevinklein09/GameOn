@@ -38,18 +38,24 @@ const CreateEvents = () => {
     const [zip, setZip] = useState('');
     const [long, setLong] = useState(0);
     const [lat, setLat] = useState(0);
-    const [date, setDate] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
+    const [date, setDate] = useState(
+      `${today.getFullYear()}-${
+        today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()
+      }-${today.getDate()}`
+    );
     const [time, setTime] = useState('12:00');
     const [playerLimit, setPlayerLimit] = useState(1);
     const [equipment, setEquipment] = useState([]);
     const [item, setItem] = useState('');
+    const [eventId, setEventId] = useState(null);
     let categoryId;
     const fullAddress = `${address} ${city} ${state} ${zip}`;
     // get initial coordinates
     const getCoords = () => {
       const query = fullAddress.split(' ').join('_');
       const queryUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?type=poi&access_token=${MAP_TOKEN}`;
-      axios.get(queryUrl)
+      axios
+        .get(queryUrl)
         .then((results) => {
           setLong(results.data.features[0].center[0]);
           setLat(results.data.features[0].center[1]);
@@ -65,9 +71,12 @@ const CreateEvents = () => {
 
     // if a sport is selected, find set the category Id variable to the one selected
     if (sport) {
-      axios.get('/api/categories')
+      axios
+        .get('/api/categories')
         .then((categories) => {
-          categoryId = categories.data.filter((category) => category.category === sport)[0]._id;
+          categoryId = categories.data.filter(
+            (category) => category.category === sport
+          )[0]._id;
         })
         .catch((err) => {
           console.error(err);
@@ -127,23 +136,27 @@ const CreateEvents = () => {
       e.preventDefault();
       // if user filled out the required fields, allow them to post
       if (sport && description && address) {
-        axios.post('/api/event', {
-          owner: context.email,
-          address: fullAddress,
-          locName: location,
-          description,
-          date,
-          time,
-          coordinates: [long, lat],
-          category: categoryId,
-          catName: sport,
-          players: playerLimit,
-          isOpen: true,
-          attendees: [context._id]
-        })
+        axios
+          .post('/api/event', {
+            owner: context.email,
+            address: fullAddress,
+            locName: location,
+            description,
+            date,
+            time,
+            coordinates: [long, lat],
+            category: categoryId,
+            catName: sport,
+            players: playerLimit,
+            isOpen: true,
+            attendees: [context._id],
+          })
+          .then((res) => {
+            setEventId(res.data.eventId);
+          })
           .then(() => {
             // upon successful post...
-            alert('your event was created!')
+            alert('your event was created!');
             // reset states
             setDescription('');
             setAddress('');
@@ -154,7 +167,13 @@ const CreateEvents = () => {
             setLat(0);
             setLocation('');
             setPlayerLimit(1);
-            setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
+            setDate(
+              `${today.getFullYear()}-${
+                today.getMonth() < 10
+                  ? `0${today.getMonth() + 1}`
+                  : today.getMonth()
+              }-${today.getDate()}`
+            );
             setTime('12:00');
             setEquipment([]);
             setItem('');
@@ -167,143 +186,162 @@ const CreateEvents = () => {
     };
 
     return (
-    <div>
-
-      <ThemeProvider theme={theme}>
-      <Typography
-        style={{ color: '#A5C9CA' }}
-        align='center'
-        variant='h3'
-        gutterBottom={ true }
-      >
-        CREATE EVENT
-      </Typography>
-
-      <form>
-        <Sports sport={ sport } handleSelectSport={ handleSelectSport }/>
-        <div id='description'>
-          <OutlinedInput
-            style={{ backgroundColor: 'white', marginTop: '10px' }}
-            multiline={true}
-            rows='5'
-            placeholder='enter description here (*required)'
-            fullWidth={true}
-            inputProps={{
-              maxLength: 500,
-              onChange: (e) => handleDescription(e),
-              value: description,
-            }}
-          />
-        </div>
-
-        <div id="playerLimit">
-          <OutlinedInput
-            style= {{ backgroundColor: '#1c1c1c', color: '#A5C9CA', marginTop: '10px' }}
-            inputProps={{
-              type: 'number',
-              onChange: (e) => handlePlayerLimit(e),
-              min: 1,
-              max: 100,
-              value: playerLimit,
-            }}
-          /> <Typography variant='t'>
-              # of players
-            </Typography>
-        </div>
-
-        <OutlinedInput
-            style={{ backgroundColor: 'white', marginTop: '10px' }}
-            rows='1'
-            placeholder='location name (optional)'
-            fullWidth={true}
-            inputProps={{
-              maxLength: 20,
-              onChange: (e) => handleLocation(e),
-              value: location,
-            }}
-        />
-
-        <AddressField
-          handleAddress={handleAddress}
-          handleCity={handleCity}
-          handleState={handleState}
-          handleZip={handleZip}
-          address={address}
-          city={city}
-          state={state}
-          zip={zip}
-        />
-        <div id='equipment'>
-          <OutlinedInput
-            style= {{ backgroundColor: 'white', marginTop: '10px' }}
-            inputProps={{
-              onChange: (e) => handleItem(e),
-              maxLength: '20',
-              placeholder: 'list equipment here',
-              value: item,
-            }}
-          />
-
-          <Button
-            style={{ maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px' }}
-            color='primary'
-            variant='contained'
-            onClick={() => handleEquipmentList()}
-          ><b> + </b>
-          </Button>
-        </div>
-
-        <EquipmentList equipment={equipment}/>
-
-        <div style={{ marginTop: '10px' }} id='dateTime'>
-          <OutlinedInput
-            style={{ marginRight: '10px', backgroundColor: '#1c1c1c', color: '#A5C9CA' }}
-            inputProps={{
-              color: 'pink',
-              type: 'date',
-              value: date,
-              onChange: (e) => handleDate(e),
-              min: `${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`,
-
-            }}
+      <div>
+        <ThemeProvider theme={theme}>
+          <Typography
+            style={{ color: '#A5C9CA' }}
+            align='center'
+            variant='h3'
+            gutterBottom={true}
           >
-          </OutlinedInput>
-          <OutlinedInput
-            style={{ marginRight: '10px', backgroundColor: '#1c1c1c', color: '#A5C9CA' }}
-            inputProps={{
-              color: 'pink',
-              type: 'time',
-              onChange: (e) => handleTime(e),
-              value: time,
-            }}
-          >
-          </OutlinedInput>
-        </div>
+            CREATE EVENT
+          </Typography>
 
-        <Fab
-          style={{ marginTop: '15px' }}
-          size='small'
-          variant='extended'
-          color='primary'
-          onClick={postEvent}
-          type='submit'
-        ><BorderColorIcon/>Create Event
-        </Fab>
+          <form>
+            <Sports sport={sport} handleSelectSport={handleSelectSport} />
+            <div id='description'>
+              <OutlinedInput
+                style={{ backgroundColor: 'white', marginTop: '10px' }}
+                multiline={true}
+                rows='5'
+                placeholder='enter description here (*required)'
+                fullWidth={true}
+                inputProps={{
+                  maxLength: 500,
+                  onChange: (e) => handleDescription(e),
+                  value: description,
+                }}
+              />
+            </div>
 
-        </form>
-      </ThemeProvider>
+            <div id='playerLimit'>
+              <OutlinedInput
+                style={{
+                  backgroundColor: '#1c1c1c',
+                  color: '#A5C9CA',
+                  marginTop: '10px',
+                }}
+                inputProps={{
+                  type: 'number',
+                  onChange: (e) => handlePlayerLimit(e),
+                  min: 1,
+                  max: 100,
+                  value: playerLimit,
+                }}
+              />{' '}
+              <Typography variant='t'># of players</Typography>
+            </div>
 
-    </div>
+            <OutlinedInput
+              style={{ backgroundColor: 'white', marginTop: '10px' }}
+              rows='1'
+              placeholder='location name (optional)'
+              fullWidth={true}
+              inputProps={{
+                maxLength: 20,
+                onChange: (e) => handleLocation(e),
+                value: location,
+              }}
+            />
+
+            <AddressField
+              handleAddress={handleAddress}
+              handleCity={handleCity}
+              handleState={handleState}
+              handleZip={handleZip}
+              address={address}
+              city={city}
+              state={state}
+              zip={zip}
+            />
+            <div id='equipment'>
+              <OutlinedInput
+                style={{ backgroundColor: 'white', marginTop: '10px' }}
+                inputProps={{
+                  onChange: (e) => handleItem(e),
+                  maxLength: '20',
+                  placeholder: 'list equipment here',
+                  value: item,
+                }}
+              />
+
+              <Button
+                style={{
+                  maxWidth: '30px',
+                  maxHeight: '30px',
+                  minWidth: '30px',
+                  minHeight: '30px',
+                }}
+                color='primary'
+                variant='contained'
+                onClick={() => handleEquipmentList()}
+              >
+                <b> + </b>
+              </Button>
+            </div>
+
+            <EquipmentList equipment={equipment} eventId={eventId} />
+
+            <div style={{ marginTop: '10px' }} id='dateTime'>
+              <OutlinedInput
+                style={{
+                  marginRight: '10px',
+                  backgroundColor: '#1c1c1c',
+                  color: '#A5C9CA',
+                }}
+                inputProps={{
+                  color: 'pink',
+                  type: 'date',
+                  value: date,
+                  onChange: (e) => handleDate(e),
+                  min: `${today.getFullYear()}-${
+                    today.getMonth() < 10
+                      ? `0${today.getMonth() + 1}`
+                      : today.getMonth()
+                  }-${today.getDate()}`,
+                }}
+              ></OutlinedInput>
+              <OutlinedInput
+                style={{
+                  marginRight: '10px',
+                  backgroundColor: '#1c1c1c',
+                  color: '#A5C9CA',
+                }}
+                inputProps={{
+                  color: 'pink',
+                  type: 'time',
+                  onChange: (e) => handleTime(e),
+                  value: time,
+                }}
+              ></OutlinedInput>
+            </div>
+
+            <Fab
+              style={{ marginTop: '15px' }}
+              size='small'
+              variant='extended'
+              color='primary'
+              onClick={postEvent}
+              type='submit'
+            >
+              <BorderColorIcon />
+              Create Event
+            </Fab>
+          </form>
+        </ThemeProvider>
+      </div>
     );
   }
   return (
-      <div align='center'>
-        <br></br>
-        <h3>
-        You must be logged in to create an event
-        </h3>
-        <img width='200' height='100%' src='https://manbitesfrog.com/wp-content/uploads/2021/10/giphy-1-2.gif'/>
-      </div>
+    <div align='center'>
+      <br></br>
+      <h3>You must be logged in to create an event</h3>
+      <img
+        width='200'
+        height='100%'
+        src='https://manbitesfrog.com/wp-content/uploads/2021/10/giphy-1-2.gif'
+      />
+    </div>
   );
 };
 
