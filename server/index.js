@@ -308,6 +308,20 @@ app.post('/event/:eventId/message', (req, res) => {
   );
 });
 
+app.put('/api/events/:eventId', (req, res) => {
+  const { eventId } = req.params;
+  const { equipment } = req.body;
+
+  Events.findByIdAndUpdate(eventId, { equipment })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 // Team Routes
 
 // Retrieve teams from database - TeamList.jsx

@@ -22,6 +22,24 @@ function EquipmentPage() {
       });
   };
 
+  const handleCheckboxChange = (e, item) => {
+    const updatedEquipment = equipment.map((e) => {
+      if (e.item === item.item) {
+        return {
+          ...e,
+          isChecked: !e.isChecked,
+        };
+      }
+      return e;
+    });
+    setEquipment(updatedEquipment);
+
+    axios.put(`/api/events/${eventId}`, {
+      ...event,
+      equipment: updatedEquipment,
+    });
+  };
+
   useEffect(() => {
     getEvent();
   }, []);
@@ -35,7 +53,14 @@ function EquipmentPage() {
         </h6>
         <ul className='equipmentlist'>
           {equipment.map((item, i) => (
-            <li key={i}>{item.item}</li>
+            <li key={i}>
+              <input
+                type='checkbox'
+                checked={item.isChecked}
+                onChange={(e) => handleCheckboxChange(e, item)}
+              />
+              {item.item}
+            </li>
           ))}
         </ul>
       </div>
