@@ -11,6 +11,7 @@ import App from './components/App.jsx';
 import Map from './components/Map.jsx';
 import Profile from './components/Profile.jsx';
 import EventListings from './components/EventListings.jsx';
+import EquipmentPage from './components/EquipmentPage.jsx';
 import EventPage from './components/EventPage.jsx';
 import CreateEvents from './components/CreateEvent.jsx';
 import Login from './components/Login.jsx';
@@ -74,6 +75,7 @@ root.render(
           <Route path='map' element={<Map />} />
           <Route path='eventListings' element={<EventListings />} />
           <Route path='eventPage/:eventId' element={<EventPage />} />
+          <Route path='equipmentPage/:eventId' element={<EquipmentPage />} />
           <Route path='postEvent' element={<CreateEvents />} />
           <Route path='leaderboard' element={<Leaderboard />} />
           <Route path='forecast' element={<Weather />} />

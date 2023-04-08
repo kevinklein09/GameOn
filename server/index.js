@@ -13,7 +13,6 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../DB/Users');
-const EquipmentList = require('../DB/EquipmentList');
 const ENV = require('../.env');
 require('./passport');
 
@@ -218,6 +217,7 @@ app.post('/api/event', (req, res) => {
     category,
     catName,
     players,
+    equipment,
   } = req.body;
 
   Events.create({
@@ -232,6 +232,7 @@ app.post('/api/event', (req, res) => {
     category,
     catName,
     players,
+    equipment,
     isOpen: true,
   })
     .then((data) => res.status(200).send(data))
