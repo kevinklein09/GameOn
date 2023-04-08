@@ -35,7 +35,7 @@ function EquipmentPage() {
         </h6>
         <ul className='equipmentlist'>
           {equipment.map((item, i) => (
-            <li key={i}>{item}</li>
+            <li key={i}>{item.item}</li>
           ))}
         </ul>
       </div>
