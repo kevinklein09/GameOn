@@ -39,7 +39,7 @@ const TeamList = () => {
   // Hook which calls getAllTeams
   useEffect(() => {
     getAllTeams();
-  }, []);
+  }, [context]);
 
   if (context) {
     return (

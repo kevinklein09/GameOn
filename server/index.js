@@ -297,7 +297,7 @@ app.post('/event/:eventId/message', (req, res) => {
 
 // Retrieve teams from database - TeamList.jsx
 app.get('/api/teamList', (req, res) => {
-  TeamList.findOne({ _id: req.query.id })
+  TeamList.find({})
     .then((teams) => res.status(200).send(teams))
     .catch((error) => res.sendStatus(500));
 });
