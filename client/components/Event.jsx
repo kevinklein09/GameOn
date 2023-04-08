@@ -179,11 +179,11 @@ console.log(props.eventData.coordinates[1], props.eventData.coordinates[0]);
         console.error('Failed to GET', err);
       });
   }, []);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <div class='card'>
-      <p className="weather-icon"><FontAwesomeIcon icon={faGlobe} size='2x' beat /> : {getWeatherIcon(weatherData.daily.weathercode[0])}</p>
+      <p className="weather-icon"><FontAwesomeIcon icon={faGlobe} size='2x' beat /> : {getWeatherIcon(weatherData.weathercode[index])}</p>
         <Typography variant='h4'>
           <p class='card-text'>{props.eventData.catName}</p>
         </Typography>
