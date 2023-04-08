@@ -25,18 +25,18 @@ const Team = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-          <div class='card'>
+          <div className='card'>
             <Typography variant='h4'>
-              <p class='card-text'>{props.teamData.teamName}</p>
+              <div className='card-text'>{props.teamData.teamName}</div>
               </Typography>
-              <p class='card-text'>
+              <div className='card-text'>
               <Groups3Icon sx={{ color: black }} />{' '}
               <div>{props.teamData.playerList.map((player, i) => (<div key={`team: ${i}`}>{player}</div>))}</div>
-              </p>
-              <p class='card-text'>
+              </div>
+              <div className='card-text'>
               <StarIcon sx={{ color: black }} />{' '}
                {props.teamData.owner}
-              </p>
+              </div>
               </div>
     </ThemeProvider>
     )

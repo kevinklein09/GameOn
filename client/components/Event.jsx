@@ -12,6 +12,8 @@ import { black } from '@mui/material/colors';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+//Team functionality additions:
+
 
 const moment = require('moment');
 // create materialUi theme
@@ -30,6 +32,7 @@ const theme = createTheme({
 
 const Event = (props) => {
   const [going, setGoing] = useState(false);
+  const [teamDrop, setTeam] = useState('');
   // const [eventCount, setEventCount] = useState(0);
 
   const context = useContext(UserContext);
@@ -147,6 +150,8 @@ const Event = (props) => {
                 )
               }
             />
+            <div>{props.eventData.hostTeam}</div>
+            <div>{teamDrop}</div>
           </FormGroup>
           <Link to={`/eventPage/${props.eventData._id}`} className='card-link'>
             Bulletin Board

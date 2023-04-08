@@ -84,7 +84,7 @@ const EventListings = () => {
               eventCount={eventCount}
               eventData={event}
               class='event'
-              key={`event: ${i}`}
+              //key={`event: ${i}`}
             />
           </>
         ))}

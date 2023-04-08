@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
+
 // MUI
 import {
   Typography,
@@ -16,6 +17,7 @@ import theme from './Theme.jsx';
 import Sports from './SportsSelect.jsx';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
+import EventTeamSelect from './EventTeamSelect.jsx'
 
 // IMPORTED google context
 import { UserContext } from '../index.jsx';
@@ -40,6 +42,7 @@ const CreateEvents = () => {
     const [lat, setLat] = useState(0);
     const [date, setDate] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
     const [time, setTime] = useState('12:00');
+    const [hostTeam, setHostTeam] = useState('')
     const [playerLimit, setPlayerLimit] = useState(1);
     const [equipment, setEquipment] = useState([]);
     const [item, setItem] = useState('');
@@ -117,6 +120,10 @@ const CreateEvents = () => {
       getCoords();
     };
 
+    const handleHostTeam = (e) => {
+      setHostTeam(e.target.value)
+    }
+
     const handlePlayerLimit = (e) => {
       setPlayerLimit(JSON.parse(e.target.value));
     };
@@ -137,6 +144,7 @@ const CreateEvents = () => {
           coordinates: [long, lat],
           category: categoryId,
           catName: sport,
+          hostTeam: hostTeam,
           players: playerLimit,
           isOpen: true,
           attendees: [context._id]
@@ -153,6 +161,7 @@ const CreateEvents = () => {
             setLong(0);
             setLat(0);
             setLocation('');
+            setHostTeam('');
             setPlayerLimit(1);
             setDate(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth() + 1}` : today.getMonth()}-${today.getDate()}`);
             setTime('12:00');
@@ -195,7 +204,7 @@ const CreateEvents = () => {
             }}
           />
         </div>
-
+        <EventTeamSelect hostTeam={ hostTeam} handleHostTeam={ handleHostTeam }/>
         <div id="playerLimit">
           <OutlinedInput
             style= {{ backgroundColor: '#1c1c1c', color: '#A5C9CA', marginTop: '10px' }}
