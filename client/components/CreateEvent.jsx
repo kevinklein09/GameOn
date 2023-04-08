@@ -46,7 +46,7 @@ const CreateEvents = () => {
     const [equipment, setEquipment] = useState([]);
     const [item, setItem] = useState('');
     let categoryId;
-    let eventHostTeam;
+    let eventHostTeam = {teamName: ''}
     const fullAddress = `${address} ${city} ${state} ${zip}`;
     // get initial coordinates
     const getCoords = () => {
