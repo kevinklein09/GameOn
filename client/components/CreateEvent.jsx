@@ -84,7 +84,7 @@ const CreateEvents = () => {
 
     // HANDLERS
     const handleEquipmentList = () => {
-      setEquipment([...equipment, item]);
+      setEquipment([...equipment, { item, isChecked: false }]);
       setItem('');
     };
 

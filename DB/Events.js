@@ -42,7 +42,12 @@ const eventSchema = new Schema({
       room: String,
     },
   ],
-  equipment: [String],
+  equipment: [
+    {
+      item: String,
+      isChecked: Boolean,
+    },
+  ],
 });
 eventSchema.index(
   {
