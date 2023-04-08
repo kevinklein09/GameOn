@@ -25,9 +25,13 @@ function EquipmentPage() {
   const handleCheckboxChange = (e, item) => {
     const updatedEquipment = equipment.map((e) => {
       if (e.item === item.item) {
+        const assignedTo = e.isChecked
+          ? ''
+          : `${context.firstName} ${context.lastName}`;
         return {
           ...e,
           isChecked: !e.isChecked,
+          assignedTo,
         };
       }
       return e;
@@ -35,7 +39,6 @@ function EquipmentPage() {
     setEquipment(updatedEquipment);
 
     axios.put(`/api/events/${eventId}`, {
-      ...event,
       equipment: updatedEquipment,
     });
   };
@@ -60,6 +63,7 @@ function EquipmentPage() {
                 onChange={(e) => handleCheckboxChange(e, item)}
               />
               {item.item}
+              {item.assignedTo && <span> ({item.assignedTo})</span>}
             </li>
           ))}
         </ul>

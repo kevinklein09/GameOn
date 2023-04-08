@@ -46,6 +46,7 @@ const eventSchema = new Schema({
     {
       item: String,
       isChecked: Boolean,
+      assignedTo: String,
     },
   ],
 });
