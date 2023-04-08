@@ -1,7 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -27,8 +26,6 @@ const io = require('socket.io')(8081, {
 
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
-    console.log(`got message: ${message}`);
-
     io.emit('message', message);
   });
 });
@@ -84,6 +81,19 @@ app.get('/api/categories', (req, res) => {
 
 app.put('/user', (req, res) => {
   Users.findByIdAndUpdate(req.body.id, {
+    eventCount: req.body.eventCount,
+  })
+    .then((user) => {
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+app.put('/user', (req, res) => {
+  Users.findById(req.body.id, {
     eventCount: req.body.eventCount,
   })
     .then((user) => {
@@ -273,11 +283,13 @@ app.get('/eventPage/:eventId', (req, res) => {
 
 app.post('/event/:eventId/message', (req, res) => {
   const { eventId } = req.params;
-  const { message, username } = req.body;
-  console.log(req.body);
+  const {
+    message, username, creator,
+  } = req.body;
   const newMessage = {
     message,
     username,
+    creator,
     createdAt: new Date(),
   };
 
