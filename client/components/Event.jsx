@@ -12,6 +12,21 @@ import { black } from '@mui/material/colors';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSun,
+  faCloud,
+  faCloudRain,
+  faSnowflake,
+  faCloudSun,
+  faCloudShowersHeavy,
+  faSmog,
+  faCloudBolt,
+  faTemperatureHigh,
+  faTemperatureLow,
+  faCalendarDay,
+  faGlobe,
+} from '@fortawesome/free-solid-svg-icons';
 
 const moment = require('moment');
 // create materialUi theme
@@ -32,6 +47,11 @@ const Event = (props) => {
   const [going, setGoing] = useState(false);
   // const [eventCount, setEventCount] = useState(0);
 
+  const [weatherData, setWeatherData] = useState(null);
+
+  const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=2023-04-10&end_date=2023-04-10&timezone=auto&latitude=${props.eventData.coordinates[1]}&longitude=${props.eventData.coordinates[0]}`;
+
+  console.log(props.eventData.coordinates[1], props.eventData.coordinates[0]);
   const context = useContext(UserContext);
   // console.log(eventCount);
   // This will read the current status of whether the user is attending or not based off of what is currently in the database on page load
@@ -108,52 +128,125 @@ const Event = (props) => {
   };
   // console.log('context', context);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <div class='card'>
-        <Typography variant='h4'>
-          <p class='card-text'>{props.eventData.catName}</p>
-        </Typography>
-        <p class='card-text'>{props.eventData.description}</p>
-        <p class='card-text'>
-          <CalendarMonthIcon sx={{ color: black }} />{' '}
-          {moment(props.eventData.date).add(1, 'day').format('MMMM Do YYYY')} |{' '}
-          {moment(props.eventData.time, 'h:mm a').format('h:mm a')}
-        </p>
-        <p class='card-text'>
-          <LocationOnIcon sx={{ color: black }} />
-          <strong>{props.eventData.locName}</strong> {props.eventData.address}
-        </p>
-        <div className='form-container'>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={going}
-                  sx={{ color: '#476A83' }}
-                  onChange={handleToggle}
-                />
-              }
-              label={
-                going ? (
-                  <div style={{ color: 'green', fontWeight: 'bolder' }}>
-                    {' '}
-                    GOING <CheckCircleOutlineIcon />
-                  </div>
-                ) : (
-                  <div style={{ color: '#234D6A', fontWeight: 'bolder' }}>
-                    RSVP?
-                  </div>
-                )
-              }
-            />
-          </FormGroup>
-          <Link to={`/eventPage/${props.eventData._id}`} className='card-link'>
-            Bulletin Board
-          </Link>
+  // icons for types of weather
+  const getWeatherIcon = (weatherCondition) => {
+    switch (weatherCondition) {
+      case 0:
+        return <FontAwesomeIcon icon={faSun} size='2x' beat />;
+      case 1:
+        return <FontAwesomeIcon icon={faCloudSun} size='2x' beat />;
+      case 2:
+        return <FontAwesomeIcon icon={faCloudSun} size='2x' beat />;
+      case 3:
+        return <FontAwesomeIcon icon={faCloudSun} size='2x' beat />;
+      case 45:
+        return <FontAwesomeIcon icon={faSmog} size='2x' beat />;
+      case 48:
+        return <FontAwesomeIcon icon={faSmog} size='2x' beat />;
+      case 51:
+        return <FontAwesomeIcon icon={faCloudRain} size='2x' beat />;
+      case 53:
+        return <FontAwesomeIcon icon={faCloudRain} size='2x' beat />;
+      case 55:
+        return <FontAwesomeIcon icon={faCloudRain} size='2x' beat />;
+      case 61:
+        return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat />;
+      case 63:
+        return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat />;
+      case 65:
+        return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat />;
+      case 71:
+        return <FontAwesomeIcon icon={faSnowflake} size='2x' beat />;
+      case 73:
+        return <FontAwesomeIcon icon={faSnowflake} size='2x' beat />;
+      case 75:
+        return <FontAwesomeIcon icon={faSnowflake} size='2x' beat />;
+      case 80:
+        return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat />;
+      case 81:
+        return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat />;
+      case 82:
+        return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat />;
+      case 95:
+        return <FontAwesomeIcon icon={faCloudBolt} size='2x' beat />;
+      case 96:
+        return <FontAwesomeIcon icon={faCloudBolt} size='2x' beat />;
+      default:
+        return null;
+    }
+  };
+
+  function getWeather() {
+    axios
+      .get(API_URL)
+      .then((res) => {
+        setWeatherData(res.data.daily);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error('Failed to GET', err);
+      });
+  }
+  // useEffect
+  useEffect(() => {
+    getWeather();
+  }, []);
+
+  if (weatherData) {
+    return (
+      <ThemeProvider theme={theme}>
+        <div class='card'>
+          <p className='weather-icon'>
+            <FontAwesomeIcon icon={faGlobe} size='2x' beat /> :{' '}
+            {getWeatherIcon(weatherData.weathercode[0])}
+          </p>
+          <Typography variant='h4'>
+            <p class='card-text'>{props.eventData.catName}</p>
+          </Typography>
+          <p class='card-text'>{props.eventData.description}</p>
+          <p class='card-text'>
+            <CalendarMonthIcon sx={{ color: black }} />{' '}
+            {moment(props.eventData.date).add(1, 'day').format('MMMM Do YYYY')}{' '}
+            | {moment(props.eventData.time, 'h:mm a').format('h:mm a')}
+          </p>
+          <p class='card-text'>
+            <LocationOnIcon sx={{ color: black }} />
+            <strong>{props.eventData.locName}</strong> {props.eventData.address}
+          </p>
+          <div className='form-container'>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={going}
+                    sx={{ color: '#476A83' }}
+                    onChange={handleToggle}
+                  />
+                }
+                label={
+                  going ? (
+                    <div style={{ color: 'green', fontWeight: 'bolder' }}>
+                      {' '}
+                      GOING <CheckCircleOutlineIcon />
+                    </div>
+                  ) : (
+                    <div style={{ color: '#234D6A', fontWeight: 'bolder' }}>
+                      RSVP?
+                    </div>
+                  )
+                }
+              />
+            </FormGroup>
+            <Link
+              to={`/eventPage/${props.eventData._id}`}
+              className='card-link'
+            >
+              Bulletin Board
+            </Link>
+          </div>
         </div>
-      </div>
-    </ThemeProvider>
-  );
+      </ThemeProvider>
+    );
+  }
 };
 export default Event;

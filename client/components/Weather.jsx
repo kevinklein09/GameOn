@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
-
 // import icons for weather forecast
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -14,19 +13,18 @@ const Weather = () => {
   // giving state
   const [weatherData, setWeatherData] = useState(null);
 
-  // potential useEffect
+  // useEffect
   useEffect(() => {
     axios
       .get(API_URL)
       .then((res) => {
         setWeatherData(res.data.daily);
-        console.log(res.data.daily, 'This is res.data.daily');
       })
       .catch((err) => {
         console.error('Failed to GET', err);
       });
   }, []);
-  console.log(weatherData, 'This is the weatherData');
+
   // loading screen display
   if (!weatherData) {
     return <div>Loading weather data...</div>;
@@ -90,6 +88,7 @@ const Weather = () => {
         return null;
     }
   };
+
   // daily forecast
   return (
     <div className='weather-forecast'>
@@ -109,4 +108,3 @@ const Weather = () => {
 };
 
 export default Weather;
-// check
