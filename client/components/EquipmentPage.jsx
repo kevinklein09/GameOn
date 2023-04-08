@@ -34,8 +34,8 @@ function EquipmentPage() {
           {`${new Date(event?.date).toLocaleDateString()} at ${event?.time}`}
         </h6>
         <ul className='equipmentlist'>
-          {equipment.map((item) => (
-            <li>{item}</li>
+          {equipment.map((item, i) => (
+            <li key={i}>{item}</li>
           ))}
         </ul>
       </div>
