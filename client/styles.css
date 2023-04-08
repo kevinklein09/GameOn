@@ -226,6 +226,8 @@ body {
 
 .equipmentlist li {
   margin: 10px 0;
+  font-size: 20px;
+  margin-left: 220px;
 }
 
 .equipmentlist input[type='checkbox'] {
@@ -235,6 +237,7 @@ body {
 
 input[type="checkbox"]:checked + span {
   font-weight: bold;
+  font-size: 20px;
   color: green;
 }
 
