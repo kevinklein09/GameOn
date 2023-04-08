@@ -31,7 +31,7 @@ const Team = (props) => {
               </Typography>
               <p class='card-text'>
               <Groups3Icon sx={{ color: black }} />{' '}
-              <div>{props.teamData.playerList.map((player, i) => (<div>{player}</div>))}</div>
+              <div>{props.teamData.playerList.map((player, i) => (<div key={`team: ${i}`}>{player}</div>))}</div>
               </p>
               <p class='card-text'>
               <StarIcon sx={{ color: black }} />{' '}
