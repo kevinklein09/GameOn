@@ -9,8 +9,7 @@ import FormControl from '@mui/material/FormControl';
 
 const EventTeamSelect = ({ team, handleHostTeam }) => {
     const [teams, setTeams] = useState([]);
-    const [teamDrop, setTeam] = useState('');
-    const [hostTeam, setHostTeam] = useState('')
+    const [teamDrop, setHostTeam] = useState('');
 
 
     const getAllTeams = () => {
@@ -21,20 +20,6 @@ const EventTeamSelect = ({ team, handleHostTeam }) => {
         })
         .catch((err) => console.error(err));
     };
-
-    // const handleEventTeamSelect = (e) => {
-    //     axios.get('/api/teamList')
-    //       .then((teamData) => {
-    //         setEventTeam(
-    //           teamData.data.filter((current) => e.teamName === current.teamName),
-    //         );
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //       });
-    //   };
-
-
 
 
 
@@ -59,7 +44,7 @@ const EventTeamSelect = ({ team, handleHostTeam }) => {
         }}
         >
         {/* // onChange={handleSelectTeam} defaultValue='test'> */}
-        <MenuItem style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }} disabled value='test'> <b>{hostTeam || 'Add Host Team'}</b> </MenuItem>
+        <MenuItem style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }} disabled value='test'> <b>{team || 'Add Host Team'}</b> </MenuItem>
         {teams.map(
           (teamItem, index) =>
           <MenuItem

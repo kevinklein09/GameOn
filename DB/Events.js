@@ -29,6 +29,7 @@ const eventSchema = new Schema({
   catName: String,
   image: String,
   players: Number,
+  hostTeam: String,
   isOpen: Boolean,
   isExpired: Boolean,
   messages: [

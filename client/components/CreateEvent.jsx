@@ -32,7 +32,6 @@ const CreateEvents = () => {
     // states
     const [sport, setSport] = useState('');
     const [description, setDescription] = useState('');
-
     const [location, setLocation] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -47,6 +46,7 @@ const CreateEvents = () => {
     const [equipment, setEquipment] = useState([]);
     const [item, setItem] = useState('');
     let categoryId;
+    let eventHostTeam;
     const fullAddress = `${address} ${city} ${state} ${zip}`;
     // get initial coordinates
     const getCoords = () => {
@@ -71,6 +71,16 @@ const CreateEvents = () => {
       axios.get('/api/categories')
         .then((categories) => {
           categoryId = categories.data.filter((category) => category.category === sport)[0]._id;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    if (hostTeam) {
+      axios.get('/api/teamList')
+        .then((teamData) => {
+          eventHostTeam = teamData.data.filter((team) => team.teamName === hostTeam)
         })
         .catch((err) => {
           console.error(err);
@@ -121,7 +131,7 @@ const CreateEvents = () => {
     };
 
     const handleHostTeam = (e) => {
-      setHostTeam(e.target.value)
+      setHostTeam(e.teamName)
     }
 
     const handlePlayerLimit = (e) => {
@@ -144,7 +154,7 @@ const CreateEvents = () => {
           coordinates: [long, lat],
           category: categoryId,
           catName: sport,
-          hostTeam: hostTeam,
+          hostTeam: eventHostTeam,
           players: playerLimit,
           isOpen: true,
           attendees: [context._id]
@@ -204,7 +214,7 @@ const CreateEvents = () => {
             }}
           />
         </div>
-        <EventTeamSelect hostTeam={ hostTeam} handleHostTeam={ handleHostTeam }/>
+        <EventTeamSelect team={ hostTeam } handleHostTeam={ handleHostTeam }/>
         <div id="playerLimit">
           <OutlinedInput
             style= {{ backgroundColor: '#1c1c1c', color: '#A5C9CA', marginTop: '10px' }}
