@@ -217,3 +217,29 @@ body {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.equipmentlist {
+  list-style-type: none;
+  margin: 20px;
+  padding: 5px;
+}
+
+.equipmentlist li {
+  margin: 10px 0;
+}
+
+.equipmentlist input[type='checkbox'] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+input[type="checkbox"]:checked + span {
+  font-weight: bold;
+  color: green;
+}
+
+.assignedTo {
+  transition: color 0.2s ease-in-out;
+}
+
+

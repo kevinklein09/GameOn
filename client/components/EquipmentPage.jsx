@@ -63,7 +63,9 @@ function EquipmentPage() {
                 onChange={(e) => handleCheckboxChange(e, item)}
               />
               {item.item}
-              {item.assignedTo && <span> ({item.assignedTo})</span>}
+              {item.assignedTo && (
+                <span className='assignedTo'> ({item.assignedTo})</span>
+              )}
             </li>
           ))}
         </ul>
