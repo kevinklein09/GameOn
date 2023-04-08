@@ -26,14 +26,14 @@ const io = require('socket.io')(8081, {
 
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
-    console.log(`got message: ${message}`);
-
     io.emit('message', message);
   });
 });
 
 const DB = require('../DB/index');
-const { Events, Sports, Users, TeamList } = require('../DB/models');
+const {
+  Events, Sports, Users, TeamList,
+} = require('../DB/models');
 
 const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
@@ -111,7 +111,7 @@ app.get('/map', (req, res) => {
     if (status === 'Going') {
       Events.updateOne(
         { _id: event },
-        { $pullAll: { attendees: [userId] } }
+        { $pullAll: { attendees: [userId] } },
       ).catch((err) => {
         console.error(err);
       });
@@ -162,7 +162,7 @@ app.use(
     secret: process.env.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -187,7 +187,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 app.get(
   '/auth/google/callback',
@@ -195,7 +195,7 @@ app.get(
   (req, res) => {
     // Successful authentication, redirect secrets.
     res.redirect('/');
-  }
+  },
 );
 
 app.get('/logout', (req, res) => {
@@ -252,14 +252,14 @@ app.put('/api/event', (req, res) => {
   if (req.body.going) {
     Events.updateOne(
       { _id: req.body.id },
-      { $pullAll: { attendees: [req.body.userId] } }
+      { $pullAll: { attendees: [req.body.userId] } },
     )
       .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   } else {
     Events.updateOne(
       { _id: req.body.id },
-      { $push: { attendees: req.body.userId } }
+      { $push: { attendees: req.body.userId } },
     )
       .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
@@ -283,11 +283,13 @@ app.get('/eventPage/:eventId', (req, res) => {
 
 app.post('/event/:eventId/message', (req, res) => {
   const { eventId } = req.params;
-  const { message, username } = req.body;
-  console.log(req.body);
+  const {
+    message, username, creator,
+  } = req.body;
   const newMessage = {
     message,
     username,
+    creator,
     createdAt: new Date(),
   };
 
@@ -302,7 +304,7 @@ app.post('/event/:eventId/message', (req, res) => {
       } else {
         res.status(200).send(updatedEvent);
       }
-    }
+    },
   );
 });
 
@@ -320,19 +322,35 @@ app.post('/api/teamList', (req, res) => {
   const {
     owner,
     teamName,
-    playerList
+    playerList,
   } = req.body;
 
   TeamList.create({
     owner,
     teamName,
-    playerList
+    playerList,
   })
     .then((team) => res.status(200).send(team))
     .catch((error) => res.sendStatus(500));
 });
 
+app.put('/event/:eventId/:messageId', (req, res) => {
+  const { eventId, messageId } = req.params;
 
+  Events.findByIdAndUpdate(
+    eventId,
+    { $pull: { messages: { _id: messageId } } },
+    { new: true },
+    (err, updatedEvent) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(updatedEvent);
+      }
+    },
+
+  );
+});
 
 app.listen(port, () => {
   console.log(`
