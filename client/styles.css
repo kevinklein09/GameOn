@@ -238,8 +238,6 @@ input[type="checkbox"]:checked + span {
   color: green;
 }
 
-.assignedTo {
-  transition: color 0.2s ease-in-out;
-}
+
 
 
