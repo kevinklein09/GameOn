@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
-const TeamSelect = ({ team, handleSelectTeam }) => {
+const TeamSelect = ({ team, handleTeamSelect }) => {
     const [teams, setTeams] = useState([]);
     const [teamDrop, setTeam] = useState('');
     const getAllTeams = () => {
@@ -45,7 +45,7 @@ const TeamSelect = ({ team, handleSelectTeam }) => {
           (teamItem, index) =>
           <MenuItem
             style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }}
-            onClick ={() => handleSelectTeam(teamItem)}
+            onClick ={() => handleTeamSelect(teamItem)}
             onChange = {handleChange}
             key={index}
             value={teamItem.teamName}
