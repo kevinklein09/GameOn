@@ -203,6 +203,7 @@ app.post('/api/event', (req, res) => {
     coordinates,
     category,
     catName,
+    hostTeam,
     players,
   } = req.body;
 
@@ -217,6 +218,7 @@ app.post('/api/event', (req, res) => {
     coordinates,
     category,
     catName,
+    hostTeam,
     players,
     isOpen: true,
   })

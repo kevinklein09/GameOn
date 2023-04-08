@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
-const EventTeamSelect = ({ team, handleHostTeam }) => {
+const EventTeamSelect = ({ hostTeam, handleHostTeam }) => {
     const [teams, setTeams] = useState([]);
     const [teamDrop, setHostTeam] = useState('');
 
@@ -44,7 +44,7 @@ const EventTeamSelect = ({ team, handleHostTeam }) => {
         }}
         >
         {/* // onChange={handleSelectTeam} defaultValue='test'> */}
-        <MenuItem style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }} disabled value='test'> <b>{team || 'Add Host Team'}</b> </MenuItem>
+        <MenuItem style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }} disabled value='test'> <b>{hostTeam || 'Add Host Team'}</b> </MenuItem>
         {teams.map(
           (teamItem, index) =>
           <MenuItem

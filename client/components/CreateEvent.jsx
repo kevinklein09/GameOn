@@ -80,7 +80,7 @@ const CreateEvents = () => {
     if (hostTeam) {
       axios.get('/api/teamList')
         .then((teamData) => {
-          eventHostTeam = teamData.data.filter((team) => team.teamName === hostTeam)
+          eventHostTeam = teamData.data.filter((team) => team.teamName === hostTeam)[0]
         })
         .catch((err) => {
           console.error(err);
@@ -154,7 +154,7 @@ const CreateEvents = () => {
           coordinates: [long, lat],
           category: categoryId,
           catName: sport,
-          hostTeam: eventHostTeam,
+          hostTeam: eventHostTeam.teamName,
           players: playerLimit,
           isOpen: true,
           attendees: [context._id]
@@ -214,7 +214,7 @@ const CreateEvents = () => {
             }}
           />
         </div>
-        <EventTeamSelect team={ hostTeam } handleHostTeam={ handleHostTeam }/>
+        <EventTeamSelect hostTeam={ hostTeam } handleHostTeam={ handleHostTeam }/>
         <div id="playerLimit">
           <OutlinedInput
             style= {{ backgroundColor: '#1c1c1c', color: '#A5C9CA', marginTop: '10px' }}

@@ -10,6 +10,8 @@ import FormControl from '@mui/material/FormControl';
 const Sports = ({ sport, handleSelectSport }) => {
   const [sports, setSports] = useState([]);
   const [sportDrop, setSport] = useState('');
+
+
   const getAllSports = () => {
     axios
       .get('/api/categories')

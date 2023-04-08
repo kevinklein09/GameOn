@@ -13,6 +13,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 //Team functionality additions:
+import Groups3Icon from '@mui/icons-material/Groups3';
 
 
 const moment = require('moment');
@@ -33,7 +34,14 @@ const theme = createTheme({
 const Event = (props) => {
   const [going, setGoing] = useState(false);
   const [teamDrop, setTeam] = useState('');
-  // const [eventCount, setEventCount] = useState(0);
+
+  //Handles conditional rendering of the pickup/team status
+  let teamVar;
+  if (props.eventData.hostTeam === undefined || props.eventData.hostTeam === '') {
+    teamVar = 'Pickup Game'
+  } else {
+    teamVar = `Host Team: ${props.eventData.hostTeam}`
+  }
 
   const context = useContext(UserContext);
   // console.log(eventCount);
@@ -150,8 +158,8 @@ const Event = (props) => {
                 )
               }
             />
-            <div>{props.eventData.hostTeam}</div>
-            <div>{teamDrop}</div>
+
+          <div style={{ color: '#234D6A', fontWeight: 'bolder' }}>{teamVar}</div>
           </FormGroup>
           <Link to={`/eventPage/${props.eventData._id}`} className='card-link'>
             Bulletin Board

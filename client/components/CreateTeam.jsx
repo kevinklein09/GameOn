@@ -3,7 +3,6 @@ import axios from 'axios';
 
 
 // Component Imports
-import TeamSelect from './TeamSelect.jsx';
 import PlayerList from './PlayerList.jsx';
 
 // MUI Imports
