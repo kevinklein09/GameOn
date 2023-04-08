@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
 require('./passport');
+const axios = require('axios');
 
 const { SERVER_URL } = process.env;
 
@@ -306,6 +307,19 @@ app.post('/event/:eventId/message', (req, res) => {
       }
     },
   );
+});
+
+const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=2023-04-10&end_date=2023-04-10&timezone=auto&latitude=${props.eventData.coordinates[1]}&longitude=${props.eventData.coordinates[0]}`;
+
+app.get('/weather', (req, res) => {
+  axios.get(API_URL)
+    .then((response) => {
+      res.json(response.data.daily);
+    })
+    .catch((error) => {
+      console.error('Failed to GET', error);
+      res.status(500).send('Failed to get weather data');
+    });
 });
 
 app.listen(port, () => {
