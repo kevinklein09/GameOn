@@ -12,6 +12,10 @@ import { black } from '@mui/material/colors';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSun, faCloud, faCloudRain, faSnowflake, faCloudSun, faCloudShowersHeavy, faSmog, faCloudBolt, faTemperatureHigh, faTemperatureLow, faCalendarDay, faGlobe,
+} from '@fortawesome/free-solid-svg-icons';
 
 const moment = require('moment');
 // create materialUi theme
@@ -28,10 +32,16 @@ const theme = createTheme({
   },
 });
 
+
 const Event = (props) => {
   const [going, setGoing] = useState(false);
   // const [eventCount, setEventCount] = useState(0);
 
+  const [weatherData, setWeatherData] = useState(null);
+
+  const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${props.eventData.coordinates[1]}&longitude=${props.eventData.coordinates[0]}&daily=weathercode&start_date=2023-04-10&end_date=2023-04-10`;
+
+console.log(props.eventData.coordinates[1], props.eventData.coordinates[0]);
   const context = useContext(UserContext);
   // console.log(eventCount);
   // This will read the current status of whether the user is attending or not based off of what is currently in the database on page load
@@ -108,9 +118,72 @@ const Event = (props) => {
   };
   // console.log('context', context);
 
+
+ // icons for types of weather
+ const getWeatherIcon = (weatherCondition) => {
+  switch (weatherCondition) {
+    case 0:
+      return <FontAwesomeIcon icon={faSun} size='2x' beat/>;
+    case 1:
+      return <FontAwesomeIcon icon={faCloudSun} size='2x' beat/>;
+    case 2:
+      return <FontAwesomeIcon icon={faCloudSun} size='2x' beat/>;
+    case 3:
+      return <FontAwesomeIcon icon={faCloudSun} size='2x' beat/>;
+    case 45:
+      return <FontAwesomeIcon icon={faSmog} size='2x' beat/>;
+    case 48:
+      return <FontAwesomeIcon icon={faSmog} size='2x' beat/>;
+    case 51:
+      return <FontAwesomeIcon icon={faCloudRain} size='2x' beat/>;
+    case 53:
+      return <FontAwesomeIcon icon={faCloudRain} size='2x' beat/>;
+    case 55:
+      return <FontAwesomeIcon icon={faCloudRain} size='2x' beat/>;
+    case 61:
+      return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat/>;
+    case 63:
+      return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat/>;
+    case 65:
+      return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat/>;
+    case 71:
+      return <FontAwesomeIcon icon={faSnowflake} size='2x' beat/>;
+    case 73:
+      return <FontAwesomeIcon icon={faSnowflake} size='2x' beat/>;
+    case 75:
+      return <FontAwesomeIcon icon={faSnowflake} size='2x' beat/>;
+    case 80:
+      return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat/>;
+    case 81:
+      return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat/>;
+    case 82:
+      return <FontAwesomeIcon icon={faCloudShowersHeavy} size='2x' beat/>;
+    case 95:
+      return <FontAwesomeIcon icon={faCloudBolt} size='2x' beat/>;
+    case 96:
+      return <FontAwesomeIcon icon={faCloudBolt} size='2x' beat/>;
+    default:
+      return null;
+  }
+};
+
+  // useEffect
+  useEffect(() => {
+    axios
+      .get(API_URL)
+      .then((res) => {
+        setWeatherData(res.data.daily);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error('Failed to GET', err);
+      });
+  }, []);
+  
   return (
     <ThemeProvider theme={theme}>
       <div class='card'>
+      <p className="weather-icon"><FontAwesomeIcon icon={faGlobe} size='2x' beat /> : {getWeatherIcon(weatherData.daily.weathercode[0])}</p>
         <Typography variant='h4'>
           <p class='card-text'>{props.eventData.catName}</p>
         </Typography>

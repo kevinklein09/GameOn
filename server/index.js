@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+import dayjs from 'dayjs';
+
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -33,7 +35,9 @@ io.on('connection', (socket) => {
 });
 
 const DB = require('../DB/index');
-const { Events, Sports, Users } = require('../DB/models');
+const {
+  Events, Sports, Users, Forecast,
+} = require('../DB/models');
 
 const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
@@ -292,6 +296,51 @@ app.post('/event/:eventId/message', (req, res) => {
     },
   );
 });
+
+const bodyParser = require('body-parser');
+
+const Twilio = require('twilio');
+
+// Twilio credentials
+const accountSid = 'AC14b12574b657075f2319849d39d6e260';
+const authToken = 'b9847a8841461f05321d8620d110434b';
+const client = new Twilio(accountSid, authToken);
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// POST route handler
+app.post('/api/send-sms', (req, res) => {
+  const { weatherData } = req.body;
+  const phoneNumbers = ['+9856078033', '+9857747212'];
+
+  const sendSmsUpdates = (phoneNumber, message) => {
+    client.messages.create({
+      body: message,
+      to: phoneNumber,
+      from: '+18333614701',
+    }).then((message) => console.log(`SMS sent to ${phoneNumber}: ${message.sid}`));
+  };
+
+  phoneNumbers.forEach((phoneNumber) => {
+    const message = `Weather update for ${dayjs(weatherData.time[0]).format('dddd, MMMM D')}: ${weatherData.temperature_2m_min[0]}°F - ${weatherData.temperature_2m_max[0]}°F`;
+    sendSmsUpdates(phoneNumber, message);
+  });
+
+  res.send('SMS sent!');
+});
+// app.post('/api/weekly-forecast', (req, res) => {
+//   const { date, day, weather_icon_code } = req.body;
+//   Forecast.create({ date, day, weather_icon_code })
+//     .then((data) => {
+//       res.sendStatus(200);
+//       console.log('Successful POST', data);
+//     })
+//     .catch((err) => {
+//       res.sendStatus(500);
+//       console.error('Failed to POST', err);
+//     });
+// });
 
 app.listen(port, () => {
   console.log(`
