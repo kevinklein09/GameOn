@@ -4,7 +4,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const EquipmentList = ({ equipment, eventId }) =>
+const EquipmentList = ({ equipment }) =>
   equipment.map((item, i) => <li key={i}>{item}</li>);
 
 export default EquipmentList;

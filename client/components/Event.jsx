@@ -151,6 +151,12 @@ const Event = (props) => {
           <Link to={`/eventPage/${props.eventData._id}`} className='card-link'>
             Bulletin Board
           </Link>
+          <Link
+            to={`/equipmentPage/${props.eventData._id}`}
+            className='card-link'
+          >
+            Equipment List
+          </Link>
         </div>
       </div>
     </ThemeProvider>

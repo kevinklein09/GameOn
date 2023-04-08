@@ -47,7 +47,6 @@ const CreateEvents = () => {
     const [playerLimit, setPlayerLimit] = useState(1);
     const [equipment, setEquipment] = useState([]);
     const [item, setItem] = useState('');
-    const [eventId, setEventId] = useState(null);
     let categoryId;
     const fullAddress = `${address} ${city} ${state} ${zip}`;
     // get initial coordinates
@@ -85,15 +84,8 @@ const CreateEvents = () => {
 
     // HANDLERS
     const handleEquipmentList = () => {
-      axios
-        .post('/api/equipment', { item })
-        .then(() => {
-          setEquipment([...equipment, item]);
-          setItem('');
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      setEquipment([...equipment, item]);
+      setItem('');
     };
 
     const handleItem = (e) => {
@@ -158,9 +150,7 @@ const CreateEvents = () => {
             players: playerLimit,
             isOpen: true,
             attendees: [context._id],
-          })
-          .then((res) => {
-            setEventId(res.data.eventId);
+            equipment,
           })
           .then(() => {
             // upon successful post...
@@ -288,7 +278,7 @@ const CreateEvents = () => {
               </Button>
             </div>
 
-            <EquipmentList equipment={equipment} eventId={eventId} />
+            <EquipmentList equipment={equipment} />
 
             <div style={{ marginTop: '10px' }} id='dateTime'>
               <OutlinedInput
