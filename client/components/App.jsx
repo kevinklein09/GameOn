@@ -99,8 +99,14 @@ const App = () => {
             <SportsBasketballIcon sx={{ fontSize: 50, color: teal[100] }} />N
           </strong>
         </Typography>
-        <Grid container spacing={6} align='center' margin='auto'>
-          <Grid xs={2}>
+        <Grid
+          container
+          spacing={6}
+          align='center'
+          margin='auto'
+          sx={{ justifyContent: 'center' }}
+        >
+          <Grid>
             <Link to='/home' style={linkStyle}>
               {
                 <Tab
@@ -111,7 +117,7 @@ const App = () => {
               }
             </Link>{' '}
           </Grid>
-          <Grid xs={2}>
+          <Grid>
             <Link to='/eventListings' style={linkStyle}>
               {
                 <Tab
@@ -122,7 +128,7 @@ const App = () => {
               }
             </Link>
           </Grid>
-          <Grid xs={2}>
+          <Grid>
             <Link to='/teamList' style={linkStyle}>
               {
                 <Tab
@@ -133,7 +139,7 @@ const App = () => {
               }
             </Link>
           </Grid>
-          <Grid xs={2}>
+          <Grid>
             <Link to='/createTeam' style={linkStyle}>
               {
                 <Tab
@@ -144,7 +150,7 @@ const App = () => {
               }
             </Link>
           </Grid>
-          <Grid xs={2}>
+          <Grid>
             <Link to='/leaderboard' style={linkStyle}>
               {
                 <Tab
@@ -155,7 +161,7 @@ const App = () => {
               }
             </Link>
           </Grid>
-          <Grid xs={2}>
+          <Grid>
             <Link to='/map' style={linkStyle}>
               {
                 <Tab
@@ -166,7 +172,7 @@ const App = () => {
               }
             </Link>
           </Grid>
-          <Grid xs={2}>
+          <Grid>
             <Link to='/forecast' style={linkStyle}>
               {
                 <Tab
@@ -177,7 +183,7 @@ const App = () => {
               }
             </Link>
           </Grid>
-          <Grid xs={2}>
+          <Grid>
             <Link to='/postEvent' style={linkStyle}>
               {
                 <Tab
