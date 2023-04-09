@@ -16,7 +16,6 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 //Team functionality additions:
 import Groups3Icon from '@mui/icons-material/Groups3';
 
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSun,
@@ -27,7 +26,6 @@ import {
   faSmog,
   faCloudBolt,
 } from '@fortawesome/free-solid-svg-icons';
-
 
 const moment = require('moment');
 // create materialUi theme
@@ -50,10 +48,13 @@ const Event = (props) => {
 
   //Handles conditional rendering of the pickup/team status
   let teamVar;
-  if (props.eventData.hostTeam === undefined || props.eventData.hostTeam === '') {
-    teamVar = 'Pickup Game'
+  if (
+    props.eventData.hostTeam === undefined ||
+    props.eventData.hostTeam === ''
+  ) {
+    teamVar = 'Pickup Game';
   } else {
-    teamVar = `Host Team: ${props.eventData.hostTeam}`
+    teamVar = `Host Team: ${props.eventData.hostTeam}`;
   }
 
   const [weatherData, setWeatherData] = useState(null);
@@ -253,7 +254,9 @@ const Event = (props) => {
                   )
                 }
               />
-            <div style={{ color: '#234D6A', fontWeight: 'bolder' }}>{teamVar}</div>
+              <div style={{ color: '#234D6A', fontWeight: 'bolder' }}>
+                {teamVar}
+              </div>
             </FormGroup>
             <Link
               to={`/eventPage/${props.eventData._id}`}
@@ -262,13 +265,12 @@ const Event = (props) => {
               Bulletin Board
             </Link>
             <Link
-            to={`/equipmentPage/${props.eventData._id}`}
-            className='card-link'
+              to={`/equipmentPage/${props.eventData._id}`}
+              className='card-link'
             >
-            Equipment List
-          </Link>F
+              Equipment List
+            </Link>
           </div>
-
         </div>
       </ThemeProvider>
     );
