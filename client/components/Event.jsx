@@ -169,17 +169,17 @@ const Event = (props) => {
         return null;
     }
   };
-//GetWeather API call
+  //GetWeather API call
   function getWeather() {
     axios
       .get('/weather', {
         params: {
           latitude: props.eventData.coordinates[1],
           longitude: props.eventData.coordinates[0],
-        }
+        },
       })
-       .then((res) => {
-        setWeatherData(res.data.daily);
+      .then((res) => {
+        setWeatherData(res.data);
       })
       .catch((err) => {
         console.error('Failed to GET', err);
@@ -190,15 +190,14 @@ const Event = (props) => {
     getWeather();
   }, []);
 
-
   if (weatherData) {
     return (
       <ThemeProvider theme={theme}>
         <div class='card'>
           <div className='weather-icon-container'>
-            <p className='weather-icon' >
-            {getWeatherIcon(weatherData.weathercode[0])}
-          </p>
+            <p className='weather-icon'>
+              {getWeatherIcon(weatherData.weathercode[0])}
+            </p>
           </div>
           <Typography variant='h4'>
             <p class='card-text'>{props.eventData.catName}</p>
