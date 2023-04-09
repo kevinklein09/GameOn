@@ -310,9 +310,11 @@ app.post('/event/:eventId/message', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-  const { latitude, longitude } = req.query;
+  const {
+    latitude, longitude, startDate, endDate,
+  } = req.query;
 
-  const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=2023-04-10&end_date=2023-04-10&timezone=auto&latitude=${latitude}&longitude=${longitude}`;
+  const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=${startDate}&end_date=${endDate}&timezone=auto&latitude=${latitude}&longitude=${longitude}`;
 
   axios.get(API_URL)
     .then((response) => {
