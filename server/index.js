@@ -218,6 +218,7 @@ app.post('/api/event', (req, res) => {
     category,
     catName,
     players,
+    equipment,
   } = req.body;
 
   Events.create({
@@ -232,6 +233,7 @@ app.post('/api/event', (req, res) => {
     category,
     catName,
     players,
+    equipment,
     isOpen: true,
   })
     .then((data) => res.status(200).send(data))
@@ -309,6 +311,44 @@ app.post('/event/:eventId/message', (req, res) => {
   );
 });
 
+
+app.put('/api/events/:eventId', (req, res) => {
+  const { eventId } = req.params;
+  const { equipment } = req.body;
+
+  Events.findByIdAndUpdate(eventId, { equipment })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+// Team Routes
+
+// Retrieve teams from database - TeamList.jsx
+app.get('/api/teamList', (req, res) => {
+  TeamList.findOne({ _id: req.query.id })
+    .then((teams) => res.status(200).send(teams))
+    .catch((error) => res.sendStatus(500));
+});
+
+// Add a team - CreateTeam.jsx
+app.post('/api/teamList', (req, res) => {
+  const { owner, teamName, playerList } = req.body;
+
+  TeamList.create({
+    owner,
+    teamName,
+    playerList,
+  })
+    .then((team) => res.status(200).send(team))
+    .catch((error) => res.sendStatus(500));
+});
+
+
 app.get('/weather', (req, res) => {
   const {
     latitude, longitude, startDate, endDate,
@@ -326,6 +366,7 @@ app.get('/weather', (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 app.listen(port, () => {
   console.log(`

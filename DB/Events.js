@@ -43,6 +43,13 @@ const eventSchema = new Schema({
       room: String,
     },
   ],
+  equipment: [
+    {
+      item: String,
+      isChecked: Boolean,
+      assignedTo: String,
+    },
+  ],
 });
 eventSchema.index(
   {
@@ -51,7 +58,7 @@ eventSchema.index(
     date: 1,
     time: 1,
   },
-  { unique: true },
+  { unique: true }
 );
 // Event Model
 

@@ -217,6 +217,35 @@ body {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+
+.equipmentlist {
+  list-style-type: none;
+  margin: 20px;
+  padding: 5px;
+}
+
+.equipmentlist li {
+  margin: 10px 0;
+  font-size: 20px;
+  margin-left: 220px;
+}
+
+.equipmentlist input[type='checkbox'] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+input[type="checkbox"]:checked + span {
+  font-weight: bold;
+  font-size: 20px;
+  color: green;
+}
+
+
+
+
+
 .weather-icon-container {
   position: absolute;
   top: 0;
@@ -225,3 +254,4 @@ body {
   margin-right: 20px;
   color:#234D6A
 }
+

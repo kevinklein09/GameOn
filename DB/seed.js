@@ -20,6 +20,13 @@ const eventData = [
     players: 5,
     isOpen: true,
     isExpired: false,
+    equipment: [
+      {
+        item: 'ball',
+        isChecked: true,
+        assignedTo: 'jasMin',
+      },
+    ],
   },
   {
     attendees: [],
@@ -176,23 +183,28 @@ eventData.forEach((event) => {
 const usersData = [
   {
     googleUser: 'jas@gmail.com',
+    firstName: 'Jasmine',
+    lastName: 'Franch',
     username: 'jasMin',
     email: 'jas@gmail.com',
     address: '143 Street',
     phone: '5046804756',
     googleId: 'jas@gmail.com',
     secret: String,
+    eventCount: 5,
   },
   {
     googleUser: 'puckjones@gmail.com',
+    firstName: 'Gregg',
+    lastName: 'Turkington',
     username: 'puck',
     email: 'puckjones@gmail.com',
     address: '833 Dodge Ave',
     phone: '5043372289',
     googleId: 'puckjones@gmail.com',
     secret: String,
+    eventCount: 2,
   },
-
 ];
 
 usersData.forEach((event) => {
