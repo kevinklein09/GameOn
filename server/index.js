@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
 require('./passport');
+const axios = require('axios');
 
 const { SERVER_URL } = process.env;
 
@@ -32,7 +33,7 @@ io.on('connection', (socket) => {
 
 const DB = require('../DB/index');
 const {
-  Events, Sports, Users, TeamList,
+  Events, Sports, Users, Forecast,
 } = require('../DB/models');
 
 const port = 3000;
@@ -308,48 +309,22 @@ app.post('/event/:eventId/message', (req, res) => {
   );
 });
 
-// Team Routes
-
-// Retrieve teams from database - TeamList.jsx
-app.get('/api/teamList', (req, res) => {
-  TeamList.findOne({ _id: req.query.id })
-    .then((teams) => res.status(200).send(teams))
-    .catch((error) => res.sendStatus(500));
-});
-
-// Add a team - CreateTeam.jsx
-app.post('/api/teamList', (req, res) => {
+app.get('/weather', (req, res) => {
   const {
-    owner,
-    teamName,
-    playerList,
-  } = req.body;
+    latitude, longitude, startDate, endDate,
+  } = req.query;
 
-  TeamList.create({
-    owner,
-    teamName,
-    playerList,
-  })
-    .then((team) => res.status(200).send(team))
-    .catch((error) => res.sendStatus(500));
-});
+  const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=${startDate}&end_date=${endDate}&timezone=auto&latitude=${latitude}&longitude=${longitude}`;
 
-app.put('/event/:eventId/:messageId', (req, res) => {
-  const { eventId, messageId } = req.params;
 
-  Events.findByIdAndUpdate(
-    eventId,
-    { $pull: { messages: { _id: messageId } } },
-    { new: true },
-    (err, updatedEvent) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.send(updatedEvent);
-      }
-    },
-
-  );
+  axios.get(API_URL)
+    .then((response) => {
+      res.send(response.data.daily);
+    })
+    .catch((error) => {
+      console.error('Failed to GET', error);
+      res.sendStatus(500);
+    });
 });
 
 app.listen(port, () => {
