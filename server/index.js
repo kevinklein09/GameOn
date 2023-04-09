@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
 require('./passport');
+const axios = require('axios');
 
 const { SERVER_URL } = process.env;
 
@@ -26,14 +27,14 @@ const io = require('socket.io')(8081, {
 
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
-    console.log(`got message: ${message}`);
-
     io.emit('message', message);
   });
 });
 
 const DB = require('../DB/index');
-const { Events, Sports, Users, TeamList } = require('../DB/models');
+const {
+  Events, Sports, Users, Forecast,
+} = require('../DB/models');
 
 const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
@@ -81,6 +82,19 @@ app.get('/api/categories', (req, res) => {
 
 app.put('/user', (req, res) => {
   Users.findByIdAndUpdate(req.body.id, {
+    eventCount: req.body.eventCount,
+  })
+    .then((user) => {
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+app.put('/user', (req, res) => {
+  Users.findById(req.body.id, {
     eventCount: req.body.eventCount,
   })
     .then((user) => {
@@ -205,6 +219,7 @@ app.post('/api/event', (req, res) => {
     catName,
     hostTeam,
     players,
+    equipment,
   } = req.body;
 
   Events.create({
@@ -220,6 +235,7 @@ app.post('/api/event', (req, res) => {
     catName,
     hostTeam,
     players,
+    equipment,
     isOpen: true,
   })
     .then((data) => res.status(200).send(data))
@@ -272,11 +288,13 @@ app.get('/eventPage/:eventId', (req, res) => {
 
 app.post('/event/:eventId/message', (req, res) => {
   const { eventId } = req.params;
-  const { message, username } = req.body;
-  console.log(req.body);
+  const {
+    message, username, creator,
+  } = req.body;
   const newMessage = {
     message,
     username,
+    creator,
     createdAt: new Date(),
   };
 
@@ -295,6 +313,21 @@ app.post('/event/:eventId/message', (req, res) => {
   );
 });
 
+
+app.put('/api/events/:eventId', (req, res) => {
+  const { eventId } = req.params;
+  const { equipment } = req.body;
+
+  Events.findByIdAndUpdate(eventId, { equipment })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 // Team Routes
 
 // Retrieve teams from database - TeamList.jsx
@@ -306,21 +339,35 @@ app.get('/api/teamList', (req, res) => {
 
 // Add a team - CreateTeam.jsx
 app.post('/api/teamList', (req, res) => {
-  const {
-    owner,
-    teamName,
-    playerList
-  } = req.body;
+  const { owner, teamName, playerList } = req.body;
 
   TeamList.create({
     owner,
     teamName,
-    playerList
+    playerList,
   })
     .then((team) => res.status(200).send(team))
     .catch((error) => res.sendStatus(500));
 });
 
+
+app.get('/weather', (req, res) => {
+  const {
+    latitude, longitude, startDate, endDate,
+  } = req.query;
+
+  const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=${startDate}&end_date=${endDate}&timezone=auto&latitude=${latitude}&longitude=${longitude}`;
+
+
+  axios.get(API_URL)
+    .then((response) => {
+      res.send(response.data.daily);
+    })
+    .catch((error) => {
+      console.error('Failed to GET', error);
+      res.sendStatus(500);
+    });
+});
 
 
 app.listen(port, () => {

@@ -67,6 +67,7 @@ const EventListings = () => {
   //   localStorage.setItem('eventCount', eventCount.toString());
   // }, [eventCount]);
 
+  // console.log(context);
   if (context) {
     return (
       <div>

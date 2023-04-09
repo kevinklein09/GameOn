@@ -36,11 +36,19 @@ const eventSchema = new Schema({
     {
       message: String,
       username: String,
+      creator: String,
       createdAt: {
         type: Date,
         default: Date.now,
       },
       room: String,
+    },
+  ],
+  equipment: [
+    {
+      item: String,
+      isChecked: Boolean,
+      assignedTo: String,
     },
   ],
 });
@@ -51,7 +59,7 @@ eventSchema.index(
     date: 1,
     time: 1,
   },
-  { unique: true },
+  { unique: true }
 );
 // Event Model
 

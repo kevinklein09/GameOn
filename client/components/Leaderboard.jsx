@@ -14,12 +14,16 @@ import {
 
 const Leaderboard = () => {
   const [users, setUsers] = useState([]);
+  // console.log(users);
 
   const getUsers = () => {
     axios
       .get('/users')
       .then((usersObj) => {
-        setUsers(usersObj.data);
+        const sortedUsers = usersObj.data.sort(
+          (a, b) => b.eventCount - a.eventCount
+        );
+        setUsers(sortedUsers);
       })
       .catch((err) => {
         console.error(err);
@@ -43,7 +47,15 @@ const Leaderboard = () => {
             <TableCell>Score</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody></TableBody>
+        <TableBody>
+          {users.map((user, index) => (
+            <TableRow key={index}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
+              <TableCell>{user.eventCount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );
