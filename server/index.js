@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
 
 const DB = require('../DB/index');
 const {
-  Events, Sports, Users, Forecast,
+  Events, Sports, Users, TeamList,
 } = require('../DB/models');
 
 const port = 3000;
@@ -313,7 +313,6 @@ app.post('/event/:eventId/message', (req, res) => {
   );
 });
 
-
 app.put('/api/events/:eventId', (req, res) => {
   const { eventId } = req.params;
   const { equipment } = req.body;
@@ -350,14 +349,12 @@ app.post('/api/teamList', (req, res) => {
     .catch((error) => res.sendStatus(500));
 });
 
-
 app.get('/weather', (req, res) => {
   const {
     latitude, longitude, startDate, endDate,
   } = req.query;
 
   const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=${startDate}&end_date=${endDate}&timezone=auto&latitude=${latitude}&longitude=${longitude}`;
-
 
   axios.get(API_URL)
     .then((response) => {
@@ -369,6 +366,23 @@ app.get('/weather', (req, res) => {
     });
 });
 
+app.put('/event/:eventId/:messageId', (req, res) => {
+  const { eventId, messageId } = req.params;
+
+  Events.findByIdAndUpdate(
+    eventId,
+    { $pull: { messages: { _id: messageId } } },
+    { new: true },
+    (err, updatedEvent) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(updatedEvent);
+      }
+    },
+
+  );
+});
 
 app.listen(port, () => {
   console.log(`
