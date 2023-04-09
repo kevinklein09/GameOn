@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const User = require('../DB/Users');
 const ENV = require('../.env');
 require('./passport');
+const axios = require('axios');
 
 const { SERVER_URL } = process.env;
 
@@ -26,14 +27,14 @@ const io = require('socket.io')(8081, {
 
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
-    console.log(`got message: ${message}`);
-
     io.emit('message', message);
   });
 });
 
 const DB = require('../DB/index');
-const { Events, Sports, Users, TeamList } = require('../DB/models');
+const {
+  Events, Sports, Users, Forecast,
+} = require('../DB/models');
 
 const port = 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
@@ -111,7 +112,7 @@ app.get('/map', (req, res) => {
     if (status === 'Going') {
       Events.updateOne(
         { _id: event },
-        { $pullAll: { attendees: [userId] } }
+        { $pullAll: { attendees: [userId] } },
       ).catch((err) => {
         console.error(err);
       });
@@ -162,7 +163,7 @@ app.use(
     secret: process.env.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -187,7 +188,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 app.get(
   '/auth/google/callback',
@@ -195,7 +196,7 @@ app.get(
   (req, res) => {
     // Successful authentication, redirect secrets.
     res.redirect('/');
-  }
+  },
 );
 
 app.get('/logout', (req, res) => {
@@ -254,14 +255,14 @@ app.put('/api/event', (req, res) => {
   if (req.body.going) {
     Events.updateOne(
       { _id: req.body.id },
-      { $pullAll: { attendees: [req.body.userId] } }
+      { $pullAll: { attendees: [req.body.userId] } },
     )
       .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
   } else {
     Events.updateOne(
       { _id: req.body.id },
-      { $push: { attendees: req.body.userId } }
+      { $push: { attendees: req.body.userId } },
     )
       .then((data) => res.status(200).send(data))
       .catch((err) => res.sendStatus(500));
@@ -285,11 +286,13 @@ app.get('/eventPage/:eventId', (req, res) => {
 
 app.post('/event/:eventId/message', (req, res) => {
   const { eventId } = req.params;
-  const { message, username } = req.body;
-  console.log(req.body);
+  const {
+    message, username, creator,
+  } = req.body;
   const newMessage = {
     message,
     username,
+    creator,
     createdAt: new Date(),
   };
 
@@ -304,9 +307,10 @@ app.post('/event/:eventId/message', (req, res) => {
       } else {
         res.status(200).send(updatedEvent);
       }
-    }
+    },
   );
 });
+
 
 app.put('/api/events/:eventId', (req, res) => {
   const { eventId } = req.params;
@@ -343,6 +347,26 @@ app.post('/api/teamList', (req, res) => {
     .then((team) => res.status(200).send(team))
     .catch((error) => res.sendStatus(500));
 });
+
+
+app.get('/weather', (req, res) => {
+  const {
+    latitude, longitude, startDate, endDate,
+  } = req.query;
+
+  const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=${startDate}&end_date=${endDate}&timezone=auto&latitude=${latitude}&longitude=${longitude}`;
+
+
+  axios.get(API_URL)
+    .then((response) => {
+      res.send(response.data.daily);
+    })
+    .catch((error) => {
+      console.error('Failed to GET', error);
+      res.sendStatus(500);
+    });
+});
+
 
 app.listen(port, () => {
   console.log(`

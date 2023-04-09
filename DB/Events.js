@@ -35,6 +35,7 @@ const eventSchema = new Schema({
     {
       message: String,
       username: String,
+      creator: String,
       createdAt: {
         type: Date,
         default: Date.now,
