@@ -39,7 +39,7 @@ const TeamList = () => {
   // Hook which calls getAllTeams
   useEffect(() => {
     getAllTeams();
-  }, []);
+  }, [context]);
 
   if (context) {
     return (
@@ -47,7 +47,7 @@ const TeamList = () => {
         <br></br><br></br>
         <Typography variant='h4'>Teams</Typography><button id='all-button' onClick={getAllTeams}>Show All Teams</button>
         <TeamSelect handleTeamSelect={ handleTeamSelect } />
-        {teams.map((team, i) => (<><Team teamData={team} class='team' key={`team: ${i}`} /></>))}
+        {teams.map((team, i) => (<><Team teamData={team} class='team'/></>))}
       </div>
     );
   }
@@ -64,4 +64,5 @@ const TeamList = () => {
     </div>
   );
 };
+
 export default TeamList;

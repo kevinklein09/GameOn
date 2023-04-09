@@ -217,6 +217,7 @@ app.post('/api/event', (req, res) => {
     coordinates,
     category,
     catName,
+    hostTeam,
     players,
     equipment,
   } = req.body;
@@ -232,6 +233,7 @@ app.post('/api/event', (req, res) => {
     coordinates,
     category,
     catName,
+    hostTeam,
     players,
     equipment,
     isOpen: true,
@@ -330,7 +332,7 @@ app.put('/api/events/:eventId', (req, res) => {
 
 // Retrieve teams from database - TeamList.jsx
 app.get('/api/teamList', (req, res) => {
-  TeamList.findOne({ _id: req.query.id })
+  TeamList.find({})
     .then((teams) => res.status(200).send(teams))
     .catch((error) => res.sendStatus(500));
 });

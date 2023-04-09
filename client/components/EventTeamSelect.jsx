@@ -7,9 +7,11 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
-const TeamSelect = ({ team, handleTeamSelect }) => {
+const EventTeamSelect = ({ hostTeam, handleHostTeam }) => {
     const [teams, setTeams] = useState([]);
-    const [teamDrop, setTeam] = useState('');
+    const [teamDrop, setHostTeam] = useState('');
+
+
     const getAllTeams = () => {
       axios
         .get('/api/teamList')
@@ -19,8 +21,10 @@ const TeamSelect = ({ team, handleTeamSelect }) => {
         .catch((err) => console.error(err));
     };
 
+
+
     const handleChange = (event) => {
-      setTeam(event.target.value);
+      setHostTeam(event.target.value);
     };
 
     useEffect(() => {
@@ -34,18 +38,18 @@ const TeamSelect = ({ team, handleTeamSelect }) => {
       <Select
         autoWidth= {true}
         variant='standard'
-        style={{ padding: '10px', backgroundColor: '#1c1c1c', color: '#A5C9CA' }}
+        style={{ padding: '10px', backgroundColor: '#1c1c1c', color: '#A5C9CA', marginTop: '10px' }}
         inputProps={{
           defaultValue: 'test',
         }}
         >
         {/* // onChange={handleSelectTeam} defaultValue='test'> */}
-        <MenuItem style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }} disabled value='test'> <b>{team || 'Choose A Team'}</b> </MenuItem>
+        <MenuItem style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }} disabled value='test'> <b>{hostTeam || 'Add Host Team'}</b> </MenuItem>
         {teams.map(
           (teamItem, index) =>
           <MenuItem
             style={{ backgroundColor: '#A5C9CA', color: '#1c1c1c' }}
-            onClick ={() => handleTeamSelect(teamItem)}
+            onClick ={() => handleHostTeam(teamItem)}
             onChange = {handleChange}
             key={index}
             value={teamItem.teamName}
@@ -57,4 +61,4 @@ const TeamSelect = ({ team, handleTeamSelect }) => {
     );
   };
 
-  export default TeamSelect;
+  export default EventTeamSelect;

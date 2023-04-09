@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 const Models = require('./models');
+const { getMaxListeners } = require('./Users');
 
-const { Users, Events } = Models;
+const { Users, Events, TeamList} = Models;
 
 const eventData = [
   {
@@ -209,6 +210,39 @@ const usersData = [
 
 usersData.forEach((event) => {
   Users.create(event).catch((err) => {
+    console.error(err);
+  });
+});
+
+const teamData = [
+  {
+    owner: 'brendantcarmichael@gmail.com',
+    teamName: 'Postmen At Work',
+    playerList: ['Jordan Davis', 'Matt Mekita', 'Kevin Klein', 'Brendan Carmichael']
+  },
+  {
+    owner: 'colinhay@ALandDownUnder.com',
+    teamName: 'Men At Work',
+    playerList: ['Colin Hay', 'Ron Strykert', 'Greg Ham', 'Jerry Speiser', 'John Rees']
+  },
+  {
+    owner: 'bugsbunny@bugsbunnyexample.com',
+    teamName: 'Toon Squad',
+    playerList: ['Bugs Bunny', 'Michael Jordan', 'Daffy Duck', 'Bill Murray', 'Yosemite Sam']
+  },
+  {
+    owner: 'Gregg Popovich',
+    teamName: 'San Antonio Spurs',
+    playerList: ['Tim Duncan', 'Manu Ginobli', 'Tony Parker', 'Kawhi Leonard', 'Danny Green',
+    'Tiago Splitter', 'Boris Diaw', 'Marco Belinelli']
+  },
+
+];
+
+
+
+teamData.forEach((team) => {
+  TeamList.create(team).catch((err) => {
     console.error(err);
   });
 });

@@ -6,9 +6,12 @@ import axios from 'axios';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+
 const Sports = ({ sport, handleSelectSport }) => {
   const [sports, setSports] = useState([]);
   const [sportDrop, setSport] = useState('');
+
+
   const getAllSports = () => {
     axios
       .get('/api/categories')
@@ -25,6 +28,7 @@ const Sports = ({ sport, handleSelectSport }) => {
   useEffect(() => {
     getAllSports();
   }, []);
+
   return (
     <div id='category'>
     <FormControl>

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
+
 // MUI
 import {
   Typography,
@@ -16,6 +17,7 @@ import theme from './Theme.jsx';
 import Sports from './SportsSelect.jsx';
 import EquipmentList from './EquipmentList.jsx';
 import AddressField from './AddressField.jsx';
+import EventTeamSelect from './EventTeamSelect.jsx'
 
 // IMPORTED google context
 import { UserContext } from '../index.jsx';
@@ -30,7 +32,6 @@ const CreateEvents = () => {
     // states
     const [sport, setSport] = useState('');
     const [description, setDescription] = useState('');
-
     const [location, setLocation] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -44,10 +45,12 @@ const CreateEvents = () => {
       }-${today.getDate()}`
     );
     const [time, setTime] = useState('12:00');
+    const [hostTeam, setHostTeam] = useState('')
     const [playerLimit, setPlayerLimit] = useState(1);
     const [equipment, setEquipment] = useState([]);
     const [item, setItem] = useState('');
     let categoryId;
+    let eventHostTeam = {teamName: ''}
     const fullAddress = `${address} ${city} ${state} ${zip}`;
     // get initial coordinates
     const getCoords = () => {
@@ -76,6 +79,17 @@ const CreateEvents = () => {
           categoryId = categories.data.filter(
             (category) => category.category === sport
           )[0]._id;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+
+    if (hostTeam) {
+      axios.get('/api/teamList')
+        .then((teamData) => {
+          eventHostTeam = teamData.data.filter((team) => team.teamName === hostTeam)[0]
         })
         .catch((err) => {
           console.error(err);
@@ -126,6 +140,10 @@ const CreateEvents = () => {
       getCoords();
     };
 
+    const handleHostTeam = (e) => {
+      setHostTeam(e.teamName)
+    }
+
     const handlePlayerLimit = (e) => {
       setPlayerLimit(JSON.parse(e.target.value));
     };
@@ -136,22 +154,23 @@ const CreateEvents = () => {
       e.preventDefault();
       // if user filled out the required fields, allow them to post
       if (sport && description && address) {
-        axios
-          .post('/api/event', {
-            owner: context.email,
-            address: fullAddress,
-            locName: location,
-            description,
-            date,
-            time,
-            coordinates: [long, lat],
-            category: categoryId,
-            catName: sport,
-            players: playerLimit,
-            isOpen: true,
-            attendees: [context._id],
-            equipment,
-          })
+
+        axios.post('/api/event', {
+          owner: context.email,
+          address: fullAddress,
+          locName: location,
+          description,
+          date,
+          time,
+          coordinates: [long, lat],
+          category: categoryId,
+          catName: sport,
+          hostTeam: eventHostTeam.teamName,
+          players: playerLimit,
+          isOpen: true,
+          attendees: [context._id]
+          equipment,
+        })
           .then(() => {
             // upon successful post...
             alert('your event was created!');
@@ -164,6 +183,7 @@ const CreateEvents = () => {
             setLong(0);
             setLat(0);
             setLocation('');
+            setHostTeam('');
             setPlayerLimit(1);
             setDate(
               `${today.getFullYear()}-${
@@ -184,63 +204,62 @@ const CreateEvents = () => {
     };
 
     return (
-      <div>
-        <ThemeProvider theme={theme}>
-          <Typography
-            style={{ color: '#A5C9CA' }}
-            align='center'
-            variant='h3'
-            gutterBottom={true}
-          >
-            CREATE EVENT
-          </Typography>
 
-          <form>
-            <Sports sport={sport} handleSelectSport={handleSelectSport} />
-            <div id='description'>
-              <OutlinedInput
-                style={{ backgroundColor: 'white', marginTop: '10px' }}
-                multiline={true}
-                rows='5'
-                placeholder='enter description here (*required)'
-                fullWidth={true}
-                inputProps={{
-                  maxLength: 500,
-                  onChange: (e) => handleDescription(e),
-                  value: description,
-                }}
-              />
-            </div>
+    <div>
 
-            <div id='playerLimit'>
-              <OutlinedInput
-                style={{
-                  backgroundColor: '#1c1c1c',
-                  color: '#A5C9CA',
-                  marginTop: '10px',
-                }}
-                inputProps={{
-                  type: 'number',
-                  onChange: (e) => handlePlayerLimit(e),
-                  min: 1,
-                  max: 100,
-                  value: playerLimit,
-                }}
-              />{' '}
-              <Typography variant='t'># of players</Typography>
-            </div>
+      <ThemeProvider theme={theme}>
+      <Typography
+        style={{ color: '#A5C9CA' }}
+        align='center'
+        variant='h3'
+        gutterBottom={ true }
+      >
+        CREATE EVENT
+      </Typography>
 
-            <OutlinedInput
-              style={{ backgroundColor: 'white', marginTop: '10px' }}
-              rows='1'
-              placeholder='location name (optional)'
-              fullWidth={true}
-              inputProps={{
-                maxLength: 20,
-                onChange: (e) => handleLocation(e),
-                value: location,
-              }}
-            />
+      <form>
+        <Sports sport={ sport } handleSelectSport={ handleSelectSport }/>
+        <div id='description'>
+          <OutlinedInput
+            style={{ backgroundColor: 'white', marginTop: '10px' }}
+            multiline={true}
+            rows='5'
+            placeholder='enter description here (*required)'
+            fullWidth={true}
+            inputProps={{
+              maxLength: 500,
+              onChange: (e) => handleDescription(e),
+              value: description,
+            }}
+          />
+        </div>
+        <EventTeamSelect hostTeam={ hostTeam } handleHostTeam={ handleHostTeam }/>
+        <div id="playerLimit">
+          <OutlinedInput
+            style= {{ backgroundColor: '#1c1c1c', color: '#A5C9CA', marginTop: '10px' }}
+            inputProps={{
+              type: 'number',
+              onChange: (e) => handlePlayerLimit(e),
+              min: 1,
+              max: 100,
+              value: playerLimit,
+            }}
+          /> <Typography variant='t'>
+              # of players
+            </Typography>
+        </div>
+
+        <OutlinedInput
+            style={{ backgroundColor: 'white', marginTop: '10px' }}
+            rows='1'
+            placeholder='location name (optional)'
+            fullWidth={true}
+            inputProps={{
+              maxLength: 20,
+              onChange: (e) => handleLocation(e),
+              value: location,
+            }}
+        />
 
             <AddressField
               handleAddress={handleAddress}
