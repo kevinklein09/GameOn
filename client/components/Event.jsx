@@ -172,8 +172,13 @@ const Event = (props) => {
 //GetWeather API call
   function getWeather() {
     axios
-      .get(API_URL)
-      .then((res) => {
+      .get('/weather', {
+        params: {
+          latitude: props.eventData.coordinates[1],
+          longitude: props.eventData.coordinates[0]
+        }
+      })
+       .then((res) => {
         setWeatherData(res.data.daily);
       })
       .catch((err) => {
@@ -184,6 +189,7 @@ const Event = (props) => {
   useEffect(() => {
     getWeather();
   }, []);
+
 
   if (weatherData) {
     return (
