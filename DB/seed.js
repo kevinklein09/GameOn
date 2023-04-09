@@ -23,7 +23,7 @@ const eventData = [
     equipment: [
       {
         item: 'ball',
-        isChecked: false,
+        isChecked: true,
         assignedTo: 'jasMin',
       },
     ],
