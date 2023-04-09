@@ -175,7 +175,7 @@ const Event = (props) => {
       .get('/weather', {
         params: {
           latitude: props.eventData.coordinates[1],
-          longitude: props.eventData.coordinates[0]
+          longitude: props.eventData.coordinates[0],
         }
       })
        .then((res) => {
