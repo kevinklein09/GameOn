@@ -44,7 +44,9 @@ const Event = (props) => {
 
   const [weatherData, setWeatherData] = useState(null);
 
-  const API_URL = `https://api.open-meteo.com/v1/forecast?daily=weathercode&start_date=2023-04-10&end_date=2023-04-10&timezone=auto&latitude=${props.eventData.coordinates[1]}&longitude=${props.eventData.coordinates[0]}`;
+  const eventDate = props.eventData.date.substring(0, 10);
+
+  console.log(eventDate);
 
   const context = useContext(UserContext);
   // console.log(eventCount);
@@ -174,6 +176,8 @@ const Event = (props) => {
     axios
       .get('/weather', {
         params: {
+          startDate: eventDate,
+          endDate: eventDate,
           latitude: props.eventData.coordinates[1],
           longitude: props.eventData.coordinates[0],
         },
